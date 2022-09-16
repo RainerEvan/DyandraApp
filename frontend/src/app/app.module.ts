@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http'
 import { WebdatarocksPivotModule } from 'ng-webdatarocks';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -14,6 +15,7 @@ import { PivotTableComponent } from './components/pivot-table/pivot-table.compon
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     WebdatarocksPivotModule
   ],
   providers: [],
