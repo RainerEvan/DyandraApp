@@ -1,5 +1,7 @@
 package com.app.demo.controller;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,8 +21,15 @@ public class ReportController {
     private final ReportService reportService;
     
     @GetMapping(path = "/generate")
-    public ReportResponse generateReport(){
+    public ReportResponse generateReport() throws IOException{
         ReportResponse report = reportService.generateReport();
+
+        return report;
+    }
+
+    @GetMapping(path = "/test")
+    public Object[] test() throws IOException{
+        Object[] report = reportService.test();
 
         return report;
     }

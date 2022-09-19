@@ -31,7 +31,6 @@ export class PivotTableComponent implements OnInit {
             next:(response:Report)=>{
                 this.report = JSON.parse(response.report);
                 this.isToolbar = response.toolbar;
-                console.log(response.toolbar);
             },
             error:(error:any)=>{
                 console.log(error);
