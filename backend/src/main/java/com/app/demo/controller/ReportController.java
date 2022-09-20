@@ -28,8 +28,15 @@ public class ReportController {
     }
 
     @GetMapping(path = "/test")
-    public Object[] test() throws IOException{
-        Object[] report = reportService.test();
+    public byte[] test() throws IOException{
+        byte[] report = reportService.getFile();
+
+        return report;
+    }
+
+    @GetMapping(path = "/test2")
+    public Object[] test2() throws IOException{
+        Object[] report = reportService.getData();
 
         return report;
     }

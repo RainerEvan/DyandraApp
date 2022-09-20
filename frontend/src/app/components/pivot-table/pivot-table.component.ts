@@ -11,7 +11,6 @@ import { ReportService } from 'src/app/services/report/report.service';
 export class PivotTableComponent implements OnInit {
 
     report:any;
-    isToolbar:boolean;
 
     constructor(private reportService:ReportService) { }
 
@@ -30,7 +29,6 @@ export class PivotTableComponent implements OnInit {
         this.reportService.generateReport().subscribe({
             next:(response:Report)=>{
                 this.report = JSON.parse(response.report);
-                this.isToolbar = response.toolbar;
             },
             error:(error:any)=>{
                 console.log(error);

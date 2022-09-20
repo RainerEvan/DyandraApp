@@ -7,5 +7,4 @@ import lombok.Data;
 @AllArgsConstructor
 public class ReportResponse {
     private String report;
-    private boolean toolbar;
 }
