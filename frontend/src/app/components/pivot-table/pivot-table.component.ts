@@ -15,7 +15,6 @@ export class PivotTableComponent implements OnInit {
     constructor(private reportService:ReportService) { }
 
     ngOnInit(): void {
-        this.generateReport();
     }
 
     @ViewChild('pivot1') child: WebdatarocksComponent;
@@ -25,10 +24,23 @@ export class PivotTableComponent implements OnInit {
         this.child.webDataRocks.setReport(this.report);
     }
 
-    generateReport(){
-        this.reportService.generateReport().subscribe({
+    generateReportFromDatabase(){
+        this.reportService.generateReportFromDatabase().subscribe({
             next:(response:Report)=>{
                 this.report = JSON.parse(response.report);
+                this.onReportComplete();
+            },
+            error:(error:any)=>{
+                console.log(error);
+            }
+        });
+    }
+
+    generateReportFromFile(){
+        this.reportService.generateReportFromFile().subscribe({
+            next:(response:Report)=>{
+                this.report = JSON.parse(response.report);
+                this.onReportComplete();
             },
             error:(error:any)=>{
                 console.log(error);

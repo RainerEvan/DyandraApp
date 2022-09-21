@@ -20,23 +20,16 @@ public class ReportController {
     @Autowired
     private final ReportService reportService;
     
-    @GetMapping(path = "/generate")
-    public ReportResponse generateReport() throws IOException{
-        ReportResponse report = reportService.generateReport();
+    @GetMapping(path = "/generate/database")
+    public ReportResponse generateReportFromDatabase() throws IOException{
+        ReportResponse report = reportService.generateReportFromDatabase();
 
         return report;
     }
 
-    @GetMapping(path = "/test")
-    public byte[] test() throws IOException{
-        byte[] report = reportService.getFile();
-
-        return report;
-    }
-
-    @GetMapping(path = "/test2")
-    public Object[] test2() throws IOException{
-        Object[] report = reportService.getData();
+    @GetMapping(path = "/generate/file")
+    public ReportResponse generateReportFromFile() throws IOException{
+        ReportResponse report = reportService.generateReportFromFile();
 
         return report;
     }

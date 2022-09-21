@@ -11,7 +11,11 @@ export class ReportService {
 
   constructor(private http: HttpClient) { }
 
-  public generateReport(): Observable<any>{
-    return this.http.get(API_URL+'/generate');
+  public generateReportFromDatabase(): Observable<any>{
+    return this.http.get(API_URL+'/generate/database');
+  }
+
+  public generateReportFromFile(): Observable<any>{
+    return this.http.get(API_URL+'/generate/file');
   }
 }
