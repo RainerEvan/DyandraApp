@@ -18,4 +18,8 @@ export class ReportService {
   public generateReportFromFile(): Observable<any>{
     return this.http.get(API_URL+'/generate/file');
   }
+
+  public saveReport(reportJson:any): Observable<any>{
+    return this.http.post(API_URL+'/save',reportJson);
+  }
 }

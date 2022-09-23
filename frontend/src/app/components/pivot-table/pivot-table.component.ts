@@ -11,6 +11,7 @@ import { ReportService } from 'src/app/services/report/report.service';
 export class PivotTableComponent implements OnInit {
 
     report:any;
+    isReportSaved:boolean = false;
 
     constructor(private reportService:ReportService) { }
 
@@ -46,6 +47,21 @@ export class PivotTableComponent implements OnInit {
                 console.log(error);
             }
         });
+    }
+
+    saveReport(){
+        var reportJson = this.child.webDataRocks.getReport();
+
+        this.reportService.saveReport(reportJson).subscribe({
+            next:(response:any)=>{
+                this.isReportSaved = true;
+                console.log(response);
+                setTimeout(() => this.isReportSaved = false, 3000);
+            },
+            error:(error:any)=>{
+                console.log(error);
+            }
+        })
     }
 
     // report = {

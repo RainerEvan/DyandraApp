@@ -5,6 +5,7 @@ import java.util.UUID;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -23,5 +24,6 @@ public class Reports {
     private UUID id;
     private String application;
     private String title;
+    @Lob
     private String report;
 }

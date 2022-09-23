@@ -1,23 +1,35 @@
 package com.app.demo.service;
 
 import java.io.IOException;
+import java.util.List;
+
+import javax.transaction.Transactional;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.app.demo.model.Reports;
 import com.app.demo.payload.ReportResponse;
+import com.app.demo.repository.ReportRepository;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class ReportService {
 
     @Value("${api.orderApiUrl}")
     private String orderApiUrl;
     @Value("${api.fileApiUrl}")
     private String fileApiUrl;
+
+    @Autowired
+    private final ReportRepository reportRepository;
     
     public ReportResponse generateReportFromDatabase() throws IOException{
 
@@ -112,5 +124,21 @@ public class ReportService {
         ResponseEntity<Object[]> response = restTemplate.getForEntity(orderApiUrl+"/all",Object[].class);
 
         return response.getBody();
+    }
+
+    @Transactional
+    public List<Reports> getAllReports(){
+        return reportRepository.findAll();
+    }
+
+    @Transactional
+    public Reports saveReport(String title, String reportJson){
+
+        Reports report = new Reports();
+        report.setApplication("App");
+        report.setTitle(title);
+        report.setReport(reportJson);
+
+        return reportRepository.save(report);
     }
 }

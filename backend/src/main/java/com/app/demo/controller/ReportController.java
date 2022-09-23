@@ -1,12 +1,16 @@
 package com.app.demo.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.demo.model.Reports;
 import com.app.demo.payload.ReportResponse;
 import com.app.demo.service.ReportService;
 
@@ -32,5 +36,15 @@ public class ReportController {
         ReportResponse report = reportService.generateReportFromFile();
 
         return report;
+    }
+
+    @GetMapping(path = "/all")
+    public List<Reports> getAllReports(){
+        return reportService.getAllReports();
+    }
+
+    @PostMapping(path = "/save")
+    public Reports saveReport(@RequestBody Object reportJson){
+        return reportService.saveReport("Contoh Report", reportJson.toString());
     }
 }
