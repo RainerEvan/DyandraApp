@@ -1,0 +1,9 @@
+.p-inputtext {
+    @apply w-full ring-0 text-black text-sm border-0 border-b-2 border-teal-400 rounded-none placeholder:text-slate-300 hover:border-teal-500 focus:ring-0 focus:border-teal-500;
+}
+
+:host ::ng-deep .p-radiobutton .p-component .p-radiobutton-checked{
+    .p-radiobutton .p-radiobutton-box .p-highlight{
+        @apply border-teal-500 bg-teal-500;
+    }
+}

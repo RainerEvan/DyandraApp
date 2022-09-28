@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { WebdatarocksComponent } from 'ng-webdatarocks';
 import { MenuItem } from 'primeng/api';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Report } from 'src/app/models/report';
 import { ReportService } from 'src/app/services/report/report.service';
+import { ExportDialogComponent } from '../dialog/export-dialog/export-dialog.component';
 
 @Component({
   selector: 'app-pivot-table',
@@ -11,42 +13,24 @@ import { ReportService } from 'src/app/services/report/report.service';
 })
 export class PivotTableComponent implements OnInit {
 
+    @ViewChild('pivot1') child: WebdatarocksComponent;
     report:any;
     isReportSaved:boolean = false;
     items: MenuItem[];
 
-    constructor(private reportService:ReportService) { }
+    ref: DynamicDialogRef;
+
+    constructor(private reportService:ReportService, private dialogService:DialogService) { }
 
     ngOnInit(): void {
-        this.items = [
-            {
-                label: 'Report',
-                icon:'pi pi-fw pi-file',
-                items: [
-                    {
-                        label: 'New', 
-                        icon: 'pi pi-fw pi-plus',
-                        items: [
-                            {label: 'Project'},
-                            {label: 'Other'},
-                        ]
-                    },
-                    {label: 'Open'},
-                    {label: 'Quit'}
-                ]
-            },
-            {
-                label: 'Edit',
-                icon: 'pi pi-fw pi-pencil',
-                items: [
-                    {label: 'Delete', icon: 'pi pi-fw pi-trash'},
-                    {label: 'Refresh', icon: 'pi pi-fw pi-refresh'}
-                ]
-            }
-        ];
+        this.generateMenubar();
     }
 
-    @ViewChild('pivot1') child: WebdatarocksComponent;
+    ngOnDestroy(): void {
+        if (this.ref) {
+            this.ref.close();
+        }
+    }
 
     onReportComplete(): void {
         this.child.webDataRocks.off('reportcomplete');
@@ -92,7 +76,7 @@ export class PivotTableComponent implements OnInit {
         })
     }
 
-    exportReport(){
+    exportReport(property:any){
         this.child.webDataRocks.exportTo(
             'pdf',
             {
@@ -101,6 +85,92 @@ export class PivotTableComponent implements OnInit {
                 destinationType:"file"
             }
         );
+    }
+
+    showExportDialog(format:string){
+        this.ref = this.dialogService.open(ExportDialogComponent,{
+            header: 'Download as '+format.toUpperCase(),
+            footer: " ",
+            data: {
+                format: format,
+            },
+            baseZIndex: 10000,
+            contentStyle: {"max-height": "650px", "overflow": "auto"},
+            width:'40vw',
+        });
+
+        this.ref.onClose.subscribe((property:any)=>{
+            if(property){
+                this.exportReport(property);
+            }
+        });
+    }
+
+    generateMenubar(){
+        this.items = [
+            {
+                label: 'Report',
+                items: [
+                    {
+                        label: 'Open',
+                        icon: 'pi pi-fw pi-folder-open'
+                    },
+                    {
+                        label: 'Save',
+                        icon: 'pi pi-fw pi-save'
+                    },
+                    {
+                        label: 'Import', 
+                        icon: 'pi pi-fw pi-database',
+                        items: [
+                            {
+                                label: 'File',
+                                command: () => {
+                                    this.generateReportFromFile();
+                                }
+                            },
+                            {
+                                label: 'Database',
+                                command: () => {
+                                    this.generateReportFromDatabase();
+                                }
+                            },
+                        ]
+                    },
+                    {
+                        label: 'Export', 
+                        icon: 'pi pi-fw pi-file',
+                        items: [
+                            {
+                                label: 'Download as PDF',
+                                command: () => {
+                                    this.showExportDialog('pdf');
+                                }
+                            },
+                            {
+                                label: 'Download as Excel',
+                                command: () => {
+                                    this.showExportDialog('excel');
+                                }
+                            },
+                        ]
+                    },
+                ]
+            },
+            {
+                label: 'Edit',
+                items: [
+                    {
+                        label: 'Format', 
+                        icon: 'pi pi-fw pi-sliders-h'
+                    },
+                    {
+                        label: 'Options', 
+                        icon: 'pi pi-fw pi-cog'
+                    }
+                ]
+            }
+        ];
     }
 
     // report = {

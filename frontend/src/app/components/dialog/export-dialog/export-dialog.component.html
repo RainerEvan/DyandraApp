@@ -1,0 +1,13 @@
+<form [formGroup]="exportForm" (ngSubmit)="exportReport()" class="flex flex-col space-y-4">
+    <div class="w-full">
+        <label for="filename" class="font-medium">File Name</label>
+        <input type="text" pInputText placeholder="Enter file name" formControlName="filename" required>
+    </div>
+    <div class="w-full">
+        <label class="font-medium">Page Orientation</label>
+        <div class="w-full flex space-x-8 px-2 py-3">
+            <p-radioButton name="pageOrientation" value="portrait" label="Portrait" inputId="orientation1" formControlName="pageOrientation"></p-radioButton>
+            <p-radioButton name="pageOrientation" value="landscape" label="Landscape" inputId="orientation2" formControlName="pageOrientation"></p-radioButton>
+        </div>
+    </div>
+</form>
