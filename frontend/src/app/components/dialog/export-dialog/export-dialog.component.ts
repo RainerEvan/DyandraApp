@@ -23,7 +23,7 @@ export class ExportDialogComponent implements OnInit {
     this.exportForm = this.formBuilder.group({
       filename: [null, [Validators.required,Validators.maxLength(255)]],
       destinationType: ['file'],
-      pageOrientation: [null],
+      pageOrientation: ['portrait'],
     });
   }
 

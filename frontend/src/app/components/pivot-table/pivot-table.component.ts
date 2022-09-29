@@ -90,13 +90,11 @@ export class PivotTableComponent implements OnInit {
     showExportDialog(format:string){
         this.ref = this.dialogService.open(ExportDialogComponent,{
             header: 'Download as '+format.toUpperCase(),
-            footer: " ",
             data: {
                 format: format,
             },
             baseZIndex: 10000,
-            contentStyle: {"max-height": "650px", "overflow": "auto"},
-            width:'40vw',
+            contentStyle: {"max-height": "650px", "min-width":"30vw","overflow": "auto"},
         });
 
         this.ref.onClose.subscribe((property:any)=>{
