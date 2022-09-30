@@ -1,0 +1,13 @@
+scalar DateTime
+
+type Query{
+    getAllReports:[Reports]
+}
+
+type Reports{
+    id:ID!
+    application:String
+    title:String
+    report:String
+    createdAt:DateTime
+}

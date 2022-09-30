@@ -2,9 +2,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { WebdatarocksComponent } from 'ng-webdatarocks';
 import { MenuItem } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Report } from 'src/app/models/report';
+import { Reports } from 'src/app/models/reports';
 import { ReportService } from 'src/app/services/report/report.service';
 import { ExportDialogComponent } from '../dialog/export-dialog/export-dialog.component';
+import { OpenDialogComponent } from '../dialog/open-dialog/open-dialog.component';
 
 @Component({
   selector: 'app-pivot-table',
@@ -37,32 +38,24 @@ export class PivotTableComponent implements OnInit {
         this.child.webDataRocks.setReport(this.report);
     }
 
-    generateReportFromDatabase(){
-        this.reportService.generateReportFromDatabase().subscribe({
-            next:(response:Report)=>{
-                this.report = JSON.parse(response.report);
-                this.onReportComplete();
-            },
-            error:(error:any)=>{
-                console.log(error);
+    //OPEN
+    showOpenDialog(){
+        this.ref = this.dialogService.open(OpenDialogComponent,{
+            header: 'Open Report',
+            baseZIndex: 10000,
+            contentStyle: {"max-height": "600px", "min-width":"50vw","overflow": "clip"},
+        });
+
+        this.ref.onClose.subscribe((reportId:any)=>{
+            if(reportId){
+
             }
         });
     }
 
-    generateReportFromFile(){
-        this.reportService.generateReportFromFile().subscribe({
-            next:(response:Report)=>{
-                this.report = JSON.parse(response.report);
-                this.onReportComplete();
-            },
-            error:(error:any)=>{
-                console.log(error);
-            }
-        });
-    }
-
+    //SAVE
     saveReport(){
-        var reportJson = this.child.webDataRocks.getReport();
+        const reportJson = this.child.webDataRocks.getReport();
 
         this.reportService.saveReport(reportJson).subscribe({
             next:(response:any)=>{
@@ -76,14 +69,37 @@ export class PivotTableComponent implements OnInit {
         })
     }
 
-    exportReport(property:any){
-        this.child.webDataRocks.exportTo(
-            'pdf',
-            {
-                filename:"order-report",
-                header:"<div class='flex flex-row justify-between'><div>ORDER REPORT</div><div>DATE</div></div>",
-                destinationType:"file"
+    //IMPORT
+    generateReportFromDatabase(){
+        this.reportService.generateReportFromDatabase().subscribe({
+            next:(response:Reports)=>{
+                this.report = JSON.parse(response.report);
+                this.onReportComplete();
+            },
+            error:(error:any)=>{
+                console.log(error);
             }
+        });
+    }
+
+    generateReportFromFile(){
+        this.reportService.generateReportFromFile().subscribe({
+            next:(response:Reports)=>{
+                this.report = JSON.parse(response.report);
+                this.onReportComplete();
+            },
+            error:(error:any)=>{
+                console.log(error);
+            }
+        });
+    }
+
+    //EXPORT
+    exportReport(format:any ,property:any){
+        this.child.webDataRocks.exportTo(
+            format,
+            property,
+            () => console.log("Export Success")
         );
     }
 
@@ -99,7 +115,7 @@ export class PivotTableComponent implements OnInit {
 
         this.ref.onClose.subscribe((property:any)=>{
             if(property){
-                this.exportReport(property);
+                this.exportReport(format,property);
             }
         });
     }
@@ -111,7 +127,10 @@ export class PivotTableComponent implements OnInit {
                 items: [
                     {
                         label: 'Open',
-                        icon: 'pi pi-fw pi-folder-open'
+                        icon: 'pi pi-fw pi-folder-open',
+                        command: () => {
+                            this.showOpenDialog();
+                        }
                     },
                     {
                         label: 'Save',

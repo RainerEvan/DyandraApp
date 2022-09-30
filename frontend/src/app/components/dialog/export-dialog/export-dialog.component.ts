@@ -40,7 +40,11 @@ export class ExportDialogComponent implements OnInit {
   }
 
   exportReport(){
+    if(this.exportForm.valid){
+      const property = this.exportForm.value;
 
+      this.ref.close(property);
+    }
   }
 
 }

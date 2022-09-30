@@ -1,5 +1,6 @@
 package com.app.demo.model;
 
+import java.time.OffsetDateTime;
 import java.util.UUID;
 
 import javax.persistence.Entity;
@@ -26,4 +27,5 @@ public class Reports {
     private String title;
     @Lob
     private String report;
+    private OffsetDateTime createdAt;
 }

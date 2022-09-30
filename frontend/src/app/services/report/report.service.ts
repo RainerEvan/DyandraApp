@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Apollo, gql } from 'apollo-angular';
+import { map, Observable } from 'rxjs';
+import { Reports } from 'src/app/models/reports';
 
 const API_URL = 'http://localhost:8080/api/report';
 
@@ -9,7 +11,24 @@ const API_URL = 'http://localhost:8080/api/report';
 })
 export class ReportService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private apollo: Apollo) { }
+
+  public getAllAccounts(): Observable<Reports[]>{
+    return this.apollo.watchQuery<any>({
+      query:gql`
+        query getAllReports{
+          getAllReports{
+            id
+            application
+            title
+            report
+            createdAt
+          }
+        }
+      `,
+    })
+      .valueChanges.pipe(map((result)=>result.data.getAllReports));
+  }
 
   public generateReportFromDatabase(): Observable<any>{
     return this.http.get(API_URL+'/generate/database');

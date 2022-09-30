@@ -13,3 +13,7 @@ body {
 .p-component{
     font-family: "Inter", sans-serif !important;
 }
+
+.btn-primary{
+    @apply text-sm text-white rounded-md px-3 py-2 bg-teal-400 hover:bg-teal-500 active:bg-teal-600;
+}

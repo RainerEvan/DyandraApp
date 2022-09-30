@@ -1,6 +1,7 @@
 package com.app.demo.service;
 
 import java.io.IOException;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -138,6 +139,7 @@ public class ReportService {
         report.setApplication("App");
         report.setTitle(title);
         report.setReport(reportJson);
+        report.setCreatedAt(OffsetDateTime.now());
 
         return reportRepository.save(report);
     }
