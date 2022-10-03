@@ -1,8 +1,12 @@
 :host ::ng-deep .p-menubar {
-    @apply bg-teal-200 border-none mb-4;
+    @apply bg-teal-200 border-none rounded-b-none;
 
     .p-menubar-root-list .p-menuitem .p-menuitem-link {
         @apply ring-0 font-medium text-sm px-3 py-2 transition duration-300 ease-out;
+    }
+
+    .p-menubar-button{
+        @apply ring-0;
     }
 
 }

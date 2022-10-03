@@ -1,3 +1,15 @@
-th, td {
+:host ::ng-deep .p-datatable {
     @apply text-sm;
+
+    .p-datatable-thead th{
+        @apply bg-teal-200 font-medium text-black;
+    }
+
+    .p-datatable-tbody tr{
+        @apply ring-0 outline-none text-black transition ease-out duration-200 translate-y-0.5;
+    }
+
+    .p-datatable-tbody tr.p-highlight{
+        @apply border-l-4 border-teal-300 text-teal-700 font-regular bg-teal-100 shadow-md transition ease-in duration-200 -translate-y-0.5;
+    }
 }

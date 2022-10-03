@@ -1,4 +1,4 @@
-package com.app.demo.payload;
+package com.app.demo.payload.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

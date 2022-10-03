@@ -6,6 +6,7 @@ import { Reports } from 'src/app/models/reports';
 import { ReportService } from 'src/app/services/report/report.service';
 import { ExportDialogComponent } from '../dialog/export-dialog/export-dialog.component';
 import { OpenDialogComponent } from '../dialog/open-dialog/open-dialog.component';
+import { SaveDialogComponent } from '../dialog/save-dialog/save-dialog.component';
 
 @Component({
   selector: 'app-pivot-table',
@@ -15,8 +16,7 @@ import { OpenDialogComponent } from '../dialog/open-dialog/open-dialog.component
 export class PivotTableComponent implements OnInit {
 
     @ViewChild('pivot1') child: WebdatarocksComponent;
-    report:any;
-    isReportSaved:boolean = false;
+    report:Reports;
     items: MenuItem[];
 
     ref: DynamicDialogRef;
@@ -35,7 +35,9 @@ export class PivotTableComponent implements OnInit {
 
     onReportComplete(): void {
         this.child.webDataRocks.off('reportcomplete');
-        this.child.webDataRocks.setReport(this.report);
+        if(this.report){
+            this.child.webDataRocks.setReport(JSON.parse(this.report.report));
+        }
     }
 
     //OPEN
@@ -48,20 +50,53 @@ export class PivotTableComponent implements OnInit {
 
         this.ref.onClose.subscribe((reportId:any)=>{
             if(reportId){
+                this.openReport(reportId);
+            }
+        });
+    }
 
+    openReport(reportId:any){
+        this.reportService.getReport(reportId).subscribe({
+            next:(response:Reports)=>{
+                console.log(response.title);
+                this.report = response;
+                this.onReportComplete();
+            },
+            error:(error:any)=>{
+                console.log(error);
             }
         });
     }
 
     //SAVE
-    saveReport(){
-        const reportJson = this.child.webDataRocks.getReport();
+    showSaveDialog(){
+        if(this.report){
+            this.ref = this.dialogService.open(SaveDialogComponent,{
+                header: 'Save Report',
+                baseZIndex: 10000,
+                contentStyle: {"max-height": "650px", "min-width":"30vw","overflow": "auto"},
+            });
+    
+            this.ref.onClose.subscribe((title:any)=>{
+                if(title){
+                    this.saveReport(title);
+                }
+            });
+        }
+    }
 
-        this.reportService.saveReport(reportJson).subscribe({
-            next:(response:any)=>{
-                this.isReportSaved = true;
-                console.log(response);
-                setTimeout(() => this.isReportSaved = false, 3000);
+    saveReport(title:string){
+        const report = this.child.webDataRocks.getReport();
+
+        const reportRequest = {
+            title,
+            "report":JSON.stringify(report)
+        }
+
+        this.reportService.saveReport(reportRequest).subscribe({
+            next:(response:Reports)=>{
+                this.openReport(response.id);
+                console.log("Report Successfully Saved: "+response.title);
             },
             error:(error:any)=>{
                 console.log(error);
@@ -73,7 +108,7 @@ export class PivotTableComponent implements OnInit {
     generateReportFromDatabase(){
         this.reportService.generateReportFromDatabase().subscribe({
             next:(response:Reports)=>{
-                this.report = JSON.parse(response.report);
+                this.report = response;
                 this.onReportComplete();
             },
             error:(error:any)=>{
@@ -85,7 +120,7 @@ export class PivotTableComponent implements OnInit {
     generateReportFromFile(){
         this.reportService.generateReportFromFile().subscribe({
             next:(response:Reports)=>{
-                this.report = JSON.parse(response.report);
+                this.report = response;
                 this.onReportComplete();
             },
             error:(error:any)=>{
@@ -95,14 +130,6 @@ export class PivotTableComponent implements OnInit {
     }
 
     //EXPORT
-    exportReport(format:any ,property:any){
-        this.child.webDataRocks.exportTo(
-            format,
-            property,
-            () => console.log("Export Success")
-        );
-    }
-
     showExportDialog(format:string){
         this.ref = this.dialogService.open(ExportDialogComponent,{
             header: 'Download as '+format.toUpperCase(),
@@ -120,6 +147,15 @@ export class PivotTableComponent implements OnInit {
         });
     }
 
+    exportReport(format:any ,property:any){
+        this.child.webDataRocks.exportTo(
+            format,
+            property,
+            () => console.log("Export Success")
+        );
+    }
+
+    //MENUBAR
     generateMenubar(){
         this.items = [
             {
@@ -134,7 +170,10 @@ export class PivotTableComponent implements OnInit {
                     },
                     {
                         label: 'Save',
-                        icon: 'pi pi-fw pi-save'
+                        icon: 'pi pi-fw pi-save',
+                        command: () => {
+                            this.showSaveDialog();
+                        }
                     },
                     {
                         label: 'Import', 

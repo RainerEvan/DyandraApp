@@ -2,6 +2,7 @@ scalar DateTime
 
 type Query{
     getAllReports:[Reports]
+    getReport(reportId:ID):Reports
 }
 
 type Reports{

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Reports } from 'src/app/models/reports';
 import { ReportService } from 'src/app/services/report/report.service';
 
@@ -11,8 +12,9 @@ export class OpenDialogComponent implements OnInit {
 
   reports:Reports[];
   loading:boolean;
+  selectedReport:Reports;
 
-  constructor(private reportService: ReportService) { }
+  constructor(public ref: DynamicDialogRef, private reportService: ReportService) { }
 
   ngOnInit(): void {
     this.getAllReports();
@@ -21,7 +23,7 @@ export class OpenDialogComponent implements OnInit {
   getAllReports(){
     this.loading = true;
 
-    this.reportService.getAllAccounts().subscribe({
+    this.reportService.getAllReports().subscribe({
       next:(response:Reports[])=>{
           this.reports = response;
           this.loading = false;
@@ -32,4 +34,9 @@ export class OpenDialogComponent implements OnInit {
     })
   }
 
+  openReport(){
+    if(this.selectedReport){
+      this.ref.close(this.selectedReport.id);
+    }
+  }
 }

@@ -13,7 +13,7 @@ export class ReportService {
 
   constructor(private http: HttpClient, private apollo: Apollo) { }
 
-  public getAllAccounts(): Observable<Reports[]>{
+  public getAllReports(): Observable<Reports[]>{
     return this.apollo.watchQuery<any>({
       query:gql`
         query getAllReports{
@@ -30,6 +30,24 @@ export class ReportService {
       .valueChanges.pipe(map((result)=>result.data.getAllReports));
   }
 
+  public getReport(reportId:any): Observable<Reports>{
+    return this.apollo.watchQuery<any>({
+      query:gql`
+        query getReport($reportId:ID!){
+          getReport(reportId: $reportId){
+            id
+            title
+            report
+          }
+        }
+      `,
+      variables:{
+        reportId: reportId,
+      }
+    })
+      .valueChanges.pipe(map((result)=>result.data.getReport));
+  }
+
   public generateReportFromDatabase(): Observable<any>{
     return this.http.get(API_URL+'/generate/database');
   }
@@ -38,7 +56,7 @@ export class ReportService {
     return this.http.get(API_URL+'/generate/file');
   }
 
-  public saveReport(reportJson:any): Observable<any>{
-    return this.http.post(API_URL+'/save',reportJson);
+  public saveReport(report:any): Observable<any>{
+    return this.http.post(API_URL+'/save',report);
   }
 }

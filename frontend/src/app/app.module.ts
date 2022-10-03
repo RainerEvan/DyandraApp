@@ -19,13 +19,15 @@ import { AppComponent } from './app.component';
 import { PivotTableComponent } from './components/pivot-table/pivot-table.component';
 import { ExportDialogComponent } from './components/dialog/export-dialog/export-dialog.component';
 import { OpenDialogComponent } from './components/dialog/open-dialog/open-dialog.component';
+import { SaveDialogComponent } from './components/dialog/save-dialog/save-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PivotTableComponent,
     ExportDialogComponent,
-    OpenDialogComponent
+    OpenDialogComponent,
+    SaveDialogComponent
   ],
   imports: [
     BrowserModule,

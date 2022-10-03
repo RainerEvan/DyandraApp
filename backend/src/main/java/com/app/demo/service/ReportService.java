@@ -3,6 +3,7 @@ package com.app.demo.service;
 import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.UUID;
 
 import javax.transaction.Transactional;
 
@@ -15,7 +16,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.app.demo.model.Reports;
-import com.app.demo.payload.ReportResponse;
+import com.app.demo.payload.request.ReportRequest;
+import com.app.demo.payload.response.ReportResponse;
 import com.app.demo.repository.ReportRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -133,12 +135,18 @@ public class ReportService {
     }
 
     @Transactional
-    public Reports saveReport(String title, String reportJson){
+    public Reports getReport(UUID reportId){
+        return reportRepository.findById(reportId)
+            .orElseThrow(() -> new IllegalStateException("Report with current Id cannot be found"));
+    }
+
+    @Transactional
+    public Reports saveReport(ReportRequest reportRequest){
 
         Reports report = new Reports();
         report.setApplication("App");
-        report.setTitle(title);
-        report.setReport(reportJson);
+        report.setTitle(reportRequest.getTitle());
+        report.setReport(reportRequest.getReport());
         report.setCreatedAt(OffsetDateTime.now());
 
         return reportRepository.save(report);

@@ -1,16 +1,13 @@
 <div class="container flex flex-col justify-center min-h-screen mx-auto max-w-screen-lg">
     <div class=" bg-white border rounded-lg shadow-lg p-10 flex flex-col ">
-        <div class="flex-row space-x-4 items-center my-2">
-            <button (click)="saveReport()" class="border-2 border-teal-400 bg-teal-400 text-white rounded-md p-2 hover:bg-teal-500 text-sm focus:outline-none">Save Report</button>
-            <button class="border-2 border-teal-400 bg-teal-400 text-white rounded-md p-2 hover:bg-teal-500 text-sm focus:outline-none">Export Report</button>
-            <button (click)="generateReportFromDatabase()" class="border-2 border-teal-400 rounded-md p-2 hover:bg-teal-100 text-sm">Generate from DB</button>
-            <button (click)="generateReportFromFile()" class="border-2 border-teal-400 rounded-md p-2 hover:bg-teal-100 text-sm">Generate from File</button>
-        </div>
         <p-menubar [model]="items">
             <ng-template pTemplate="end">
                 <div class="font-medium text-xl italic text-teal-700 tracking-widest">DYANDRA</div>
             </ng-template>
         </p-menubar>
+        <div class="w-full flex items-center justify-center bg-white border-2 border-teal-200 p-2">
+            <span class="font-medium text-sm">{{report?.title || "New Report"}}</span>
+        </div>
         <app-wbr-pivot #pivot1 [toolbar]="false" [width]="'100%'" [height]="500" (reportcomplete)="onReportComplete()">
         </app-wbr-pivot>
     </div>

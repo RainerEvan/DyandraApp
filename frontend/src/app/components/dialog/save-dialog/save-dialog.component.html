@@ -1,0 +1,9 @@
+<form [formGroup]="saveForm" class="flex flex-col space-y-4">
+    <div class="w-full">
+        <label for="title" class="font-medium">Report Title</label>
+        <input type="text" pInputText placeholder="Enter report title" formControlName="title" required>
+    </div>
+    <div class="w-full flex items-center justify-center pt-4 pb-2">
+        <button (click)="saveReport()" type="button" class="w-full btn-primary">SAVE</button>
+    </div>
+</form>

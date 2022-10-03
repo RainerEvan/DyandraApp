@@ -1,5 +1,5 @@
 <div class="flex flex-col space-y-4">
-    <p-table #reportTable [value]="reports" [loading]="loading" selectionMode="single" [scrollable]="true" scrollHeight="300px" [responsive]="true" responsiveLayout="scroll">
+    <p-table #reportTable [value]="reports" [loading]="loading" selectionMode="single" [(selection)]="selectedReport" dataKey="id" [scrollable]="true" scrollHeight="300px" [responsive]="true" responsiveLayout="scroll">
         <ng-template pTemplate="header">
             <tr>
                 <th>Application</th>
@@ -8,17 +8,21 @@
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-report>
-            <tr>
+            <tr [pSelectableRow]="report">
                 <td>{{report.application}}</td>
                 <td>{{report.title}}</td>
                 <td>{{report.createdAt | date:'dd/MM/yyyy'}}</td>
             </tr>
         </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <div class="text-sm text-teal-400 text-center my-6">NO REPORTS FOUND</div>
+        </ng-template>
     </p-table>
-    <div class="w-full flex items-center p-2">
-        <span>Report Selected: </span>
+    <div class="w-full flex flex-row items-center justify-between p-2">
+        <span class="font-medium text-sm">Selected Report:</span>
+        <span *ngIf="selectedReport" class="text-sm text-teal-700 uppercase">{{selectedReport.title}}</span>
     </div>
     <div class="w-full flex items-center justify-center py-2">
-        <button type="button" class="w-full btn-primary">OPEN</button>
+        <button (click)="openReport()" type="button" class="w-full btn-primary">OPEN</button>
     </div>
 </div>
