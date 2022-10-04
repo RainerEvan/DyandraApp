@@ -6,6 +6,7 @@ import { Reports } from 'src/app/models/reports';
 import { ReportService } from 'src/app/services/report/report.service';
 import { ExportDialogComponent } from '../dialog/export-dialog/export-dialog.component';
 import { OpenDialogComponent } from '../dialog/open-dialog/open-dialog.component';
+import { OptionsDialogComponent } from '../dialog/options-dialog/options-dialog.component';
 import { SaveDialogComponent } from '../dialog/save-dialog/save-dialog.component';
 
 @Component({
@@ -155,6 +156,33 @@ export class PivotTableComponent implements OnInit {
         );
     }
 
+    //OPTIONS
+    showOptionsDialog(){
+        const options = this.child.webDataRocks.getOptions();
+
+        this.ref = this.dialogService.open(OptionsDialogComponent,{
+            header: 'Table Options',
+            data:{
+                currOptions: options.grid
+            },
+            baseZIndex: 10000,
+            contentStyle: {"max-height": "650px", "min-width":"50vw","overflow": "auto"},
+        });
+
+        this.ref.onClose.subscribe((property:any)=>{
+            if(property){
+                this.applyOptions(property);
+            }
+        });
+    }
+
+    applyOptions(property:any){
+        this.child.webDataRocks.setOptions({
+            grid: property
+        });
+        this.child.webDataRocks.refresh();
+    }
+
     //MENUBAR
     generateMenubar(){
         this.items = [
@@ -222,7 +250,10 @@ export class PivotTableComponent implements OnInit {
                     },
                     {
                         label: 'Options', 
-                        icon: 'pi pi-fw pi-cog'
+                        icon: 'pi pi-fw pi-cog',
+                        command: () => {
+                            this.showOptionsDialog();
+                        }
                     }
                 ]
             }

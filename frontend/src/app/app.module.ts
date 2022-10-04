@@ -20,6 +20,7 @@ import { PivotTableComponent } from './components/pivot-table/pivot-table.compon
 import { ExportDialogComponent } from './components/dialog/export-dialog/export-dialog.component';
 import { OpenDialogComponent } from './components/dialog/open-dialog/open-dialog.component';
 import { SaveDialogComponent } from './components/dialog/save-dialog/save-dialog.component';
+import { OptionsDialogComponent } from './components/dialog/options-dialog/options-dialog.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { SaveDialogComponent } from './components/dialog/save-dialog/save-dialog
     PivotTableComponent,
     ExportDialogComponent,
     OpenDialogComponent,
-    SaveDialogComponent
+    SaveDialogComponent,
+    OptionsDialogComponent
   ],
   imports: [
     BrowserModule,

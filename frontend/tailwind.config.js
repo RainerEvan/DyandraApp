@@ -7,6 +7,7 @@ module.exports = {
         extend: {
             fontFamily: {
                 inter: "'Inter', sans-serif",
+                allerta : "'Allerta Stencil', sans-serif",
             },
             fontSize: {},
             fontWeight: {
