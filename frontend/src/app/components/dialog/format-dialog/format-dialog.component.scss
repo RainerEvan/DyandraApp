@@ -1,0 +1,31 @@
+:host ::ng-deep .p-dropdown {
+    @apply w-full ring-0 shadow-none text-black text-sm border-0 border-b-2 border-teal-400 rounded-none hover:border-teal-500 focus:ring-0 focus:border-teal-500;
+
+    .p-dropdown-label{
+        @apply text-sm text-black;
+    }
+
+    .p-dropdown-label.p-placeholder{
+        @apply text-sm text-slate-400;
+    }
+    
+    .p-dropdown-item{
+        @apply text-sm text-black;
+    }
+    
+    .p-dropdown-empty-message{
+        @apply text-sm text-black;
+    }
+}
+
+:host ::ng-deep .p-dropdown.p-focus {
+    @apply ring-0 shadow-none border-teal-500;
+}
+
+.form-label{
+    @apply w-2/5 text-sm;
+}
+
+.p-inputtext {
+    @apply w-full ring-0 text-black text-sm border-0 border-b-2 border-teal-400 rounded-none placeholder:text-slate-400 hover:border-teal-500 focus:ring-0 focus:border-teal-500;
+}

@@ -5,6 +5,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Reports } from 'src/app/models/reports';
 import { ReportService } from 'src/app/services/report/report.service';
 import { ExportDialogComponent } from '../dialog/export-dialog/export-dialog.component';
+import { FormatDialogComponent } from '../dialog/format-dialog/format-dialog.component';
 import { OpenDialogComponent } from '../dialog/open-dialog/open-dialog.component';
 import { OptionsDialogComponent } from '../dialog/options-dialog/options-dialog.component';
 import { SaveDialogComponent } from '../dialog/save-dialog/save-dialog.component';
@@ -46,7 +47,7 @@ export class PivotTableComponent implements OnInit {
         this.ref = this.dialogService.open(OpenDialogComponent,{
             header: 'Open Report',
             baseZIndex: 10000,
-            contentStyle: {"max-height": "600px", "min-width":"50vw","overflow": "clip"},
+            contentStyle: {"max-height": "600px", "width":"50vw","min-width":"450px", "max-width":"600px","overflow": "auto"},
         });
 
         this.ref.onClose.subscribe((reportId:any)=>{
@@ -156,17 +157,73 @@ export class PivotTableComponent implements OnInit {
         );
     }
 
+    //FORMAT
+    showFormatDialog(){
+        const measures = this.child.webDataRocks.getAllMeasures();
+        const measureFormats = [];
+
+        if(measures.length > 0){
+            measureFormats.push({
+                uniqueName: "",
+                caption: "All values",
+                format: this.child.webDataRocks.getFormat(''),
+            });
+            
+            measures.forEach((measure)=>{
+                var measureFormat = {
+                    uniqueName: measure.uniqueName,
+                    caption: measure.caption,
+                    format: this.child.webDataRocks.getFormat(measure.uniqueName)
+                }
+    
+                measureFormats.push(measureFormat);
+            });
+        }
+
+        this.ref = this.dialogService.open(FormatDialogComponent,{
+            header: 'Format Cells',
+            data:{
+                measureFormats: measureFormats,
+            },
+            baseZIndex: 10000,
+            contentStyle: {"max-height": "650px", "width":"50vw","min-width":"400px", "max-width":"600px", "overflow": "auto"},
+        });
+
+        this.ref.onClose.subscribe((property:any)=>{
+            if(property){
+                this.applyOptions(property);
+            }
+        });
+    }
+
+    getReport(){
+        const format = {
+            thousandsSeparator: "",
+            decimalSeparator: ".",
+            decimalPlaces: 2,
+            maxSymbols: 20,
+            currencySymbol: "Rp ",
+            currencySymbolAlign: "left",
+            nullValue: "",
+            infinityValue: "Infinity",
+            divideByZeroValue: "Infinity"
+        }
+
+        const report = this.child.webDataRocks.getReport();
+        console.log(report);
+    }
+
     //OPTIONS
     showOptionsDialog(){
         const options = this.child.webDataRocks.getOptions();
 
         this.ref = this.dialogService.open(OptionsDialogComponent,{
-            header: 'Table Options',
+            header: 'Layout Options',
             data:{
                 currOptions: options.grid
             },
             baseZIndex: 10000,
-            contentStyle: {"max-height": "650px", "min-width":"50vw","overflow": "auto"},
+            contentStyle: {"max-height": "650px", "width":"50vw","min-width":"400px", "max-width":"600px", "overflow": "auto"},
         });
 
         this.ref.onClose.subscribe((property:any)=>{
@@ -246,7 +303,10 @@ export class PivotTableComponent implements OnInit {
                 items: [
                     {
                         label: 'Format', 
-                        icon: 'pi pi-fw pi-sliders-h'
+                        icon: 'pi pi-fw pi-sliders-h',
+                        command: () => {
+                            this.showFormatDialog();
+                        }
                     },
                     {
                         label: 'Options', 

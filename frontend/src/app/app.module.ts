@@ -21,6 +21,8 @@ import { ExportDialogComponent } from './components/dialog/export-dialog/export-
 import { OpenDialogComponent } from './components/dialog/open-dialog/open-dialog.component';
 import { SaveDialogComponent } from './components/dialog/save-dialog/save-dialog.component';
 import { OptionsDialogComponent } from './components/dialog/options-dialog/options-dialog.component';
+import { FormatDialogComponent } from './components/dialog/format-dialog/format-dialog.component';
+import { DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,8 @@ import { OptionsDialogComponent } from './components/dialog/options-dialog/optio
     ExportDialogComponent,
     OpenDialogComponent,
     SaveDialogComponent,
-    OptionsDialogComponent
+    OptionsDialogComponent,
+    FormatDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -45,6 +48,7 @@ import { OptionsDialogComponent } from './components/dialog/options-dialog/optio
     DynamicDialogModule,
     InputTextModule,
     RadioButtonModule,
+    DropdownModule,
     TableModule,
   ],
   providers: [DialogService],

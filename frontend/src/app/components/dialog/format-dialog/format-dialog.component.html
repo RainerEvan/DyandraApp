@@ -1,0 +1,16 @@
+<div class="pb-6">
+    <label for="fild" class="font-medium">Field Value</label>
+    <p-dropdown [options]="measureFormats" optionLabel="caption" optionValue="uniqueName" [showClear]="true" placeholder="Choose field value"></p-dropdown>
+</div>
+<form [formGroup]="formatForm" class="flex flex-col space-y-4">
+    <label class="font-medium">Format</label>
+
+    <div class="w-full flex flex-row items-center px-3 space-x-2">
+        <label for="field" class="form-label">File Name</label>
+        <input type="text" pInputText placeholder="Enter file name" formControlName="field">
+    </div>
+    
+    <div class="w-full flex items-center justify-center pt-4 pb-2">
+        <button (click)="applyFormat()" type="button" class="w-full btn-primary">EXPORT</button>
+    </div>
+</form>
