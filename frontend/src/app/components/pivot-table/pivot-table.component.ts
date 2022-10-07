@@ -166,7 +166,7 @@ export class PivotTableComponent implements OnInit {
             measureFormats.push({
                 uniqueName: "",
                 caption: "All values",
-                format: this.child.webDataRocks.getFormat(''),
+                format: this.child.webDataRocks.getFormat(""),
             });
             
             measures.forEach((measure)=>{
@@ -186,31 +186,19 @@ export class PivotTableComponent implements OnInit {
                 measureFormats: measureFormats,
             },
             baseZIndex: 10000,
-            contentStyle: {"max-height": "650px", "width":"50vw","min-width":"400px", "max-width":"600px", "overflow": "auto"},
+            contentStyle: {"max-height": "650px", "width":"50vw","min-width":"500px", "max-width":"600px", "overflow": "auto"},
         });
 
         this.ref.onClose.subscribe((property:any)=>{
             if(property){
-                this.applyOptions(property);
+                this.applyFormat(property);
             }
         });
     }
 
-    getReport(){
-        const format = {
-            thousandsSeparator: "",
-            decimalSeparator: ".",
-            decimalPlaces: 2,
-            maxSymbols: 20,
-            currencySymbol: "Rp ",
-            currencySymbolAlign: "left",
-            nullValue: "",
-            infinityValue: "Infinity",
-            divideByZeroValue: "Infinity"
-        }
-
-        const report = this.child.webDataRocks.getReport();
-        console.log(report);
+    applyFormat(property:any){
+        this.child.webDataRocks.setFormat(property.format, property.name);
+        this.child.webDataRocks.refresh();
     }
 
     //OPTIONS

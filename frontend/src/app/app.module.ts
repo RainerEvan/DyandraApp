@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http'
 import { WebdatarocksPivotModule } from 'ng-webdatarocks';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GraphQLModule } from './graphql.module';
 
 import { MenuModule } from 'primeng/menu';
@@ -39,6 +39,7 @@ import { DropdownModule } from 'primeng/dropdown';
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
+    FormsModule,
     ReactiveFormsModule,
     WebdatarocksPivotModule,
     GraphQLModule,

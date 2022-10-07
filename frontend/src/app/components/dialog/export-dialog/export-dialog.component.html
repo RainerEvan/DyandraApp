@@ -11,6 +11,6 @@
         </div>
     </div>
     <div class="w-full flex items-center justify-center pt-4 pb-2">
-        <button (click)="exportReport()" type="button" class="w-full btn-primary">EXPORT</button>
+        <button (click)="exportReport()" [disabled]="exportForm.invalid" type="button" class="w-full btn-primary">EXPORT</button>
     </div>
 </form>

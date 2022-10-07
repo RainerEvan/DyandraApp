@@ -23,6 +23,6 @@
         <span *ngIf="selectedReport" class="text-sm text-teal-700 uppercase">{{selectedReport.title}}</span>
     </div>
     <div class="w-full flex items-center justify-center py-2">
-        <button (click)="openReport()" type="button" class="w-full btn-primary">OPEN</button>
+        <button (click)="openReport()" [disabled]="!selectedReport" type="button" class="w-full btn-primary">OPEN</button>
     </div>
 </div>
