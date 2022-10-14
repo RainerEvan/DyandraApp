@@ -15,10 +15,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.app.demo.model.Connections;
 import com.app.demo.model.Reports;
+import com.app.demo.model.SourcePaths;
 import com.app.demo.payload.request.ReportRequest;
 import com.app.demo.payload.response.ReportResponse;
+import com.app.demo.repository.ConnectionRepository;
 import com.app.demo.repository.ReportRepository;
+import com.app.demo.repository.SourcePathRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -33,6 +37,31 @@ public class ReportService {
 
     @Autowired
     private final ReportRepository reportRepository;
+    @Autowired
+    private final ConnectionRepository connectionRepository;
+    @Autowired
+    private final SourcePathRepository sourcePathRepository;
+
+    public Reports addReport(ReportRequest reportRequest){
+        Connections connection = connectionRepository.findById(reportRequest.getConnectionId())
+            .orElseThrow(() -> new IllegalStateException("Connection with current id cannot be found"));
+
+        SourcePaths sourcePath = sourcePathRepository.findById(reportRequest.getSourcePathId())
+            .orElseThrow(() -> new IllegalStateException("Source path with current id cannot be found"));
+
+        String reportToken = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
+
+        Reports report = new Reports();
+        report.setConnection(connection);
+        report.setSourcePath(sourcePath);
+        report.setQuery(reportRequest.getQuery());
+        report.setTitle(reportRequest.getTitle());
+        report.setReport(reportRequest.getReport());
+        report.setReportToken(reportToken);
+        report.setCreatedAt(OffsetDateTime.now());
+
+        return reportRepository.save(report);
+    }
     
     public ReportResponse generateReportFromDatabase() throws IOException{
 
@@ -43,36 +72,7 @@ public class ReportService {
         JSONObject dataSource = new JSONObject();
         dataSource.put("dataSourceType", "json");
         dataSource.put("data", data);
-
-        JSONObject slice = new JSONObject();
-
-        JSONArray rows = new JSONArray();
-        JSONObject field = new JSONObject();
-        field.put("uniqueName", "country");
-        JSONObject field2 = new JSONObject();
-        field2.put("uniqueName", "Measures");
-        rows.put(field);
-        rows.put(field2);
-
-        JSONArray columns = new JSONArray();
-        JSONObject field3 = new JSONObject();
-        field3.put("uniqueName", "category");
-        JSONObject field4 = new JSONObject();
-        field4.put("uniqueName", "color");
-        columns.put(field3);
-        columns.put(field4);
-
-        JSONArray measures = new JSONArray();
-        JSONObject field5 = new JSONObject();
-        field5.put("uniqueName", "price");
-        measures.put(field5);
-
-        slice.put("rows", rows);
-        slice.put("columns", columns);
-        slice.put("measures", measures);
-
         report.put("dataSource", dataSource);
-        report.put("slice", slice);
 
         ReportResponse reportResponse = new ReportResponse(report.toString());
 
@@ -144,7 +144,6 @@ public class ReportService {
     public Reports saveReport(ReportRequest reportRequest){
 
         Reports report = new Reports();
-        report.setApplication("App");
         report.setTitle(reportRequest.getTitle());
         report.setReport(reportRequest.getReport());
         report.setCreatedAt(OffsetDateTime.now());

@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -21,28 +20,21 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "m_reports")
-public class Reports {
+@Table(name = "m_connections")
+public class Connections {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
 
     @ManyToOne
-    @JoinColumn(name="connection_id")
-    private Connections connection;
+    @JoinColumn(name="application_id")
+    private Applications application;
 
     @ManyToOne
-    @JoinColumn(name="source_path_id")
-    private SourcePaths sourcePath;
+    @JoinColumn(name="method_id")
+    private Methods method;
 
-    @Lob
-    private String query;
-
-    private String title;
-    @Lob
-    private String report;
-    private String reportToken;
     private OffsetDateTime createdAt;
-    private OffsetDateTime updatedAt;
+
 }

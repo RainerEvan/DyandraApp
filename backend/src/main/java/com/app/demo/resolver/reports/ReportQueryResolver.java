@@ -1,4 +1,4 @@
-package com.app.demo.resolver;
+package com.app.demo.resolver.reports;
 
 import java.util.List;
 import java.util.UUID;

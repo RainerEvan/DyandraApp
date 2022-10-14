@@ -1,0 +1,10 @@
+type SourcePaths{
+    id:ID!
+    connection:Connections
+    path:String
+    createdAt:DateTime
+}
+
+extend type Query{
+    getAllSourcePathsForConnection(connectionId:ID!):[SourcePaths]
+}

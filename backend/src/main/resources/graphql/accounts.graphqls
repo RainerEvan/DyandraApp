@@ -1,0 +1,8 @@
+type Accounts{
+    id:ID!
+    username:String
+}
+
+extend type Query{
+    getAllAccounts:[Accounts]
+}

@@ -1,0 +1,10 @@
+type Applications{
+    id:ID!
+    name:String
+    code:String
+    clientToken:String
+}
+
+extend type Query{
+    getAllApplications:[Applications]
+}

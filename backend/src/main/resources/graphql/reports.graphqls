@@ -1,0 +1,16 @@
+type Reports{
+    id:ID!
+    connection:Connections
+    sourcePath:SourcePaths
+    query:String
+    title:String
+    report:String
+    reportToken:String
+    createdAt:DateTime
+    updatedAt:DateTime
+}
+
+extend type Query{
+    getAllReports:[Reports]
+    getReport(reportId:ID):Reports
+}

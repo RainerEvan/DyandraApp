@@ -7,10 +7,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class ReportRequest {
+public class SourcePathRequest {
     private UUID connectionId;
-    private UUID sourcePathId;
-    private String query;
-    private String title;
-    private String report;
+    private String path;
 }

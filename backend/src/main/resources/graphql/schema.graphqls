@@ -1,14 +1,11 @@
 scalar DateTime
 
-type Query{
-    getAllReports:[Reports]
-    getReport(reportId:ID):Reports
+schema {
+    query:Query
 }
 
-type Reports{
-    id:ID!
-    application:String
-    title:String
-    report:String
-    createdAt:DateTime
+type Query{
+
 }
+
+ 

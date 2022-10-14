@@ -1,0 +1,15 @@
+type Methods{
+    id:ID!
+    name:EMethod
+}
+
+enum EMethod{
+    DIRECT_DB
+    API
+    API_GATEAWAY
+    LOCAL_FILES
+}
+
+extend type Query{
+    getAllMethods:[Methods]
+}

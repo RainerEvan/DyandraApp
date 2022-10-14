@@ -1,0 +1,10 @@
+type Connections{
+    id:ID!
+    application:Applications
+    method:Methods
+    createdAt:DateTime
+}
+
+extend type Query{
+    getAllConnections:[Connections]
+}
