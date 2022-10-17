@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.app.demo.exception.AbstractGraphQLException;
 import com.app.demo.model.Connections;
 import com.app.demo.model.Reports;
 import com.app.demo.model.SourcePaths;
@@ -42,12 +43,13 @@ public class ReportService {
     @Autowired
     private final SourcePathRepository sourcePathRepository;
 
+    @Transactional
     public Reports addReport(ReportRequest reportRequest){
         Connections connection = connectionRepository.findById(reportRequest.getConnectionId())
-            .orElseThrow(() -> new IllegalStateException("Connection with current id cannot be found"));
+            .orElseThrow(() -> new AbstractGraphQLException("Connection with current id cannot be found"));
 
         SourcePaths sourcePath = sourcePathRepository.findById(reportRequest.getSourcePathId())
-            .orElseThrow(() -> new IllegalStateException("Source path with current id cannot be found"));
+            .orElseThrow(() -> new AbstractGraphQLException("Source path with current id cannot be found"));
 
         String reportToken = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
 
@@ -63,6 +65,7 @@ public class ReportService {
         return reportRepository.save(report);
     }
     
+    @Transactional
     public ReportResponse generateReportFromDatabase() throws IOException{
 
         Object[] data = getData();

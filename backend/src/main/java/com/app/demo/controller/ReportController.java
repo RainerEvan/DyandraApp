@@ -28,7 +28,7 @@ public class ReportController {
     private final ReportService reportService;
 
     @PostMapping(path = "/add")
-    public ResponseEntity<Object> addApplication(@RequestBody ReportRequest reportRequest){
+    public ResponseEntity<Object> addReport(@RequestBody ReportRequest reportRequest){
         try {
             Reports report = reportService.addReport(reportRequest);
             

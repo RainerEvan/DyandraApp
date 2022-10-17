@@ -24,7 +24,7 @@ public class ConnectionController {
     private final ConnectionService connectionService;
 
     @PostMapping(path = "/add")
-    public ResponseEntity<Object> addApplication(@RequestBody ConnectionRequest connectionRequest){
+    public ResponseEntity<Object> addConnection(@RequestBody ConnectionRequest connectionRequest){
         try {
             Connections connection = connectionService.addConnection(connectionRequest);
             

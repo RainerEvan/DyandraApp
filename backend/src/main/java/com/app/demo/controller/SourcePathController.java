@@ -24,11 +24,11 @@ public class SourcePathController {
     private final SourcePathService sourcePathService;
 
     @PostMapping(path = "/add")
-    public ResponseEntity<Object> addApplication(@RequestBody SourcePathRequest sourcePathRequest){
+    public ResponseEntity<Object> addSourcePath(@RequestBody SourcePathRequest sourcePathRequest){
         try {
             SourcePaths sourcePath = sourcePathService.addSourcePath(sourcePathRequest);
             
-            return ResponseHandler.generateResponse("SourcePath has been added successfully!", HttpStatus.OK, sourcePath);
+            return ResponseHandler.generateResponse("Source path has been added successfully!", HttpStatus.OK, sourcePath);
         } catch (Exception e) {
             return ResponseHandler.generateResponse(e.getMessage(), HttpStatus.BAD_REQUEST, null);
         }

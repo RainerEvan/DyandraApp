@@ -24,7 +24,7 @@ public class AccountController {
     private final AccountService accountService;
 
     @PostMapping(path = "/add")
-    public ResponseEntity<Object> addApplication(@RequestBody AccountRequest accountRequest){
+    public ResponseEntity<Object> addAccount(@RequestBody AccountRequest accountRequest){
         try {
             Accounts account = accountService.addAccount(accountRequest);
             

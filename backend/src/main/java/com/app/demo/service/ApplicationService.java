@@ -3,6 +3,8 @@ package com.app.demo.service;
 import java.util.List;
 import java.util.UUID;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,10 +21,12 @@ public class ApplicationService {
     @Autowired
     private final ApplicationRepository applicationRepository;
 
+    @Transactional
     public List<Applications> getAllApplications(){
         return applicationRepository.findAll();
     }
 
+    @Transactional
     public Applications addApplication(ApplicationRequest applicationRequest){
         String clientToken = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
 
