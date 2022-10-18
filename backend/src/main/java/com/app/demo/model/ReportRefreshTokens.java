@@ -1,6 +1,6 @@
 package com.app.demo.model;
 
-import java.time.OffsetDateTime;
+import java.time.Instant;
 import java.util.UUID;
 
 import javax.persistence.Entity;
@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -19,15 +20,16 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RefreshTokens {
+@Table(name = "t_report_refresh_token")
+public class ReportRefreshTokens {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
-    
+
     @ManyToOne
-    @JoinColumn(name="application_id")
-    private Applications application;
+    @JoinColumn(name = "report_id")
+    private Reports report;
     private String token;
-    private OffsetDateTime expiryDate;
+    private Instant expiryDate;
 }

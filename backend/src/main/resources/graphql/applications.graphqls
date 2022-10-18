@@ -2,7 +2,7 @@ type Applications{
     id:ID!
     name:String
     code:String
-    clientToken:String
+    clientId:String
 }
 
 extend type Query{

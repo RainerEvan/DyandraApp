@@ -5,6 +5,7 @@ type Reports{
     query:String
     title:String
     report:String
+    reportId:String
     createdAt:DateTime
     updatedAt:DateTime
 }

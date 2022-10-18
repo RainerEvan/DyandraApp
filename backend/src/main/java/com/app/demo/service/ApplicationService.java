@@ -28,12 +28,12 @@ public class ApplicationService {
 
     @Transactional
     public Applications addApplication(ApplicationRequest applicationRequest){
-        String clientToken = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
+        String clientId = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
 
         Applications application = new Applications();
         application.setName(applicationRequest.getName());
         application.setCode(applicationRequest.getCode());
-        application.setClientToken(clientToken);
+        application.setClientId(clientId);
 
         return applicationRepository.save(application);
     }

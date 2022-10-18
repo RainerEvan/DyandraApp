@@ -51,7 +51,7 @@ public class ReportService {
         SourcePaths sourcePath = sourcePathRepository.findById(reportRequest.getSourcePathId())
             .orElseThrow(() -> new AbstractGraphQLException("Source path with current id cannot be found"));
 
-        String reportToken = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
+        String reportId = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
 
         Reports report = new Reports();
         report.setConnection(connection);
@@ -59,7 +59,7 @@ public class ReportService {
         report.setQuery(reportRequest.getQuery());
         report.setTitle(reportRequest.getTitle());
         report.setReport(reportRequest.getReport());
-        report.setReportToken(reportToken);
+        report.setReportId(reportId);
         report.setCreatedAt(OffsetDateTime.now());
 
         return reportRepository.save(report);

@@ -42,7 +42,7 @@ public class Reports {
     private String title;
     @Lob
     private String report;
-    private String reportToken;
+    private String reportId;
     private OffsetDateTime createdAt;
     private OffsetDateTime updatedAt;
 }

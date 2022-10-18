@@ -25,5 +25,5 @@ public class Applications {
     private UUID id;
     private String name;
     private String code;
-    private String clientToken;
+    private String clientId;
 }
