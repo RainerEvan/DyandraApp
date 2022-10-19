@@ -16,7 +16,10 @@ module.exports = {
                 medium: 500,
                 semibold: 600,
                 bold: 700
-            }
+            },
+            colors: {
+                bca:'#0066AE',
+            },
         },
     },
     plugins: [],

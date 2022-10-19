@@ -39,6 +39,10 @@ public class ReportJwtUtils {
         return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
     }
 
+    public Date getExpirationFromJwtToken(String token) {
+        return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getExpiration();
+    }
+
     public boolean validateJwtToken(String authToken) {
         try {
         Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);

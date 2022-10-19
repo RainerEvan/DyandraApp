@@ -1,9 +1,38 @@
 :host ::ng-deep .p-menubar {
-    @apply bg-teal-200 border-none rounded-b-none;
+    @apply bg-bca border-none rounded-b-none text-white;
 
     .p-menubar-root-list {
         .p-menuitem .p-menuitem-link {
-            @apply ring-0 font-medium text-sm px-3 py-2 transition duration-300 ease-out;
+            @apply ring-0 font-medium text-sm px-3 py-2 transition duration-200 ease-out;
+
+            .p-menuitem-text{
+                @apply text-white;
+            }
+
+            .p-submenu-icon{
+                @apply text-white;
+            }
+        }
+
+        .p-menuitem.p-menuitem-active > .p-menuitem-link{
+            .p-menuitem-text{
+                @apply text-[#3F3F46];
+            }
+
+            .p-submenu-icon{
+                @apply text-[#3F3F46];
+            }
+        }
+        
+    }
+
+    .p-submenu-list .p-menuitem .p-menuitem-link{
+        .p-menuitem-text{
+            @apply text-[#3F3F46];
+        }
+
+        .p-submenu-icon{
+            @apply text-[#3F3F46];
         }
     }
     

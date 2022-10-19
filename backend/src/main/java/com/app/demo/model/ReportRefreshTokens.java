@@ -31,5 +31,5 @@ public class ReportRefreshTokens {
     @JoinColumn(name = "report_id")
     private Reports report;
     private String token;
-    private Instant expiryDate;
+    private Instant expirationDate;
 }

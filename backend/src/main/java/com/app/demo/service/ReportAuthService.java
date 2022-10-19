@@ -45,6 +45,7 @@ public class ReportAuthService {
 
                 return new JwtReportResponse(
                     accessToken,
+                    reportJwtUtils.getExpirationFromJwtToken(accessToken).toInstant(),
                     refreshTokens.getToken(),
                     report.getTitle()
                 );
