@@ -34,6 +34,7 @@ public class Connections {
     @ManyToOne
     @JoinColumn(name="method_id")
     private Methods method;
+    private String name;
 
     private OffsetDateTime createdAt;
 

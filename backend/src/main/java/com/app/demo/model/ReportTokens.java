@@ -20,8 +20,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "t_report_refresh_token")
-public class ReportRefreshTokens {
+@Table(name = "t_report_token")
+public class ReportTokens {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")

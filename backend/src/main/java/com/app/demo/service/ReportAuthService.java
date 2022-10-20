@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.app.demo.model.Applications;
-import com.app.demo.model.ReportRefreshTokens;
+import com.app.demo.model.ReportTokens;
 import com.app.demo.model.Reports;
 import com.app.demo.payload.request.ReportAuthRequest;
 import com.app.demo.payload.response.JwtReportResponse;
@@ -27,26 +27,25 @@ public class ReportAuthService {
     @Autowired
     private final ReportJwtUtils reportJwtUtils;
     @Autowired
-    private final ReportRefreshTokenService reportRefreshTokenService;
+    private final ReportTokenService reportTokenService;
 
     @Transactional
     public JwtReportResponse authenticate(ReportAuthRequest reportAuthRequest){
         try{
+            Applications application = applicationRepository.findByClientId(reportAuthRequest.getClientId())
+                .orElseThrow(() -> new IllegalStateException("Client with current id cannot be found"));
+            
             Reports report = reportRepository.findByReportId(reportAuthRequest.getReportId())
                 .orElseThrow(() -> new IllegalStateException("Report with current id cannot be found"));
 
-            Applications application = applicationRepository.findByClientId(reportAuthRequest.getClientId())
-                .orElseThrow(() -> new IllegalStateException("Client with current id cannot be found"));
-
             if(application.getClientId().equals(report.getConnection().getApplication().getClientId())){
-                String accessToken = reportJwtUtils.generateJwtToken(report);
+                String token = reportJwtUtils.generateJwtToken(report);
 
-                ReportRefreshTokens refreshTokens = reportRefreshTokenService.addReportRefreshToken(report.getId());
+                ReportTokens reportToken = reportTokenService.addReportToken(report.getId(), token, reportJwtUtils.getExpirationFromJwtToken(token).toInstant());
 
                 return new JwtReportResponse(
-                    accessToken,
-                    reportJwtUtils.getExpirationFromJwtToken(accessToken).toInstant(),
-                    refreshTokens.getToken(),
+                    token,
+                    reportToken.getExpirationDate(),
                     report.getTitle()
                 );
             }

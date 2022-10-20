@@ -6,9 +6,9 @@ import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.app.demo.model.ReportRefreshTokens;
+import com.app.demo.model.ReportTokens;
 
 @Repository
-public interface ReportRefreshTokenRepository extends JpaRepository<ReportRefreshTokens,UUID>{
-    Optional<ReportRefreshTokens> findByToken(String token);
+public interface ReportTokenRepository extends JpaRepository<ReportTokens,UUID>{
+    Optional<ReportTokens> findByToken(String token);
 }

@@ -4,11 +4,11 @@ import { MenuItem } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Reports } from 'src/app/models/reports';
 import { ReportService } from 'src/app/services/report/report.service';
-import { ExportDialogComponent } from '../dialog/export-dialog/export-dialog.component';
-import { FormatDialogComponent } from '../dialog/format-dialog/format-dialog.component';
-import { OpenDialogComponent } from '../dialog/open-dialog/open-dialog.component';
-import { OptionsDialogComponent } from '../dialog/options-dialog/options-dialog.component';
-import { SaveDialogComponent } from '../dialog/save-dialog/save-dialog.component';
+import { ExportDialogComponent } from '../dialog/pivot-table/export-dialog/export-dialog.component';
+import { FormatDialogComponent } from '../dialog/pivot-table/format-dialog/format-dialog.component';
+import { OpenDialogComponent } from '../dialog/pivot-table/open-dialog/open-dialog.component';
+import { OptionsDialogComponent } from '../dialog/pivot-table/options-dialog/options-dialog.component';
+import { SaveDialogComponent } from '../dialog/pivot-table/save-dialog/save-dialog.component';
 
 @Component({
   selector: 'app-pivot-table',

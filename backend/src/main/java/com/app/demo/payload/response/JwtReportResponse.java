@@ -10,6 +10,5 @@ import lombok.Data;
 public class JwtReportResponse {
     private String accessToken;
     private Instant expirationDate;
-    private String refreshToken;
     private String reportTitle;
 }
