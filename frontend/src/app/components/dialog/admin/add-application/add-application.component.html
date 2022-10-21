@@ -1,0 +1,13 @@
+<form [formGroup]="applicationForm" class="flex flex-col space-y-4">
+    <div class="w-full">
+        <label for="title" class="font-medium">Name</label>
+        <input type="text" pInputText placeholder="Enter application name" formControlName="name" required>
+    </div>
+    <div class="w-full">
+        <label for="code" class="font-medium">Code</label>
+        <input type="text" pInputText placeholder="Enter application code" formControlName="code" required>
+    </div>
+    <div class="w-full flex items-center justify-center pt-4 pb-2">
+        <button (click)="addApplication()" [disabled]="applicationForm.invalid" type="button" class="w-full btn-primary">SAVE</button>
+    </div>
+</form>

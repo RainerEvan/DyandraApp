@@ -12,4 +12,5 @@ import lombok.Data;
 public class ConnectionRequest {
     private UUID applicationId;
     private EMethod methodName;
+    private String name;
 }

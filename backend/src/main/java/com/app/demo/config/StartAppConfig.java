@@ -47,7 +47,7 @@ public class StartAppConfig {
             ApplicationRequest applicationReq2 = new ApplicationRequest("SMILE", "SMLE");
             Applications application2 = applicationService.addApplication(applicationReq2);
 
-            ConnectionRequest connectionReq = new ConnectionRequest(application.getId(), EMethod.API);
+            ConnectionRequest connectionReq = new ConnectionRequest(application.getId(), EMethod.API,"ICOS-API");
             Connections connection = connectionService.addConnection(connectionReq);
 
             SourcePathRequest sourcePathReq = new SourcePathRequest(connection.getId(), "/contoh");

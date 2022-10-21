@@ -2,6 +2,7 @@ type Connections{
     id:ID!
     application:Applications
     method:Methods
+    name:String
     createdAt:DateTime
 }
 

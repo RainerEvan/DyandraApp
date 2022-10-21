@@ -15,5 +15,5 @@ body {
 }
 
 .btn-primary{
-    @apply text-sm text-white rounded-md px-3 py-2 bg-teal-400 transition ease-out duration-100 hover:bg-teal-500 active:bg-teal-600 disabled:bg-slate-200 disabled:text-slate-400 disabled:shadow-inner;
+    @apply text-sm text-white rounded-md px-3 py-2 bg-bca transition ease-out duration-100 hover:bg-bca active:bg-bca disabled:bg-slate-200 disabled:text-slate-400 disabled:shadow-inner;
 }

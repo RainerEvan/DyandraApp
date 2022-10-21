@@ -6,5 +6,6 @@ type SourcePaths{
 }
 
 extend type Query{
+    getAllSourcePaths:[SourcePaths]
     getAllSourcePathsForConnection(connectionId:ID!):[SourcePaths]
 }

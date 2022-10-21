@@ -1,0 +1,12 @@
+:host ::ng-deep .p-datatable {
+    @apply text-sm;
+
+    .p-datatable-thead th{
+        @apply bg-gray-800 font-medium text-white;
+    }
+
+    .p-datatable-tbody tr{
+        @apply ring-0 outline-none text-black transition ease-out duration-200 translate-y-0.5;
+    }
+
+}

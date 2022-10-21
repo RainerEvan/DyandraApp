@@ -28,6 +28,11 @@ public class SourcePathService {
     private final ConnectionRepository connectionRepository;
 
     @Transactional
+    public List<SourcePaths> getAllSourcePaths(){
+        return sourcePathRepository.findAll();
+    }
+
+    @Transactional
     public List<SourcePaths> getAllSourcePathsForConnection(UUID connectionId){
         Connections connection = connectionRepository.findById(connectionId)
             .orElseThrow(() -> new AbstractGraphQLException("Connection with current id cannot be found"));

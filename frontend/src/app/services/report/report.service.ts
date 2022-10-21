@@ -19,10 +19,18 @@ export class ReportService {
         query getAllReports{
           getAllReports{
             id
-            application
+            connection{
+              name
+            }
+            sourcePath{
+              path
+            }
+            query
             title
             report
+            reportId
             createdAt
+            updatedAt
           }
         }
       `,

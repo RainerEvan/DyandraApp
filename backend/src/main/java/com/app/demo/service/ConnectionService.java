@@ -46,6 +46,7 @@ public class ConnectionService {
         Connections connection = new Connections();
         connection.setApplication(application);
         connection.setMethod(method);
+        connection.setName(connectionRequest.getName());
         connection.setCreatedAt(OffsetDateTime.now());
 
         return connectionRepository.save(connection);

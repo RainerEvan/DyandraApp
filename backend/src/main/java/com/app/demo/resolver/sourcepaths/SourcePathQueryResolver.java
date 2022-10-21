@@ -19,6 +19,10 @@ public class SourcePathQueryResolver implements GraphQLQueryResolver{
     @Autowired
     private final SourcePathService sourcePathService;
 
+    public List<SourcePaths> getAllSourcePaths(){
+        return sourcePathService.getAllSourcePaths();
+    }
+
     public List<SourcePaths> getAllSourcePathsForConnection(UUID connectionId){
         return sourcePathService.getAllSourcePathsForConnection(connectionId);
     }

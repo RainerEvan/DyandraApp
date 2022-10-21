@@ -1,1 +1,36 @@
-<p>connection works!</p>
+<div class="flex flex-col space-y-4 p-10">
+    <div class="flex flex-row justify-between">
+        <h1 class="font-medium text-lg">Connection Manager</h1>
+        <button (click)="showAddConnectionDialog()" class="flex flex-row space-x-2 items-center rounded-sm text-white bg-bca px-3 py-2">
+            <i class="pi pi-plus" style="font-size:12px"></i>
+            <span class="text-sm">New</span>
+        </button>
+    </div>
+    <p-table #connectionTable [value]="connections" [loading]="loading" dataKey="id" [scrollable]="true" [paginator]="true" [rows]="10" [responsive]="true" responsiveLayout="scroll" sortField="name" [sortOrder]="-1">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Connection</th>
+                <th>Application</th>
+                <th>Method</th>
+                <th>Date Created</th>
+                <th>Actions</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-connection>
+            <tr [pSelectableRow]="connection">
+                <td>{{connection.name}}</td>
+                <td>{{connection.application.name}}</td>
+                <td>{{connection.method.name}}</td>
+                <td>{{connection.createdAt | date:'dd/MM/yyyy'}}</td>
+                <td class="flex flex-row justify-center text-white">
+                    <button class="flex items-center justify-center bg-bca p-2 rounded-sm">
+                        <i class="pi pi-trash" style="font-size:14px"></i>
+                    </button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <div class="text-sm text-gray-400 text-center my-6">NO connectionS FOUND</div>
+        </ng-template>
+    </p-table>
+</div> 
