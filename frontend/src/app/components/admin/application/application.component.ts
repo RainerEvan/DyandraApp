@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { cloneDeep } from '@apollo/client/utilities';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Applications } from 'src/app/models/applications';
 import { ApplicationService } from 'src/app/services/application/application.service';
 import { AddApplicationComponent } from '../../dialog/admin/add-application/add-application.component';
+import { ConfirmationDialogComponent } from '../../dialog/shared/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-application',
@@ -27,7 +29,7 @@ export class ApplicationComponent implements OnInit {
 
     this.applicationService.getAllApplications().subscribe({
       next:(response:Applications[])=>{
-          this.applications = response;
+          this.applications = cloneDeep(response);
           this.loading = false;
       },
       error:(error:any)=>{
@@ -36,11 +38,15 @@ export class ApplicationComponent implements OnInit {
     })
   }
 
+  deleteApplication(applicationId:string){
+
+  }
+
   showAddApplicationDialog(){
     this.ref = this.dialogService.open(AddApplicationComponent,{
         header: 'Add Application',
         baseZIndex: 10000,
-        contentStyle: {"max-height": "650px", "min-width":"30vw","overflow": "auto"},
+        contentStyle: {"max-height": "650px", "width":"40vw", "min-width":"350px", "max-width":"500px","overflow": "auto"},
     });
 
     this.ref.onClose.subscribe((success:boolean)=>{
@@ -50,4 +56,22 @@ export class ApplicationComponent implements OnInit {
     });
   }
 
+  showConfirmationDialog(title:string, message:string, action:string, applicationId:string){
+    this.ref = this.dialogService.open(ConfirmationDialogComponent, {
+      header: title,
+      data: {
+        message: message,
+      },
+      baseZIndex: 10000,
+      contentStyle: {"max-height": "500px", "width":"40vw", "min-width":"350px", "max-width":"500px", "overflow": "auto"},
+    });
+
+    this.ref.onClose.subscribe((confirm:boolean) =>{
+        if (confirm) {
+          if(action == 'delete'){
+            this.deleteApplication(applicationId);
+          }
+        }
+    });
+  }
 }

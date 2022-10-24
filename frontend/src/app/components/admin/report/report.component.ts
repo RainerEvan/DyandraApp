@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { cloneDeep } from '@apollo/client/utilities';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Reports } from 'src/app/models/reports';
 import { ReportService } from 'src/app/services/report/report.service';
 import { AddReportComponent } from '../../dialog/admin/add-report/add-report.component';
+import { ConfirmationDialogComponent } from '../../dialog/shared/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-report',
@@ -27,7 +29,7 @@ export class ReportComponent implements OnInit {
 
     this.reportService.getAllReports().subscribe({
       next:(response:Reports[])=>{
-          this.reports = response;
+          this.reports = cloneDeep(response);
           this.loading = false;
       },
       error:(error:any)=>{
@@ -36,11 +38,15 @@ export class ReportComponent implements OnInit {
     })
   }
 
+  deleteReport(reportId:string){
+    
+  }
+
   showAddReportDialog(){
     this.ref = this.dialogService.open(AddReportComponent,{
         header: 'Add Report',
         baseZIndex: 10000,
-        contentStyle: {"max-height": "650px", "min-width":"30vw","overflow": "auto"},
+        contentStyle: {"max-height": "650px", "width":"40vw", "min-width":"350px", "max-width":"500px","overflow": "auto"},
     });
 
     this.ref.onClose.subscribe((success:boolean)=>{
@@ -50,4 +56,22 @@ export class ReportComponent implements OnInit {
     });
   }
 
+  showConfirmationDialog(title:string, message:string, action:string, reportId:string){
+    this.ref = this.dialogService.open(ConfirmationDialogComponent, {
+      header: title,
+      data: {
+        message: message,
+      },
+      baseZIndex: 10000,
+      contentStyle: {"max-height": "500px", "width":"40vw", "min-width":"350px", "max-width":"500px", "overflow": "auto"},
+    });
+
+    this.ref.onClose.subscribe((confirm:boolean) =>{
+        if (confirm) {
+          if(action == 'delete'){
+            this.deleteReport(reportId);
+          }
+        }
+    });
+  }
 }

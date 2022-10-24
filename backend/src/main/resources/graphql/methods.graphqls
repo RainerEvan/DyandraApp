@@ -9,3 +9,7 @@ enum EMethod{
     API_GATEAWAY
     LOCAL_FILES
 }
+
+extend type Query{
+    getAllMethods:[Methods]
+}

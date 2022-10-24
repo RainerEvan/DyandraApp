@@ -11,6 +11,7 @@ import { MenubarModule } from 'primeng/menubar';
 import { TabViewModule } from 'primeng/tabview';
 import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
 import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { TableModule } from 'primeng/table';
 
@@ -36,6 +37,7 @@ import { AddApplicationComponent } from './components/dialog/admin/add-applicati
 import { AddConnectionComponent } from './components/dialog/admin/add-connection/add-connection.component';
 import { AddSourcepathComponent } from './components/dialog/admin/add-sourcepath/add-sourcepath.component';
 import { AddReportComponent } from './components/dialog/admin/add-report/add-report.component';
+import { ConfirmationDialogComponent } from './components/dialog/shared/confirmation-dialog/confirmation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +61,7 @@ import { AddReportComponent } from './components/dialog/admin/add-report/add-rep
     AddConnectionComponent,
     AddSourcepathComponent,
     AddReportComponent,
+    ConfirmationDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -74,6 +77,7 @@ import { AddReportComponent } from './components/dialog/admin/add-report/add-rep
     TabViewModule,
     DynamicDialogModule,
     InputTextModule,
+    InputTextareaModule,
     RadioButtonModule,
     DropdownModule,
     TableModule,

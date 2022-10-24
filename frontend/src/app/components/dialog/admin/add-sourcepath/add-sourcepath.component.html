@@ -1,1 +1,13 @@
-<p>add-sourcepath works!</p>
+<form [formGroup]="sourcePathForm" class="flex flex-col space-y-4">
+    <div class="w-full">
+        <label for="connectionId" class="font-medium">Connection</label>
+        <p-dropdown [options]="connections" optionLabel="name" optionValue="id" [showClear]="true" placeholder="Select connection" formControlName="connectionId" required></p-dropdown>
+    </div>
+    <div class="w-full">
+        <label for="path" class="font-medium">Path</label>
+        <textarea pInputTextarea rows="5" placeholder="Enter source path" formControlName="path"></textarea>
+    </div>
+    <div class="w-full flex items-center justify-center pt-4 pb-2">
+        <button (click)="addSourcePath()" [disabled]="sourcePathForm.invalid" type="button" class="w-full btn-primary">SAVE</button>
+    </div>
+</form>

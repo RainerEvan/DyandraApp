@@ -1,1 +1,17 @@
-<p>add-connection works!</p>
+<form [formGroup]="connectionForm" class="flex flex-col space-y-4">
+    <div class="w-full">
+        <label for="applicationId" class="font-medium">Application</label>
+        <p-dropdown [options]="applications" optionLabel="name" optionValue="id" [showClear]="true" placeholder="Select application" formControlName="applicationId" required></p-dropdown>
+    </div>
+    <div class="w-full">
+        <label for="methodName" class="font-medium">Method</label>
+        <p-dropdown [options]="methods" optionLabel="name" optionValue="name" [showClear]="true" placeholder="Select method" formControlName="methodName" required></p-dropdown>
+    </div>
+    <div class="w-full">
+        <label for="name" class="font-medium">Name</label>
+        <input type="text" pInputText placeholder="Enter connection name" formControlName="name" required>
+    </div>
+    <div class="w-full flex items-center justify-center pt-4 pb-2">
+        <button (click)="addConnection()" [disabled]="connectionForm.invalid" type="button" class="w-full btn-primary">SAVE</button>
+    </div>
+</form>
