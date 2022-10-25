@@ -18,7 +18,7 @@ export class SourcepathComponent implements OnInit {
 
   ref: DynamicDialogRef;
 
-  constructor(private sourcePathervice:SourcepathService, private dialogService:DialogService) { }
+  constructor(private sourcePathService:SourcepathService, private dialogService:DialogService) { }
 
   ngOnInit(): void {
     this.getAllSourcePaths();
@@ -27,7 +27,7 @@ export class SourcepathComponent implements OnInit {
   getAllSourcePaths(){
     this.loading = true;
 
-    this.sourcePathervice.getAllSourcePaths().subscribe({
+    this.sourcePathService.getAllSourcePaths().subscribe({
       next:(response:SourcePaths[])=>{
           this.sourcePaths = cloneDeep(response);
           this.loading = false;
@@ -39,14 +39,22 @@ export class SourcepathComponent implements OnInit {
   }
 
   deleteSourcePath(sourcePathId:string){
-
+    this.sourcePathService.deleteSourcePath(sourcePathId).subscribe({
+      next: (result: any) => {
+        console.log(result);
+        this.getAllSourcePaths();
+      },
+      error: (error: any) => {
+        console.log(error);
+      }
+    });
   }
 
   showAddSourcePathDialog(){
     this.ref = this.dialogService.open(AddSourcepathComponent,{
         header: 'Add Source Path',
         baseZIndex: 10000,
-        contentStyle: {"max-height": "650px", "width":"40vw", "min-width":"350px", "max-width":"500px", "overflow": "auto"},
+        contentStyle: {"max-height": "650px", "width":"40vw", "min-width":"400px", "max-width":"600px", "overflow": "auto"},
     });
 
     this.ref.onClose.subscribe((success:boolean)=>{

@@ -7,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminMenuComponent implements OnInit {
 
+  showDropdown:boolean = false;
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  toggleDropdown(){
+    this.showDropdown = !this.showDropdown;
   }
 
 }

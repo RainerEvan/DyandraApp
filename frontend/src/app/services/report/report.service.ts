@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
 import { map, Observable } from 'rxjs';
@@ -54,6 +54,15 @@ export class ReportService {
       }
     })
       .valueChanges.pipe(map((result)=>result.data.getReport));
+  }
+
+  public addReport(form:any): Observable<any>{
+    return this.http.post(API_URL+'/add',form);
+  }
+
+  public deleteReport(reportId: string): Observable<any>{
+    const params = new HttpParams().set('reportId',reportId);
+    return this.http.delete(API_URL+'/delete',{params:params});
   }
 
   public generateReportFromDatabase(): Observable<any>{

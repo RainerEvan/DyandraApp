@@ -14,24 +14,26 @@ body {
     font-family: "Inter", sans-serif !important;
 }
 
-.ng-touched{
-    appearance: none !important;
-}
-
 .p-inputtext{
     width: 100%;
     font-size: 14px !important;
     border-color: #f0a9a7 !important;
+    box-shadow: none !important;
 
     &:enabled:focus{
         box-shadow: none !important;
         border-color: gray !important;
+    }
+
+    &::placeholder{
+        color:#bbbbbb !important;
     }
 }
 
 .p-dropdown{
     width: 100%;
     font-size: 14px !important;
+    border-color: #f0a9a7 !important;
 
     &:not(.p-disabled).p-focus{
         box-shadow: none !important;
@@ -39,10 +41,14 @@ body {
     }
 
     .p-dropdown-label.p-placeholder{
-        color:#808080 !important;
+        color:#bbbbbb !important;
     }
 
     .p-dropdown-panel .p-dropdown-items .p-dropdown-item{
+        font-size: 14px !important;
+    }
+
+    .p-dropdown-panel .p-dropdown-items .p-dropdown-empty-message{
         font-size: 14px !important;
     }
 }

@@ -39,14 +39,22 @@ export class ReportComponent implements OnInit {
   }
 
   deleteReport(reportId:string){
-    
+    this.reportService.deleteReport(reportId).subscribe({
+      next: (result: any) => {
+        console.log(result);
+        this.getAllReports();
+      },
+      error: (error: any) => {
+        console.log(error);
+      }
+    });
   }
 
   showAddReportDialog(){
     this.ref = this.dialogService.open(AddReportComponent,{
         header: 'Add Report',
         baseZIndex: 10000,
-        contentStyle: {"max-height": "650px", "width":"40vw", "min-width":"350px", "max-width":"500px","overflow": "auto"},
+        contentStyle: {"max-height": "650px", "width":"40vw", "min-width":"400px", "max-width":"600px", "overflow": "auto"},
     });
 
     this.ref.onClose.subscribe((success:boolean)=>{

@@ -39,7 +39,15 @@ export class ApplicationComponent implements OnInit {
   }
 
   deleteApplication(applicationId:string){
-
+    this.applicationService.deleteApplication(applicationId).subscribe({
+      next: (result: any) => {
+        console.log(result);
+        this.getAllApplications();
+      },
+      error: (error: any) => {
+        console.log(error);
+      }
+    });
   }
 
   showAddApplicationDialog(){

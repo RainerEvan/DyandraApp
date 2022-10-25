@@ -18,7 +18,7 @@ export class ConnectionComponent implements OnInit {
 
   ref: DynamicDialogRef;
 
-  constructor(private connectionservice:ConnectionService, private dialogService:DialogService) { }
+  constructor(private connectionService:ConnectionService, private dialogService:DialogService) { }
 
   ngOnInit(): void {
     this.getAllConnections();
@@ -27,7 +27,7 @@ export class ConnectionComponent implements OnInit {
   getAllConnections(){
     this.loading = true;
 
-    this.connectionservice.getAllConnections().subscribe({
+    this.connectionService.getAllConnections().subscribe({
       next:(response:Connections[])=>{
           this.connections = cloneDeep(response);
           this.loading = false;
@@ -39,7 +39,15 @@ export class ConnectionComponent implements OnInit {
   }
 
   deleteConnection(connectionId:string){
-    
+    this.connectionService.deleteConnection(connectionId).subscribe({
+      next: (result: any) => {
+        console.log(result);
+        this.getAllConnections();
+      },
+      error: (error: any) => {
+        console.log(error);
+      }
+    });
   }
 
   showAddConnectionDialog(){

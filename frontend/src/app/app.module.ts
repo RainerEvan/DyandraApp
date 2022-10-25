@@ -32,7 +32,6 @@ import { ReportComponent } from './components/admin/report/report.component';
 import { AdminPageComponent } from './components/admin/admin-page/admin-page.component';
 import { AdminHeaderComponent } from './components/admin/admin-header/admin-header.component';
 import { AdminMenuComponent } from './components/admin/admin-menu/admin-menu.component';
-import { AdminHomeComponent } from './components/admin/admin-home/admin-home.component';
 import { AddApplicationComponent } from './components/dialog/admin/add-application/add-application.component';
 import { AddConnectionComponent } from './components/dialog/admin/add-connection/add-connection.component';
 import { AddSourcepathComponent } from './components/dialog/admin/add-sourcepath/add-sourcepath.component';
@@ -56,7 +55,6 @@ import { ConfirmationDialogComponent } from './components/dialog/shared/confirma
     ReportComponent,
     AdminHeaderComponent,
     AdminMenuComponent,
-    AdminHomeComponent,
     AddApplicationComponent,
     AddConnectionComponent,
     AddSourcepathComponent,

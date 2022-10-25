@@ -6,7 +6,7 @@
             <span class="text-sm">New</span>
         </button>
     </div>
-    <p-table #applicationTable [value]="applications" [loading]="loading" dataKey="id" [scrollable]="true" [paginator]="true" [rows]="10" [responsive]="true" responsiveLayout="scroll" sortField="name" [sortOrder]="-1">
+    <p-table #applicationTable [value]="applications" [loading]="loading" dataKey="id" [rowHover]="true" [paginator]="true" [rows]="10" [responsive]="true" responsiveLayout="scroll" sortField="name" [sortOrder]="-1">
         <ng-template pTemplate="header">
             <tr>
                 <th>Application</th>

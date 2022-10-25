@@ -1,5 +1,5 @@
-<div class="w-64 h-screen flex-col bg-gray-800 shadow hidden sm:flex">
-    <a routerLink="./home" class="w-full flex items-center space-x-1 p-6 border-b-2 border-gray-700">
+<div class="w-64 h-screen flex-col bg-gray-800 shadow hidden md:flex">
+    <a routerLink="./application" class="w-full flex items-center space-x-1 p-6 border-b-2 border-gray-700">
         <img class="w-8" src="/assets/image/dyandra-logo2.png" alt="Dyandra dyandra-logo2">
         <span class="font-allerta text-3xl text-white">DYANDRA</span>
     </a>
@@ -32,12 +32,42 @@
     </ul>
 </div>
 
-<div class="absolute w-full h-16 flex flex-row items-center justify-between bg-gray-800 sm:hidden">
-    <button class="absolute p-4 text-white">
-        <i class="pi pi-bars" style="font-size: 24px"></i>
-    </button>
-    <a routerLink="./home" class="w-full flex items-center justify-center space-x-1 p-4">
-        <img class="w-8" src="/assets/image/dyandra-logo2.png" alt="Dyandra dyandra-logo2">
-        <span class="font-allerta text-3xl text-white">DYANDRA</span>
-    </a>
+<div class="absolute flex flex-col w-full md:hidden">
+    <div class="flex flex-row items-center justify-between h-16 px-4 bg-gray-800">
+        <button (click)="toggleDropdown()" class="text-white">
+            <i class="pi pi-bars" style="font-size: 24px"></i>
+        </button>
+        <a routerLink="./application" class="flex items-center justify-center space-x-1">
+            <img class="w-8" src="/assets/image/dyandra-logo2.png" alt="Dyandra dyandra-logo2">
+            <span class="font-allerta text-3xl text-white">DYANDRA</span>
+        </a>
+    </div>
+    <div [hidden]="!showDropdown" class="z-[2]">
+        <ul class="flex flex-col">
+            <li>
+                <a routerLink="./application" (click)="toggleDropdown()" routerLinkActive="menu-item-mobile-active" class="menu-item-mobile">
+                    <i class="pi pi-box" style="font-size: 14px"></i>
+                    <span class="font-medium text-sm ml-2">Application</span>
+                </a>
+            </li>
+            <li>
+                <a routerLink="./connection" (click)="toggleDropdown()" routerLinkActive="menu-item-mobile-active" class="menu-item-mobile">
+                    <i class="pi pi-globe" style="font-size: 14px"></i>
+                    <span class="font-medium text-sm ml-2">Connection</span>
+                </a>
+            </li>
+            <li>
+                <a routerLink="./sourcepath" (click)="toggleDropdown()" routerLinkActive="menu-item-mobile-active" class="menu-item-mobile">
+                    <i class="pi pi-code" style="font-size: 14px"></i>
+                    <span class="font-medium text-sm ml-2">Source Path</span>
+                </a>
+            </li>
+            <li>
+                <a routerLink="./report" (click)="toggleDropdown()" routerLinkActive="menu-item-mobile-active" class="menu-item-mobile">
+                    <i class="pi pi-book" style="font-size: 14px"></i>
+                    <span class="font-medium text-sm ml-2">Report</span>
+                </a>
+            </li>
+        </ul>
+    </div>
 </div>

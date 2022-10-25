@@ -37,4 +37,12 @@ public class ApplicationService {
 
         return applicationRepository.save(application);
     }
+
+    @Transactional
+    public void deleteApplication(UUID applicationId){
+        Applications application = applicationRepository.findById(applicationId)
+            .orElseThrow(() -> new IllegalStateException("Application with current id cannot be found: "+applicationId));
+
+        applicationRepository.delete(application);
+    }
 }

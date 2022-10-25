@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
 import { map, Observable } from 'rxjs';
@@ -36,5 +36,10 @@ export class ConnectionService {
 
   public addConnection(form:any): Observable<any>{
     return this.http.post(API_URL+'/add',form);
+  }
+
+  public deleteConnection(connectionId: string): Observable<any>{
+    const params = new HttpParams().set('connectionId',connectionId);
+    return this.http.delete(API_URL+'/delete',{params:params});
   }
 }

@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AdminHomeComponent } from './components/admin/admin-home/admin-home.component';
 import { AdminPageComponent } from './components/admin/admin-page/admin-page.component';
 import { ApplicationComponent } from './components/admin/application/application.component';
 import { ConnectionComponent } from './components/admin/connection/connection.component';
 import { ReportComponent } from './components/admin/report/report.component';
 import { SourcepathComponent } from './components/admin/sourcepath/sourcepath.component';
+import { PivotTableComponent } from './components/pivot-table/pivot-table.component';
 
 const routes: Routes = [
   {
@@ -19,12 +19,8 @@ const routes: Routes = [
     children:[
       {
         path:'',
-        redirectTo: 'home',
+        redirectTo: 'application',
         pathMatch: 'full'
-      },
-      {
-        path:'home',
-        component: AdminHomeComponent,
       },
       {
         path:'application',
@@ -43,6 +39,10 @@ const routes: Routes = [
         component: ReportComponent,
       },
     ]
+  },
+  {
+    path:'pivot',
+    component: PivotTableComponent,
   },
 ];
 

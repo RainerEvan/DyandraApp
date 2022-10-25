@@ -53,9 +53,6 @@ public class StartAppConfig {
             SourcePathRequest sourcePathReq = new SourcePathRequest(connection.getId(), "/contoh");
             SourcePaths sourcePath = sourcePathService.addSourcePath(sourcePathReq);
 
-            ReportRequest reportReq = new ReportRequest(connection.getId(), sourcePath.getId(), "SELECT * FROM", "Report Oktober", "Contoh");
-            Reports report = reportService.addReport(reportReq);
-
         };
     }
 }

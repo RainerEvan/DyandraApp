@@ -43,7 +43,7 @@ public class SourcePathService {
     @Transactional
     public SourcePaths addSourcePath(SourcePathRequest sourcePathRequest){
         Connections connection = connectionRepository.findById(sourcePathRequest.getConnectionId())
-            .orElseThrow(() -> new AbstractGraphQLException("Connection with current id cannot be found"));
+            .orElseThrow(() -> new IllegalStateException("Connection with current id cannot be found"));
 
         SourcePaths sourcePath = new SourcePaths();
         sourcePath.setConnection(connection);
@@ -51,5 +51,13 @@ public class SourcePathService {
         sourcePath.setCreatedAt(OffsetDateTime.now());
 
         return sourcePathRepository.save(sourcePath);
+    }
+
+    @Transactional
+    public void deleteSourcePath(UUID sourcePathId){
+        SourcePaths sourcePath = sourcePathRepository.findById(sourcePathId)
+            .orElseThrow(() -> new IllegalStateException("Source path with current id cannot be found: "+sourcePathId));
+
+        sourcePathRepository.delete(sourcePath);
     }
 }

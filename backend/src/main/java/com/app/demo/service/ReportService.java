@@ -7,20 +7,19 @@ import java.util.UUID;
 
 import javax.transaction.Transactional;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.app.demo.data.EMethod;
 import com.app.demo.exception.AbstractGraphQLException;
 import com.app.demo.model.Connections;
+import com.app.demo.model.Methods;
 import com.app.demo.model.Reports;
 import com.app.demo.model.SourcePaths;
 import com.app.demo.payload.request.ReportRequest;
-import com.app.demo.payload.response.ReportResponse;
 import com.app.demo.repository.ConnectionRepository;
 import com.app.demo.repository.ReportRepository;
 import com.app.demo.repository.SourcePathRepository;
@@ -31,11 +30,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ReportService {
 
-    @Value("${api.orderApiUrl}")
-    private String orderApiUrl;
-    @Value("${api.fileApiUrl}")
-    private String fileApiUrl;
-
     @Autowired
     private final ReportRepository reportRepository;
     @Autowired
@@ -44,13 +38,26 @@ public class ReportService {
     private final SourcePathRepository sourcePathRepository;
 
     @Transactional
+    public List<Reports> getAllReports(){
+        return reportRepository.findAll();
+    }
+    
+    @Transactional
+    public Reports getReport(UUID reportId){
+        return reportRepository.findById(reportId)
+            .orElseThrow(() -> new AbstractGraphQLException("Report with current Id cannot be found"));
+    }
+
+    @Transactional
     public Reports addReport(ReportRequest reportRequest){
         Connections connection = connectionRepository.findById(reportRequest.getConnectionId())
-            .orElseThrow(() -> new AbstractGraphQLException("Connection with current id cannot be found"));
+            .orElseThrow(() -> new IllegalStateException("Connection with current id cannot be found"));
 
         SourcePaths sourcePath = sourcePathRepository.findById(reportRequest.getSourcePathId())
-            .orElseThrow(() -> new AbstractGraphQLException("Source path with current id cannot be found"));
+            .orElseThrow(() -> new IllegalStateException("Source path with current id cannot be found"));
 
+        String reportJson = generateReport(connection, sourcePath, reportRequest.getQuery());
+        
         String reportId = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
 
         Reports report = new Reports();
@@ -58,17 +65,54 @@ public class ReportService {
         report.setSourcePath(sourcePath);
         report.setQuery(reportRequest.getQuery());
         report.setTitle(reportRequest.getTitle());
-        report.setReport(reportRequest.getReport());
         report.setReportId(reportId);
+        report.setReport(reportJson);
         report.setCreatedAt(OffsetDateTime.now());
 
         return reportRepository.save(report);
     }
+
+    @Transactional
+    public void deleteReport(UUID reportId){
+        Reports report = reportRepository.findById(reportId)
+            .orElseThrow(() -> new IllegalStateException("Report with current id cannot be found: "+reportId));
+
+        reportRepository.delete(report);
+    }
+
+    @Transactional
+    public String generateReport(Connections connection, SourcePaths sourcePaths, String query){
+        try {
+            String report = "";
+            Methods method = connection.getMethod();
+            String path = sourcePaths.getPath();
+
+            if(method.getName().equals(EMethod.API)){
+                report = generateReportFromApi(path);
+            }
+            else if(method.getName().equals(EMethod.API_GATEAWAY)){
+                report = generateReportFromApi(path);
+            }
+            else if(method.getName().equals(EMethod.DIRECT_DB)){
+                report = generateReportFromApi(path);
+            }
+            else if(method.getName().equals(EMethod.LOCAL_FILES)){
+                report = generateReportFromApi(path);
+            }
+
+            return report;
+            
+        } catch (IOException e) {
+            throw new RuntimeException("Error generating report from current source! "+e.getMessage());
+        }
+    }
     
     @Transactional
-    public ReportResponse generateReportFromDatabase() throws IOException{
+    public String generateReportFromApi(String apiUrl) throws IOException{
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<Object[]> response = restTemplate.getForEntity(apiUrl,Object[].class);
 
-        Object[] data = getData();
+        Object[] data = response.getBody();
 
         JSONObject report = new JSONObject();
 
@@ -77,78 +121,57 @@ public class ReportService {
         dataSource.put("data", data);
         report.put("dataSource", dataSource);
 
-        ReportResponse reportResponse = new ReportResponse(report.toString());
-
-        return reportResponse;
+        return report.toString();
     }
 
-    public ReportResponse generateReportFromFile() throws IOException{
+    // public ReportResponse generateReportFromFile() throws IOException{
 
-        JSONObject report = new JSONObject();
+    //     JSONObject report = new JSONObject();
 
-        JSONObject dataSource = new JSONObject();
-        dataSource.put("dataSourceType", "csv");
-        dataSource.put("filename", "http://localhost:8081/api/files/get");
+    //     JSONObject dataSource = new JSONObject();
+    //     dataSource.put("dataSourceType", "csv");
+    //     dataSource.put("filename", "http://localhost:8081/api/files/get");
 
-        JSONObject slice = new JSONObject();
+    //     JSONObject slice = new JSONObject();
 
-        JSONArray rows = new JSONArray();
-        JSONObject field = new JSONObject();
-        field.put("uniqueName", "Category");
-        JSONObject field2 = new JSONObject();
-        field2.put("uniqueName", "Measures");
-        rows.put(field);
-        rows.put(field2);
+    //     JSONArray rows = new JSONArray();
+    //     JSONObject field = new JSONObject();
+    //     field.put("uniqueName", "Category");
+    //     JSONObject field2 = new JSONObject();
+    //     field2.put("uniqueName", "Measures");
+    //     rows.put(field);
+    //     rows.put(field2);
 
-        JSONArray columns = new JSONArray();
-        JSONObject field3 = new JSONObject();
-        field3.put("uniqueName", "Country");
-        JSONObject field4 = new JSONObject();
-        field4.put("uniqueName", "Color");
-        columns.put(field3);
-        columns.put(field4);
+    //     JSONArray columns = new JSONArray();
+    //     JSONObject field3 = new JSONObject();
+    //     field3.put("uniqueName", "Country");
+    //     JSONObject field4 = new JSONObject();
+    //     field4.put("uniqueName", "Color");
+    //     columns.put(field3);
+    //     columns.put(field4);
 
-        JSONArray measures = new JSONArray();
-        JSONObject field5 = new JSONObject();
-        field5.put("uniqueName", "Price");
-        measures.put(field5);
+    //     JSONArray measures = new JSONArray();
+    //     JSONObject field5 = new JSONObject();
+    //     field5.put("uniqueName", "Price");
+    //     measures.put(field5);
 
-        slice.put("rows", rows);
-        slice.put("columns", columns);
-        slice.put("measures", measures);
+    //     slice.put("rows", rows);
+    //     slice.put("columns", columns);
+    //     slice.put("measures", measures);
 
-        report.put("dataSource", dataSource);
-        report.put("slice", slice);
+    //     report.put("dataSource", dataSource);
+    //     report.put("slice", slice);
 
-        ReportResponse reportResponse = new ReportResponse(report.toString());
+    //     ReportResponse reportResponse = new ReportResponse(report.toString());
 
-        return reportResponse;
-    }
-
-    public Object[] getData(){
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Object[]> response = restTemplate.getForEntity(orderApiUrl+"/all",Object[].class);
-
-        return response.getBody();
-    }
-
-    @Transactional
-    public List<Reports> getAllReports(){
-        return reportRepository.findAll();
-    }
-
-    @Transactional
-    public Reports getReport(UUID reportId){
-        return reportRepository.findById(reportId)
-            .orElseThrow(() -> new IllegalStateException("Report with current Id cannot be found"));
-    }
+    //     return reportResponse;
+    // }
 
     @Transactional
     public Reports saveReport(ReportRequest reportRequest){
 
         Reports report = new Reports();
         report.setTitle(reportRequest.getTitle());
-        report.setReport(reportRequest.getReport());
         report.setCreatedAt(OffsetDateTime.now());
 
         return reportRepository.save(report);

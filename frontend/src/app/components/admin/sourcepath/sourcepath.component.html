@@ -6,7 +6,7 @@
             <span class="text-sm">New</span>
         </button>
     </div>
-    <p-table #sourcePathTable [value]="sourcePaths" [loading]="loading" dataKey="id" [scrollable]="true" [paginator]="true" [rows]="10" [responsive]="true" responsiveLayout="scroll" sortField="name" [sortOrder]="-1">
+    <p-table #sourcePathTable [value]="sourcePaths" [loading]="loading" dataKey="id" [rowHover]="true" [paginator]="true" [rows]="10" [responsive]="true" responsiveLayout="scroll" sortField="createdAt" [sortOrder]="-1">
         <ng-template pTemplate="header">
             <tr>
                 <th>Connection</th>
@@ -28,7 +28,7 @@
             </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage">
-            <div class="text-sm text-gray-400 text-center my-6">NO sourcePathS FOUND</div>
+            <div class="text-sm text-gray-400 text-center my-6">NO SOURCE PATHS FOUND</div>
         </ng-template>
     </p-table>
 </div> 

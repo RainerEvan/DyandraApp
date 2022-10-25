@@ -10,3 +10,19 @@
     }
 
 }
+
+:host ::ng-deep .p-paginator {
+    @apply text-sm;
+
+    .p-paginator-page{
+        @apply font-medium text-sm text-gray-500 ring-0 hover:bg-gray-100/80;
+    }
+
+    .p-link{
+        @apply font-medium text-sm text-gray-500 ring-0 hover:bg-gray-100/80;
+    }
+
+    .p-highlight{
+        @apply border-gray-400 bg-gray-100 hover:bg-gray-100 text-inherit;
+    }
+}
