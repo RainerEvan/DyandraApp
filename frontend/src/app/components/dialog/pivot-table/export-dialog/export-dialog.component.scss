@@ -1,16 +1,16 @@
 .p-inputtext {
-    @apply w-full ring-0 text-black text-sm border-0 border-b-2 border-teal-400 rounded-none placeholder:text-slate-400 hover:border-teal-500 focus:ring-0 focus:border-teal-500;
+    @apply w-full ring-0 text-black text-sm border-0 border-b-2 border-gray-400 rounded-none placeholder:text-slate-400 hover:border-gray-500 focus:ring-0 focus:border-gray-500;
 }
 
 :host ::ng-deep .p-radiobutton{
     .p-radiobutton-box{
-        @apply border-teal-400;
+        @apply border-gray-400;
     }
     .p-radiobutton-box.p-highlight {
-        @apply bg-white hover:bg-white border-teal-500 hover:border-teal-500 shadow-none;
+        @apply bg-white hover:bg-white border-gray-500 hover:border-gray-500 shadow-none;
     }
     .p-radiobutton-icon{
-        @apply bg-teal-500;
+        @apply bg-gray-500;
     }
 }
 

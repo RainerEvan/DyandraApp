@@ -14,42 +14,75 @@ body {
     font-family: "Inter", sans-serif !important;
 }
 
-.p-inputtext{
-    width: 100%;
-    font-size: 14px !important;
-    border-color: #f0a9a7 !important;
-    box-shadow: none !important;
-
-    &:enabled:focus{
-        box-shadow: none !important;
-        border-color: gray !important;
-    }
-
-    &::placeholder{
-        color:#bbbbbb !important;
-    }
-}
-
-.p-dropdown{
-    width: 100%;
-    font-size: 14px !important;
-    border-color: #f0a9a7 !important;
-
-    &:not(.p-disabled).p-focus{
-        box-shadow: none !important;
-        border-color: gray !important;
-    }
-
-    .p-dropdown-label.p-placeholder{
-        color:#bbbbbb !important;
-    }
-
-    .p-dropdown-panel .p-dropdown-items .p-dropdown-item{
+.admin {
+    .p-datatable {
         font-size: 14px !important;
+    
+        .p-datatable-thead th{
+            background-color: #1f2937 !important;
+            color: #ffffff !important;
+        }
+    
+        .p-datatable-tbody tr{
+            color: #000000 !important;
+            outline: none !important;
+        }
+    
+    }
+    
+    .p-paginator {
+        font-size: 14px !important;
+    
+        .p-link{
+            box-shadow: none !important;
+            color: #6b7280 !important;
+        }
+    
+        .p-highlight{
+            outline: none !important;
+            border-color: #a7a7a7 !important;
+            background: #f3f4f6 !important;
+            color: #6b7280 !important;
+        }
     }
 
-    .p-dropdown-panel .p-dropdown-items .p-dropdown-empty-message{
+    .p-inputtext{
+        width: 100%;
         font-size: 14px !important;
+        border-color: #f0a9a7 !important;
+        box-shadow: none !important;
+    
+        &:enabled:focus{
+            box-shadow: none !important;
+            border-color: #6b7280 !important;
+        }
+    
+        &::placeholder{
+            color:#bbbbbb !important;
+        }
+    }
+    
+    .p-dropdown{
+        width: 100%;
+        font-size: 14px !important;
+        border-color: #f0a9a7 !important;
+    
+        &:not(.p-disabled).p-focus{
+            box-shadow: none !important;
+            border-color: #6b7280 !important;
+        }
+    
+        .p-dropdown-label.p-placeholder{
+            color:#bbbbbb !important;
+        }
+    
+        .p-dropdown-panel .p-dropdown-items .p-dropdown-item{
+            font-size: 14px !important;
+        }
+    
+        .p-dropdown-panel .p-dropdown-items .p-dropdown-empty-message{
+            font-size: 14px !important;
+        }
     }
 }
 

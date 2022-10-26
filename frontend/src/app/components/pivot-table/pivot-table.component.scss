@@ -37,7 +37,7 @@
     }
     
     .p-menubar-button{
-        @apply ring-0;
+        @apply ring-0 text-white hover:text-black;
     }
 
 }

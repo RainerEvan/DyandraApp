@@ -1,4 +1,4 @@
-<form [formGroup]="connectionForm" class="flex flex-col space-y-4">
+<form [formGroup]="connectionForm" class="admin flex flex-col space-y-4">
     <div class="w-full">
         <label for="applicationId" class="font-medium">Application</label>
         <p-dropdown [options]="applications" optionLabel="name" optionValue="id" [showClear]="true" placeholder="Select application" formControlName="applicationId" required></p-dropdown>

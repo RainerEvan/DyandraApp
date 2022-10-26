@@ -9,7 +9,7 @@
         </ng-template>
         <ng-template pTemplate="body" let-report>
             <tr [pSelectableRow]="report">
-                <td>{{report.application}}</td>
+                <td>{{report.connection.name}}</td>
                 <td>{{report.title}}</td>
                 <td>{{report.createdAt | date:'dd/MM/yyyy'}}</td>
             </tr>

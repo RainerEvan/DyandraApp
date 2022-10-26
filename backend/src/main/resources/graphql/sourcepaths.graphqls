@@ -2,6 +2,8 @@ type SourcePaths{
     id:ID!
     connection:Connections
     path:String
+    username:String
+    password:String
     createdAt:DateTime
 }
 

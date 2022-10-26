@@ -50,9 +50,6 @@ public class StartAppConfig {
             ConnectionRequest connectionReq = new ConnectionRequest(application.getId(), EMethod.API,"ICOS-API");
             Connections connection = connectionService.addConnection(connectionReq);
 
-            SourcePathRequest sourcePathReq = new SourcePathRequest(connection.getId(), "/contoh");
-            SourcePaths sourcePath = sourcePathService.addSourcePath(sourcePathReq);
-
         };
     }
 }

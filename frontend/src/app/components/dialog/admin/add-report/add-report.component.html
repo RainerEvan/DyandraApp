@@ -1,4 +1,4 @@
-<form [formGroup]="reportForm" class="flex flex-col space-y-4">
+<form [formGroup]="reportForm" class="admin flex flex-col space-y-4">
     <div class="w-full">
         <label for="connectionId" class="font-medium">Connection</label>
         <p-dropdown (onChange)="getAllSourcePathsForConnection($event)" [options]="connections" optionLabel="name" optionValue="id" [showClear]="false" placeholder="Select connection" formControlName="connectionId" required></p-dropdown>

@@ -3,13 +3,17 @@ package com.app.demo.service;
 import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
+import javax.sql.DataSource;
 import javax.transaction.Transactional;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -81,23 +85,22 @@ public class ReportService {
     }
 
     @Transactional
-    public String generateReport(Connections connection, SourcePaths sourcePaths, String query){
+    public String generateReport(Connections connection, SourcePaths sourcePath, String query){
         try {
             String report = "";
             Methods method = connection.getMethod();
-            String path = sourcePaths.getPath();
 
             if(method.getName().equals(EMethod.API)){
-                report = generateReportFromApi(path);
+                // report = generateReportFromApi(path);
             }
             else if(method.getName().equals(EMethod.API_GATEAWAY)){
-                report = generateReportFromApi(path);
+                report = generateReportFromApi(sourcePath);
             }
             else if(method.getName().equals(EMethod.DIRECT_DB)){
-                report = generateReportFromApi(path);
+                report = generateReportFromDatabase(sourcePath,query);
             }
             else if(method.getName().equals(EMethod.LOCAL_FILES)){
-                report = generateReportFromApi(path);
+                // report = generateReportFromApi(path);
             }
 
             return report;
@@ -108,12 +111,34 @@ public class ReportService {
     }
     
     @Transactional
-    public String generateReportFromApi(String apiUrl) throws IOException{
+    public String generateReportFromApi(SourcePaths sourcePath) throws IOException{
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Object[]> response = restTemplate.getForEntity(apiUrl,Object[].class);
+        ResponseEntity<Object[]> response = restTemplate.getForEntity(sourcePath.getPath(),Object[].class);
 
         Object[] data = response.getBody();
 
+        JSONObject report = new JSONObject();
+
+        JSONObject dataSource = new JSONObject();
+        dataSource.put("dataSourceType", "json");
+        dataSource.put("data", data);
+        report.put("dataSource", dataSource);
+
+        return report.toString();
+    }
+
+    @Transactional
+    public String generateReportFromDatabase(SourcePaths sourcePath, String query){
+        DataSource objectDataSource = new DriverManagerDataSource(
+            sourcePath.getPath(),
+            sourcePath.getUsername(),
+            sourcePath.getPassword()
+        );
+
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(objectDataSource);
+
+        List<Map<String,Object>> data = jdbcTemplate.queryForList(query);
+        
         JSONObject report = new JSONObject();
 
         JSONObject dataSource = new JSONObject();

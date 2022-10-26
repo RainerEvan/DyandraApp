@@ -32,5 +32,7 @@ public class SourcePaths {
     private Connections connection;
 
     private String path;
+    private String username;
+    private String password;
     private OffsetDateTime createdAt;
 }

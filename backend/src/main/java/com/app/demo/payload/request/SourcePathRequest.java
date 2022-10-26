@@ -10,4 +10,6 @@ import lombok.Data;
 public class SourcePathRequest {
     private UUID connectionId;
     private String path;
+    private String username;
+    private String password;
 }

@@ -1,5 +1,5 @@
 :host ::ng-deep .p-dropdown {
-    @apply w-full ring-0 shadow-none text-black text-sm border-0 border-b-2 border-teal-400 rounded-none hover:border-teal-500 focus:ring-0 focus:border-teal-500;
+    @apply w-full ring-0 shadow-none text-black text-sm border-0 border-b-2 border-gray-400 rounded-none hover:border-gray-500 focus:ring-0 focus:border-gray-500;
 
     .p-dropdown-label{
         @apply text-sm text-black;
@@ -19,11 +19,11 @@
 }
 
 :host ::ng-deep .p-dropdown.p-focus {
-    @apply ring-0 shadow-none border-teal-500;
+    @apply ring-0 shadow-none border-gray-500;
 }
 
 .form-enabled-false{
-    @apply bg-teal-50 text-slate-400/75;
+    @apply bg-gray-50 text-slate-400/75;
 }
 
 .form-label{
@@ -31,5 +31,5 @@
 }
 
 .p-inputtext {
-    @apply w-full ring-0 text-black text-sm border-0 border-b-2 border-teal-400 rounded-none placeholder:text-slate-400 hover:border-teal-500 focus:ring-0 focus:border-teal-500 disabled:pointer-events-none;
+    @apply w-full ring-0 text-black text-sm border-0 border-b-2 border-gray-400 rounded-none placeholder:text-slate-400 hover:border-gray-500 focus:ring-0 focus:border-gray-500 disabled:pointer-events-none;
 }

@@ -56,6 +56,8 @@ export class AddSourcepathComponent implements OnInit {
     this.sourcePathForm = this.formBuilder.group({
       connectionId: [null, [Validators.required]],
       path: [null, [Validators.required]],
+      username: [null],
+      password: [null],
     });
     this.getAllconnections();
   }
@@ -65,6 +67,12 @@ export class AddSourcepathComponent implements OnInit {
   }
   get path(){
     return this.sourcePathForm.get('path');
+  }
+  get username(){
+    return this.sourcePathForm.get('username');
+  }
+  get password(){
+    return this.sourcePathForm.get('password');
   }
 
 }
