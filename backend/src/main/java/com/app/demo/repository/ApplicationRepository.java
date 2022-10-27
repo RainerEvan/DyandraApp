@@ -11,4 +11,6 @@ import com.app.demo.model.Applications;
 @Repository
 public interface ApplicationRepository extends JpaRepository<Applications, UUID>{
     Optional<Applications> findByClientId(String clientId);
+    boolean existsByName(String name);
+    boolean existsByCode(String code);
 }

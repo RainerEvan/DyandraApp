@@ -37,6 +37,11 @@ import { AddConnectionComponent } from './components/dialog/admin/add-connection
 import { AddSourcepathComponent } from './components/dialog/admin/add-sourcepath/add-sourcepath.component';
 import { AddReportComponent } from './components/dialog/admin/add-report/add-report.component';
 import { ConfirmationDialogComponent } from './components/dialog/shared/confirmation-dialog/confirmation-dialog.component';
+import { ApplicationDetailsComponent } from './components/dialog/admin/application-details/application-details.component';
+import { ConnectionDetailsComponent } from './components/dialog/admin/connection-details/connection-details.component';
+import { SourcepathDetailsComponent } from './components/dialog/admin/sourcepath-details/sourcepath-details.component';
+import { ReportDetailsComponent } from './components/dialog/admin/report-details/report-details.component';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -60,6 +65,10 @@ import { ConfirmationDialogComponent } from './components/dialog/shared/confirma
     AddSourcepathComponent,
     AddReportComponent,
     ConfirmationDialogComponent,
+    ApplicationDetailsComponent,
+    ConnectionDetailsComponent,
+    SourcepathDetailsComponent,
+    ReportDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -80,7 +89,7 @@ import { ConfirmationDialogComponent } from './components/dialog/shared/confirma
     DropdownModule,
     TableModule,
   ],
-  providers: [DialogService],
+  providers: [DialogService, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

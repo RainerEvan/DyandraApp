@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,6 +34,17 @@ public class SourcePathController {
             SourcePaths sourcePath = sourcePathService.addSourcePath(sourcePathRequest);
             
             return ResponseHandler.generateResponse("Source path has been added successfully!", HttpStatus.OK, sourcePath);
+        } catch (Exception e) {
+            return ResponseHandler.generateResponse(e.getMessage(), HttpStatus.BAD_REQUEST, null);
+        }
+    }
+
+    @PutMapping(path = "/edit")
+    public ResponseEntity<Object> editSourcePath(@RequestParam("sourcePathId") UUID sourcePathId, @RequestBody SourcePathRequest sourcePathRequest){
+        try {
+            SourcePaths sourcePath = sourcePathService.editSourcePath(sourcePathId, sourcePathRequest);
+            
+            return ResponseHandler.generateResponse("Source path has been updated successfully!", HttpStatus.OK, sourcePath);
         } catch (Exception e) {
             return ResponseHandler.generateResponse(e.getMessage(), HttpStatus.BAD_REQUEST, null);
         }

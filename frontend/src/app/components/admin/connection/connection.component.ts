@@ -4,6 +4,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Connections } from 'src/app/models/connections';
 import { ConnectionService } from 'src/app/services/connection/connection.service';
 import { AddConnectionComponent } from '../../dialog/admin/add-connection/add-connection.component';
+import { ConnectionDetailsComponent } from '../../dialog/admin/connection-details/connection-details.component';
 import { ConfirmationDialogComponent } from '../../dialog/shared/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
@@ -63,6 +64,19 @@ export class ConnectionComponent implements OnInit {
         }
     });
   }
+
+  showConnectionDetailsDialog(connection:Connections){
+    this.ref = this.dialogService.open(ConnectionDetailsComponent,{
+        header: 'Connection Details',
+        data:{
+          connectionData:connection
+        },
+        footer:" ",
+        baseZIndex: 10000,
+        contentStyle: {"max-height": "650px", "width":"40vw", "min-width":"350px", "max-width":"500px","overflow": "auto"},
+    });
+  }
+
   showConfirmationDialog(title:string, message:string, action:string, connectionId:string){
     this.ref = this.dialogService.open(ConfirmationDialogComponent, {
       header: title,

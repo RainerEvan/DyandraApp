@@ -19,10 +19,13 @@ export class SourcepathService {
         query getAllSourcePaths{
           getAllSourcePaths{
             id
+            name
             connection{
               name
             }
             path
+            username
+            password
             createdAt
           }
         }
@@ -52,6 +55,10 @@ export class SourcepathService {
     return this.http.post(API_URL+'/add',form);
   }
 
+  public editSourcePath(sourcePathId: string, form:any): Observable<any>{
+    const params = new HttpParams().set('sourcePathId',sourcePathId);
+    return this.http.put(API_URL+'/edit',form,{params:params});
+  }
   public deleteSourcePath(sourcePathId: string): Observable<any>{
     const params = new HttpParams().set('sourcePathId',sourcePathId);
     return this.http.delete(API_URL+'/delete',{params:params});

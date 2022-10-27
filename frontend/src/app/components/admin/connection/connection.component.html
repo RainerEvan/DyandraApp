@@ -17,12 +17,15 @@
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-connection>
-            <tr [pSelectableRow]="connection">
+            <tr>
                 <td>{{connection.name}}</td>
                 <td>{{connection.application.name}}</td>
                 <td>{{connection.method.name}}</td>
                 <td>{{connection.createdAt | date:'dd/MM/yyyy'}}</td>
-                <td class="flex flex-row justify-center text-white">
+                <td class="flex flex-row justify-center space-x-2 text-white">
+                    <button (click)="showConnectionDetailsDialog(connection)" class="flex items-center justify-center btn-primary">
+                        <i class="pi pi-info-circle" style="font-size:14px"></i>
+                    </button>
                     <button (click)="showConfirmationDialog('Delete Connection','Do you want to delete this connection?','delete',connection.id)" class="flex items-center justify-center btn-primary">
                         <i class="pi pi-trash" style="font-size:14px"></i>
                     </button>

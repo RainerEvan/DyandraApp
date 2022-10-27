@@ -47,10 +47,23 @@ public class SourcePathService {
 
         SourcePaths sourcePath = new SourcePaths();
         sourcePath.setConnection(connection);
+        sourcePath.setName(sourcePathRequest.getName());
         sourcePath.setPath(sourcePathRequest.getPath());
         sourcePath.setUsername(sourcePathRequest.getUsername());
         sourcePath.setPassword(sourcePathRequest.getPassword());
         sourcePath.setCreatedAt(OffsetDateTime.now());
+
+        return sourcePathRepository.save(sourcePath);
+    }
+
+    @Transactional
+    public SourcePaths editSourcePath(UUID sourcePathId, SourcePathRequest sourcePathRequest){
+        SourcePaths sourcePath = sourcePathRepository.findById(sourcePathId)
+            .orElseThrow(() -> new IllegalStateException("Source path with current id cannot be found: "+sourcePathId));
+
+        sourcePath.setPath(sourcePathRequest.getPath());
+        sourcePath.setUsername(sourcePathRequest.getUsername());
+        sourcePath.setPassword(sourcePathRequest.getPassword());
 
         return sourcePathRepository.save(sourcePath);
     }

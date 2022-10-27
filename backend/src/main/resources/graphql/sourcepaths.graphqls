@@ -1,6 +1,7 @@
 type SourcePaths{
     id:ID!
     connection:Connections
+    name:String
     path:String
     username:String
     password:String

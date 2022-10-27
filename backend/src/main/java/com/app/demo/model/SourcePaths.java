@@ -31,6 +31,7 @@ public class SourcePaths {
     @JoinColumn(name="connection_id")
     private Connections connection;
 
+    private String name;
     private String path;
     private String username;
     private String password;

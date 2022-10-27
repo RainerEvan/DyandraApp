@@ -4,6 +4,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Applications } from 'src/app/models/applications';
 import { ApplicationService } from 'src/app/services/application/application.service';
 import { AddApplicationComponent } from '../../dialog/admin/add-application/add-application.component';
+import { ApplicationDetailsComponent } from '../../dialog/admin/application-details/application-details.component';
 import { ConfirmationDialogComponent } from '../../dialog/shared/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
@@ -61,6 +62,18 @@ export class ApplicationComponent implements OnInit {
         if(success){
           this.getAllApplications();
         }
+    });
+  }
+
+  showApplicationDetailsDialog(application:Applications){
+    this.ref = this.dialogService.open(ApplicationDetailsComponent,{
+        header: 'Application Details',
+        data:{
+          applicationData:application
+        },
+        footer:" ",
+        baseZIndex: 10000,
+        contentStyle: {"max-height": "650px", "width":"40vw", "min-width":"350px", "max-width":"500px","overflow": "auto"},
     });
   }
 

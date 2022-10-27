@@ -1,15 +1,19 @@
 <form [formGroup]="sourcePathForm" class="admin flex flex-col space-y-4">
     <div class="w-full">
-        <label for="connectionId" class="font-medium">Connection</label>
-        <p-dropdown [options]="connections" optionLabel="name" optionValue="id" [showClear]="true" placeholder="Select connection" formControlName="connectionId" required></p-dropdown>
-    </div>
-    <div class="w-full">
         <label for="name" class="font-medium">Name</label>
         <input type="text" pInputText placeholder="Enter source path name" formControlName="name" required>
     </div>
     <div class="w-full">
+        <label for="connection" class="font-medium">Connection</label>
+        <input type="text" pInputText placeholder="Enter source path name" formControlName="connection">
+    </div>
+    <div class="w-full">
+        <label for="dateCreated" class="font-medium">Date Created</label>
+        <input type="text" pInputText placeholder="Enter date created" formControlName="dateCreated">
+    </div>
+    <div class="w-full">
         <label for="path" class="font-medium">Path/URL</label>
-        <textarea pInputTextarea rows="5" placeholder="Enter source path/url" formControlName="path" required></textarea>
+        <textarea pInputTextarea rows="5" placeholder="Enter source path/url" formControlName="path"></textarea>
     </div>
     <div class="w-full">
         <label for="username" class="font-medium">Database Username</label>
@@ -20,6 +24,6 @@
         <input type="text" pInputText placeholder="Enter database password" formControlName="password">
     </div>
     <div class="w-full flex items-center justify-center pt-4 pb-2">
-        <button (click)="addSourcePath()" [disabled]="sourcePathForm.invalid" type="button" class="w-full btn-primary">SAVE</button>
+        <button (click)="editSourcePath()" [disabled]="!sourcePathForm.dirty" type="button" class="w-full btn-primary">SAVE</button>
     </div>
 </form>

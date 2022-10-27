@@ -18,7 +18,7 @@
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-report>
-            <tr [pSelectableRow]="report">
+            <tr>
                 <td>{{report.title}}</td>
                 <td>{{report.connection.name}}</td>
                 <td class="truncate">{{report.sourcePath.path}}</td>

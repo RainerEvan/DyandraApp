@@ -9,6 +9,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class SourcePathRequest {
     private UUID connectionId;
+    private String name;
     private String path;
     private String username;
     private String password;

@@ -4,6 +4,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SourcePaths } from 'src/app/models/sourcepaths';
 import { SourcepathService } from 'src/app/services/sourcepath/sourcepath.service';
 import { AddSourcepathComponent } from '../../dialog/admin/add-sourcepath/add-sourcepath.component';
+import { SourcepathDetailsComponent } from '../../dialog/admin/sourcepath-details/sourcepath-details.component';
 import { ConfirmationDialogComponent } from '../../dialog/shared/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
@@ -62,6 +63,23 @@ export class SourcepathComponent implements OnInit {
           this.getAllSourcePaths();
         }
     });
+  }
+
+  showSourcePathDetailsDialog(sourcePath:SourcePaths){
+    this.ref = this.dialogService.open(SourcepathDetailsComponent,{
+        header: 'Source Path Details',
+        data:{
+          sourcePathData:sourcePath
+        },
+        baseZIndex: 10000,
+        contentStyle: {"max-height": "650px", "width":"40vw", "min-width":"350px", "max-width":"500px","overflow": "auto"},
+    });
+
+    this.ref.onClose.subscribe((success:boolean)=>{
+      if(success){
+        this.getAllSourcePaths();
+      }
+  });
   }
 
   showConfirmationDialog(title:string, message:string, action:string, sourcePathId:string){

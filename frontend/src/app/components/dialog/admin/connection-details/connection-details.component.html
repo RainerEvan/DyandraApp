@@ -1,0 +1,18 @@
+<form [formGroup]="connectionForm" class="admin flex flex-col space-y-4">
+    <div class="w-full">
+        <label for="name" class="font-medium">Name</label>
+        <input type="text" pInputText placeholder="Enter connection name" formControlName="name">
+    </div>
+    <div class="w-full">
+        <label for="application" class="font-medium">Application</label>
+        <input type="text" pInputText placeholder="Enter application name" formControlName="application">
+    </div>
+    <div class="w-full">
+        <label for="method" class="font-medium">Method</label>
+        <input type="text" pInputText placeholder="Enter method name" formControlName="method">
+    </div>
+    <div class="w-full">
+        <label for="dateCreated" class="font-medium">Date Created</label>
+        <input type="text" pInputText placeholder="Enter date created" formControlName="dateCreated">
+    </div>
+</form>
