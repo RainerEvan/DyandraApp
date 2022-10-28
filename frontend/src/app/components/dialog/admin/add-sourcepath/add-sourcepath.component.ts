@@ -15,6 +15,7 @@ export class AddSourcepathComponent implements OnInit {
   sourcePathForm: FormGroup;
   isSourcePathFormSubmitted: boolean = false;
   connections: Connections[];
+  showPassword: boolean = false;
   
   constructor(public ref: DynamicDialogRef,private sourcePathService: SourcepathService, private connectionService:ConnectionService , private formBuilder: FormBuilder) { }
 

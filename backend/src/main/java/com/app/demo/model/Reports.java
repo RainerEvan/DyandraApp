@@ -41,7 +41,7 @@ public class Reports {
 
     private String title;
     @Lob
-    private String report;
+    private String reportConfig;
     private String reportId;
     private OffsetDateTime createdAt;
     private OffsetDateTime updatedAt;

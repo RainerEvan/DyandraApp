@@ -6,6 +6,7 @@ type SourcePaths{
     username:String
     password:String
     createdAt:DateTime
+    updatedAt:DateTime
 }
 
 extend type Query{

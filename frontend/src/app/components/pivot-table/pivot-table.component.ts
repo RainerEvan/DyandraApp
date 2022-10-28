@@ -38,7 +38,7 @@ export class PivotTableComponent implements OnInit {
     onReportComplete(): void {
         this.child.webDataRocks.off('reportcomplete');
         if(this.report){
-            this.child.webDataRocks.setReport(JSON.parse(this.report.report));
+            this.child.webDataRocks.setReport(JSON.parse(this.report.reportConfig));
         }
     }
 

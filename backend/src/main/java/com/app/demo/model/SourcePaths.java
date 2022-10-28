@@ -36,4 +36,5 @@ public class SourcePaths {
     private String username;
     private String password;
     private OffsetDateTime createdAt;
+    private OffsetDateTime updatedAt;
 }

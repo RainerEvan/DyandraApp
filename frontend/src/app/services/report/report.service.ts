@@ -23,11 +23,10 @@ export class ReportService {
               name
             }
             sourcePath{
-              path
+              name
             }
             query
             title
-            report
             reportId
             createdAt
             updatedAt
@@ -45,7 +44,7 @@ export class ReportService {
           getReport(reportId: $reportId){
             id
             title
-            report
+            reportConfig
           }
         }
       `,
@@ -58,6 +57,11 @@ export class ReportService {
 
   public addReport(form:any): Observable<any>{
     return this.http.post(API_URL+'/add',form);
+  }
+  
+  public editReport(reportId:string,form:any): Observable<any>{
+    const params = new HttpParams().set('reportId',reportId);
+    return this.http.put(API_URL+'/edit',form,{params:params});
   }
 
   public deleteReport(reportId: string): Observable<any>{

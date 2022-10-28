@@ -17,7 +17,11 @@
     </div>
     <div class="w-full">
         <label for="password" class="font-medium">Database Password</label>
-        <input type="text" pInputText placeholder="Enter database password" formControlName="password">
+        <span class="w-full p-input-icon-right">
+            <i *ngIf="showPassword" (click)="showPassword=false" class="pi pi-eye-slash cursor-pointer"></i>
+            <i *ngIf="!showPassword" (click)="showPassword=true" class="pi pi-eye cursor-pointer"></i>
+            <input type="text" pInputText [type]="showPassword ? 'text' : 'password'" placeholder="Enter database password" formControlName="password">
+        </span>
     </div>
     <div class="w-full flex items-center justify-center pt-4 pb-2">
         <button (click)="addSourcePath()" [disabled]="sourcePathForm.invalid" type="button" class="w-full btn-primary">SAVE</button>

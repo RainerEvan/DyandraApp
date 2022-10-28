@@ -1,13 +1,16 @@
 package com.app.demo.controller;
 
+import java.io.IOException;
 import java.util.UUID;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,10 +31,10 @@ public class ReportController {
     @Autowired
     private final ReportService reportService;
 
-    @GetMapping(path = "/test")
-    public void test(@RequestParam("url") String url, @RequestParam("query") String query){
-        // return reportService.generateReportFromDatabase(url, query);
-    }
+    // @GetMapping(path = "/test")
+    // public String test(@RequestBody String path) throws IOException{
+    //     return reportService.test(path);
+    // }
 
     @PostMapping(path = "/add")
     public ResponseEntity<Object> addReport(@RequestBody ReportRequest reportRequest){
@@ -39,6 +42,17 @@ public class ReportController {
             Reports report = reportService.addReport(reportRequest);
             
             return ResponseHandler.generateResponse("Report has been added successfully!", HttpStatus.OK, report);
+        } catch (Exception e) {
+            return ResponseHandler.generateResponse(e.getMessage(), HttpStatus.BAD_REQUEST, null);
+        }
+    }
+
+    @PutMapping(path = "/edit")
+    public ResponseEntity<Object> editReport(@RequestParam("reportId") UUID reportId, @RequestBody ReportRequest reportRequest){
+        try {
+            Reports report = reportService.editReport(reportId, reportRequest);
+            
+            return ResponseHandler.generateResponse("Report has been updated successfully!", HttpStatus.OK, report);
         } catch (Exception e) {
             return ResponseHandler.generateResponse(e.getMessage(), HttpStatus.BAD_REQUEST, null);
         }

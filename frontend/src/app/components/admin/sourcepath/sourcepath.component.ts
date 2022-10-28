@@ -79,7 +79,7 @@ export class SourcepathComponent implements OnInit {
       if(success){
         this.getAllSourcePaths();
       }
-  });
+    });
   }
 
   showConfirmationDialog(title:string, message:string, action:string, sourcePathId:string){

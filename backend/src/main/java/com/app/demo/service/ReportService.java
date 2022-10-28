@@ -1,5 +1,6 @@
 package com.app.demo.service;
 
+import java.io.File;
 import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -9,6 +10,8 @@ import java.util.UUID;
 import javax.sql.DataSource;
 import javax.transaction.Transactional;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -70,8 +73,23 @@ public class ReportService {
         report.setQuery(reportRequest.getQuery());
         report.setTitle(reportRequest.getTitle());
         report.setReportId(reportId);
-        report.setReport(reportJson);
+        report.setReportConfig(reportJson);
         report.setCreatedAt(OffsetDateTime.now());
+
+        return reportRepository.save(report);
+    }
+
+    @Transactional
+    public Reports editReport(UUID reportId, ReportRequest reportRequest){
+        Reports report = reportRepository.findById(reportId)
+            .orElseThrow(() -> new IllegalStateException("Report with current Id cannot be found"));
+
+        String reportJson = generateReport(report.getConnection(), report.getSourcePath(), reportRequest.getQuery());
+        
+        report.setQuery(reportRequest.getQuery());
+        report.setTitle(reportRequest.getTitle());
+        report.setReportConfig(reportJson);
+        report.setUpdatedAt(OffsetDateTime.now());
 
         return reportRepository.save(report);
     }
@@ -91,16 +109,16 @@ public class ReportService {
             Methods method = connection.getMethod();
 
             if(method.getName().equals(EMethod.API)){
-                // report = generateReportFromApi(path);
+                report = generateReportFromApi(sourcePath);
             }
             else if(method.getName().equals(EMethod.API_GATEAWAY)){
-                report = generateReportFromApi(sourcePath);
+                // report = generateReportFromApi(sourcePath);
             }
             else if(method.getName().equals(EMethod.DIRECT_DB)){
                 report = generateReportFromDatabase(sourcePath,query);
             }
             else if(method.getName().equals(EMethod.LOCAL_FILES)){
-                // report = generateReportFromApi(path);
+                report = generateReportFromFiles(sourcePath);
             }
 
             return report;
@@ -144,6 +162,21 @@ public class ReportService {
         JSONObject dataSource = new JSONObject();
         dataSource.put("dataSourceType", "json");
         dataSource.put("data", data);
+        report.put("dataSource", dataSource);
+
+        return report.toString();
+    }
+
+    @Transactional
+    public String generateReportFromFiles(SourcePaths sourcePath) throws IOException{
+        File file = new File(sourcePath.getPath());
+        String type = FilenameUtils.getExtension(file.getName());
+
+        JSONObject report = new JSONObject();
+
+        JSONObject dataSource = new JSONObject();
+        dataSource.put("dataSourceType", type);
+        dataSource.put("filename", sourcePath.getPath());
         report.put("dataSource", dataSource);
 
         return report.toString();

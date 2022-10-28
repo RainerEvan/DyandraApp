@@ -4,7 +4,7 @@ type Reports{
     sourcePath:SourcePaths
     query:String
     title:String
-    report:String
+    reportConfig:String
     reportId:String
     createdAt:DateTime
     updatedAt:DateTime

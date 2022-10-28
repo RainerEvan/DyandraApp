@@ -15,12 +15,12 @@ export class SourcepathDetailsComponent implements OnInit {
   sourcePathForm: FormGroup;
   isSourcePathFormSubmitted: boolean = false;
   sourcePath: SourcePaths;
+  showPassword: boolean = false;
   
   constructor(public ref: DynamicDialogRef, public config: DynamicDialogConfig, private sourcePathService: SourcepathService, private datePipe:DatePipe, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
     this.sourcePath = this.config.data.sourcePathData;
-    console.log(this.sourcePath);
     this.generateSourcePathForm();
   }
 

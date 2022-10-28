@@ -27,6 +27,7 @@ export class SourcepathService {
             username
             password
             createdAt
+            updatedAt
           }
         }
       `,

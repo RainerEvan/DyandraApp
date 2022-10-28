@@ -50,6 +50,11 @@ public class StartAppConfig {
             ConnectionRequest connectionReq = new ConnectionRequest(application.getId(), EMethod.API,"ICOS-API");
             Connections connection = connectionService.addConnection(connectionReq);
 
+            SourcePathRequest sourcePathReq = new SourcePathRequest(connection.getId(), "API URL", "http://localhost:8081/api/orders/all", null, null);
+            SourcePaths sourcePath = sourcePathService.addSourcePath(sourcePathReq);
+
+            ReportRequest reportReq = new ReportRequest(connection.getId(), sourcePath.getId(), null, "Report 1");
+            Reports report = reportService.addReport(reportReq);
         };
     }
 }

@@ -64,6 +64,7 @@ public class SourcePathService {
         sourcePath.setPath(sourcePathRequest.getPath());
         sourcePath.setUsername(sourcePathRequest.getUsername());
         sourcePath.setPassword(sourcePathRequest.getPassword());
+        sourcePath.setUpdatedAt(OffsetDateTime.now());
 
         return sourcePathRepository.save(sourcePath);
     }

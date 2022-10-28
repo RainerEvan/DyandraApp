@@ -5,8 +5,9 @@ export interface Reports{
     id:string
     connection:Connections;
     sourcePath:SourcePaths;
+    query:string;
     title:string;
-    report:string;
+    reportConfig:string;
     reportId:string;
     createdAt:Date;
     updatedAt:Date;
