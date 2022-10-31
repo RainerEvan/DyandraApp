@@ -45,10 +45,10 @@ export class ReportDetailsComponent implements OnInit {
 
   generateReportForm(){
     this.reportForm = this.formBuilder.group({
-      title: [{value:this.report.id, disabled:true}],
+      title: [this.report.title],
       reportId: [{value:this.report.reportId, disabled:true}],
       connection: [{value:this.report.connection.name, disabled:true}],
-      sourcePath: [{value:this.report.sourcePath.name, disabled:true}],
+      sourcePath: [{value:this.report.sourcePath.path, disabled:true}],
       dateCreated:[{value:this.datePipe.transform(this.report.createdAt,'dd/MM/yyyy'), disabled:true}],
       query: [this.report.query],
     });

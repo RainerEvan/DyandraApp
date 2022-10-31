@@ -37,11 +37,11 @@ export class ReportService {
       .valueChanges.pipe(map((result)=>result.data.getAllReports));
   }
 
-  public getReport(reportId:any): Observable<Reports>{
+  public getReportByReportId(reportId:any): Observable<Reports>{
     return this.apollo.watchQuery<any>({
       query:gql`
-        query getReport($reportId:ID!){
-          getReport(reportId: $reportId){
+        query getReportByReportId($reportId:String!){
+          getReportByReportId(reportId: $reportId){
             id
             title
             reportConfig
@@ -52,7 +52,7 @@ export class ReportService {
         reportId: reportId,
       }
     })
-      .valueChanges.pipe(map((result)=>result.data.getReport));
+      .valueChanges.pipe(map((result)=>result.data.getReportByReportId));
   }
 
   public addReport(form:any): Observable<any>{
@@ -64,20 +64,19 @@ export class ReportService {
     return this.http.put(API_URL+'/edit',form,{params:params});
   }
 
-  public deleteReport(reportId: string): Observable<any>{
+  public saveReport(reportId:string,report:any): Observable<any>{
+    const params = new HttpParams().set('reportId',reportId);
+    return this.http.put(API_URL+'/save',report,{params:params});
+  }
+
+  public deleteReport(reportId:string): Observable<any>{
     const params = new HttpParams().set('reportId',reportId);
     return this.http.delete(API_URL+'/delete',{params:params});
   }
 
-  public generateReportFromDatabase(): Observable<any>{
-    return this.http.get(API_URL+'/generate/database');
+  public generateReport(reportId:string): Observable<any>{
+    const params = new HttpParams().set('reportId',reportId);
+    return this.http.get(API_URL+'/generate',{params:params});
   }
-
-  public generateReportFromFile(): Observable<any>{
-    return this.http.get(API_URL+'/generate/file');
-  }
-
-  public saveReport(report:any): Observable<any>{
-    return this.http.post(API_URL+'/save',report);
-  }
+  
 }

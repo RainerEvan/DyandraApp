@@ -3,6 +3,7 @@ package com.app.demo.model;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -42,6 +43,8 @@ public class Reports {
     private String title;
     @Lob
     private String reportConfig;
+
+    @Column(unique = true)
     private String reportId;
     private OffsetDateTime createdAt;
     private OffsetDateTime updatedAt;

@@ -53,8 +53,17 @@ public class StartAppConfig {
             SourcePathRequest sourcePathReq = new SourcePathRequest(connection.getId(), "API URL", "http://localhost:8081/api/orders/all", null, null);
             SourcePaths sourcePath = sourcePathService.addSourcePath(sourcePathReq);
 
-            ReportRequest reportReq = new ReportRequest(connection.getId(), sourcePath.getId(), null, "Report 1");
+            ReportRequest reportReq = new ReportRequest(connection.getId(), sourcePath.getId(), null, "Report 1",null);
             Reports report = reportService.addReport(reportReq);
+
+            ConnectionRequest connectionReq2 = new ConnectionRequest(application.getId(), EMethod.LOCAL_FILES,"ICOS-FILES");
+            Connections connection2 = connectionService.addConnection(connectionReq2);
+
+            SourcePathRequest sourcePathReq2= new SourcePathRequest(connection2.getId(), "FILE URL", "C:/Users/u545587/Downloads/data.json", null, null);
+            SourcePaths sourcePath2 = sourcePathService.addSourcePath(sourcePathReq2);
+
+            ReportRequest reportReq2 = new ReportRequest(connection2.getId(), sourcePath2.getId(), null, "Report 2",null);
+            Reports report2 = reportService.addReport(reportReq2);
         };
     }
 }

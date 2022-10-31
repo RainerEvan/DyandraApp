@@ -10,16 +10,18 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 export class SaveDialogComponent implements OnInit {
 
   saveForm: FormGroup;
+  reportTitle: string;
 
-  constructor(public ref: DynamicDialogRef, private formBuilder: FormBuilder) { }
+  constructor(public ref: DynamicDialogRef, private config:DynamicDialogConfig, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
+    this.reportTitle = this.config.data.reportTitle;
     this.generateSaveForm();
   }
 
   generateSaveForm(){
     this.saveForm = this.formBuilder.group({
-      title: [null, [Validators.required,Validators.maxLength(255)]],
+      title: [this.reportTitle, [Validators.required,Validators.maxLength(255)]],
     });
   }
 

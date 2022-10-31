@@ -2,6 +2,7 @@ package com.app.demo.model;
 
 import java.util.UUID;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -23,7 +24,13 @@ public class Applications {
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
+
+    @Column(unique = true)
     private String name;
+
+    @Column(unique = true)
     private String code;
+
+    @Column(unique = true)
     private String clientId;
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { cloneDeep } from '@apollo/client/utilities';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Reports } from 'src/app/models/reports';
 import { ReportService } from 'src/app/services/report/report.service';
@@ -25,7 +26,7 @@ export class OpenDialogComponent implements OnInit {
 
     this.reportService.getAllReports().subscribe({
       next:(response:Reports[])=>{
-          this.reports = response;
+          this.reports = cloneDeep(response);
           this.loading = false;
       },
       error:(error:any)=>{
@@ -36,7 +37,7 @@ export class OpenDialogComponent implements OnInit {
 
   openReport(){
     if(this.selectedReport){
-      this.ref.close(this.selectedReport.id);
+      this.ref.close(this.selectedReport.reportId);
     }
   }
 }

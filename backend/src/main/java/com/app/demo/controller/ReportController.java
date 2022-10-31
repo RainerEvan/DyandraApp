@@ -3,7 +3,6 @@ package com.app.demo.controller;
 import java.io.IOException;
 import java.util.UUID;
 
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,10 +30,21 @@ public class ReportController {
     @Autowired
     private final ReportService reportService;
 
-    // @GetMapping(path = "/test")
-    // public String test(@RequestBody String path) throws IOException{
-    //     return reportService.test(path);
-    // }
+    @GetMapping(path = "/test")
+    public Reports test(@RequestBody String reportId) throws IOException{
+        return reportService.getReportByReportId(reportId);
+    }
+
+    @GetMapping(path = "/generate")
+    public ResponseEntity<Object> generateReport(@RequestParam("reportId") UUID reportId){
+        try {
+            String reportConfig = reportService.generateReport(reportId);
+            
+            return ResponseHandler.generateResponse("Generated report successfully!", HttpStatus.OK, reportConfig);
+        } catch (Exception e) {
+            return ResponseHandler.generateResponse(e.getMessage(), HttpStatus.BAD_REQUEST, null);
+        }
+    }
 
     @PostMapping(path = "/add")
     public ResponseEntity<Object> addReport(@RequestBody ReportRequest reportRequest){
@@ -58,6 +68,17 @@ public class ReportController {
         }
     }
 
+    @PutMapping(path = "/save")
+    public ResponseEntity<Object> saveReport(@RequestParam("reportId") UUID reportId , @RequestBody ReportRequest reportRequest){
+        try {
+            Reports report = reportService.saveReport(reportId, reportRequest);
+            
+            return ResponseHandler.generateResponse("Report has been updated successfully!", HttpStatus.OK, report);
+        } catch (Exception e) {
+            return ResponseHandler.generateResponse(e.getMessage(), HttpStatus.BAD_REQUEST, null);
+        }
+    }
+
     @DeleteMapping(path = "/delete")
     public ResponseEntity<Object> deleteReport(@RequestParam("reportId") UUID reportId){
         try {
@@ -69,8 +90,4 @@ public class ReportController {
         }
     }
 
-    @PostMapping(path = "/save")
-    public Reports saveReport(@RequestBody ReportRequest reportRequest){
-        return reportService.saveReport(reportRequest);
-    }
 }

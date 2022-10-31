@@ -12,4 +12,5 @@ public class ReportRequest {
     private UUID sourcePathId;
     private String query;
     private String title;
+    private String reportConfig;
 }

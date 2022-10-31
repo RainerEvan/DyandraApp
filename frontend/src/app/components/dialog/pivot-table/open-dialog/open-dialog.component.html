@@ -1,17 +1,19 @@
 <div class="flex flex-col space-y-4">
-    <p-table #reportTable [value]="reports" [loading]="loading" selectionMode="single" [(selection)]="selectedReport" dataKey="id" [scrollable]="true" scrollHeight="300px" [responsive]="true" responsiveLayout="scroll">
+    <p-table #reportTable [value]="reports" [loading]="loading" selectionMode="single" [(selection)]="selectedReport" dataKey="id" [scrollable]="true" scrollHeight="300px" [responsive]="true" responsiveLayout="scroll" sortField="createdAt" [sortOrder]="1">
         <ng-template pTemplate="header">
             <tr>
-                <th>Application</th>
                 <th>Title</th>
+                <th>Connection</th>
                 <th>Date Created</th>
+                <th>Last Updated</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-report>
             <tr [pSelectableRow]="report">
-                <td>{{report.connection.name}}</td>
                 <td>{{report.title}}</td>
+                <td>{{report.connection.name}}</td>
                 <td>{{report.createdAt | date:'dd/MM/yyyy'}}</td>
+                <td>{{(report.updatedAt | date:'dd/MM/yyyy') || "-"}}</td>
             </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage">

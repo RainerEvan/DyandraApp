@@ -18,8 +18,9 @@ import { SaveDialogComponent } from '../dialog/pivot-table/save-dialog/save-dial
 export class PivotTableComponent implements OnInit {
 
     @ViewChild('pivot1') child: WebdatarocksComponent;
-    report:Reports;
+    report: Reports;
     items: MenuItem[];
+    reportConfig: any;
 
     ref: DynamicDialogRef;
 
@@ -38,7 +39,7 @@ export class PivotTableComponent implements OnInit {
     onReportComplete(): void {
         this.child.webDataRocks.off('reportcomplete');
         if(this.report){
-            this.child.webDataRocks.setReport(JSON.parse(this.report.reportConfig));
+            this.child.webDataRocks.setReport(JSON.parse(this.reportConfig));
         }
     }
 
@@ -47,7 +48,7 @@ export class PivotTableComponent implements OnInit {
         this.ref = this.dialogService.open(OpenDialogComponent,{
             header: 'Open Report',
             baseZIndex: 10000,
-            contentStyle: {"max-height": "600px", "width":"50vw","min-width":"450px", "max-width":"600px","overflow": "auto"},
+            contentStyle: {"max-height": "600px", "width":"55vw","min-width":"450px", "max-width":"700px","overflow": "auto"},
         });
 
         this.ref.onClose.subscribe((reportId:any)=>{
@@ -58,10 +59,21 @@ export class PivotTableComponent implements OnInit {
     }
 
     openReport(reportId:any){
-        this.reportService.getReport(reportId).subscribe({
+        this.reportService.getReportByReportId(reportId).subscribe({
             next:(response:Reports)=>{
-                console.log(response.title);
                 this.report = response;
+                this.generateReport(response.id);
+            },
+            error:(error:any)=>{
+                console.log(error);
+            }
+        });
+    }
+
+    generateReport(reportId:any){
+        this.reportService.generateReport(reportId).subscribe({
+            next:(response:any)=>{
+                this.reportConfig = response.data;
                 this.onReportComplete();
             },
             error:(error:any)=>{
@@ -75,6 +87,9 @@ export class PivotTableComponent implements OnInit {
         if(this.report){
             this.ref = this.dialogService.open(SaveDialogComponent,{
                 header: 'Save Report',
+                data:{
+                    reportTitle:this.report.title
+                },
                 baseZIndex: 10000,
                 contentStyle: {"max-height": "650px", "min-width":"30vw","overflow": "auto"},
             });
@@ -92,43 +107,17 @@ export class PivotTableComponent implements OnInit {
 
         const reportRequest = {
             title,
-            "report":JSON.stringify(report)
+            "reportConfig":JSON.stringify(report)
         }
 
-        this.reportService.saveReport(reportRequest).subscribe({
-            next:(response:Reports)=>{
-                this.openReport(response.id);
-                console.log("Report Successfully Saved: "+response.title);
+        this.reportService.saveReport(this.report.id, reportRequest).subscribe({
+            next:(response:any)=>{
+                console.log(response);
             },
             error:(error:any)=>{
                 console.log(error);
             }
         })
-    }
-
-    //IMPORT
-    generateReportFromDatabase(){
-        this.reportService.generateReportFromDatabase().subscribe({
-            next:(response:Reports)=>{
-                this.report = response;
-                this.onReportComplete();
-            },
-            error:(error:any)=>{
-                console.log(error);
-            }
-        });
-    }
-
-    generateReportFromFile(){
-        this.reportService.generateReportFromFile().subscribe({
-            next:(response:Reports)=>{
-                this.report = response;
-                this.onReportComplete();
-            },
-            error:(error:any)=>{
-                console.log(error);
-            }
-        });
     }
 
     //EXPORT
@@ -247,24 +236,6 @@ export class PivotTableComponent implements OnInit {
                         command: () => {
                             this.showSaveDialog();
                         }
-                    },
-                    {
-                        label: 'Import', 
-                        icon: 'pi pi-fw pi-database',
-                        items: [
-                            {
-                                label: 'File',
-                                command: () => {
-                                    this.generateReportFromFile();
-                                }
-                            },
-                            {
-                                label: 'Database',
-                                command: () => {
-                                    this.generateReportFromDatabase();
-                                }
-                            },
-                        ]
                     },
                     {
                         label: 'Export', 

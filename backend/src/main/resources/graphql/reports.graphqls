@@ -12,5 +12,5 @@ type Reports{
 
 extend type Query{
     getAllReports:[Reports]
-    getReport(reportId:ID):Reports
+    getReportByReportId(reportId:String):Reports
 }

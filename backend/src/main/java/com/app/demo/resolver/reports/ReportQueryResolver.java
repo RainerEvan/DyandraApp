@@ -1,7 +1,6 @@
 package com.app.demo.resolver.reports;
 
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,7 +22,7 @@ public class ReportQueryResolver implements GraphQLQueryResolver {
         return reportService.getAllReports();
     }
 
-    public Reports getReport(UUID reportId){
-        return reportService.getReport(reportId);
+    public Reports getReportByReportId(String reportId){
+        return reportService.getReportByReportId(reportId);
     }
 }
