@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class ReportAuthRequest {
+public class ClientAuthRequest {
     private String clientId;
     private String reportId;
 }

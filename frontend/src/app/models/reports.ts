@@ -1,7 +1,7 @@
 import { Connections } from "./connections";
 import { SourcePaths } from "./sourcepaths";
 
-export interface Reports{
+export type Reports = {
     id:string
     connection:Connections;
     sourcePath:SourcePaths;

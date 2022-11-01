@@ -95,3 +95,7 @@ body {
         @apply text-sm text-bca rounded-md px-3 py-2 bg-white border-2 border-bca transition ease-out duration-100 hover:bg-bca/10 hover:border-bca/80 active:bg-white disabled:bg-white disabled:text-slate-400 disabled:border-slate-200;
     }
 }
+
+#wdr-pivot-view .wdr-credits a{
+    display:none !important;
+}

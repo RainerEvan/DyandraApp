@@ -23,7 +23,7 @@ public class AccountController {
     @Autowired
     private final AccountService accountService;
 
-    @PostMapping(path = "/add")
+    @PostMapping(path = "/admin/add")
     public ResponseEntity<Object> addAccount(@RequestBody AccountRequest accountRequest){
         try {
             Accounts account = accountService.addAccount(accountRequest);

@@ -5,16 +5,21 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.app.demo.data.EMethod;
+import com.app.demo.model.Accounts;
 import com.app.demo.model.Applications;
 import com.app.demo.model.Connections;
 import com.app.demo.model.Methods;
 import com.app.demo.model.Reports;
+import com.app.demo.model.Roles;
 import com.app.demo.model.SourcePaths;
+import com.app.demo.payload.request.AccountRequest;
 import com.app.demo.payload.request.ApplicationRequest;
 import com.app.demo.payload.request.ConnectionRequest;
 import com.app.demo.payload.request.ReportRequest;
 import com.app.demo.payload.request.SourcePathRequest;
 import com.app.demo.repository.MethodRepository;
+import com.app.demo.repository.RoleRepository;
+import com.app.demo.service.AccountService;
 import com.app.demo.service.ApplicationService;
 import com.app.demo.service.ConnectionService;
 import com.app.demo.service.ReportService;
@@ -23,7 +28,7 @@ import com.app.demo.service.SourcePathService;
 @Configuration
 public class StartAppConfig {
     @Bean
-    CommandLineRunner commandLineRunner(MethodRepository methodRepository, ApplicationService applicationService, ConnectionService connectionService, ReportService reportService, SourcePathService sourcePathService){
+    CommandLineRunner commandLineRunner(MethodRepository methodRepository, ApplicationService applicationService, ConnectionService connectionService, ReportService reportService, SourcePathService sourcePathService, RoleRepository roleRepository, AccountService accountService){
         return args -> {
             Methods method1 = new Methods();
             method1.setName(EMethod.API);
@@ -40,6 +45,13 @@ public class StartAppConfig {
             Methods method4 = new Methods();
             method4.setName(EMethod.LOCAL_FILES);
             methodRepository.save(method4);
+
+            Roles role = new Roles();
+            role.setName("ADMIN");
+            roleRepository.save(role);
+
+            AccountRequest accountReq = new AccountRequest("admin", "pass123", role.getId());
+            Accounts account = accountService.addAccount(accountReq);
 
             ApplicationRequest applicationReq = new ApplicationRequest("ICOS", "ICOS");
             Applications application = applicationService.addApplication(applicationReq);
@@ -64,6 +76,7 @@ public class StartAppConfig {
 
             ReportRequest reportReq2 = new ReportRequest(connection2.getId(), sourcePath2.getId(), null, "Report 2",null);
             Reports report2 = reportService.addReport(reportReq2);
+
         };
     }
 }

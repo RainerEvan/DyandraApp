@@ -27,7 +27,7 @@ public class ApplicationController {
     @Autowired
     private final ApplicationService applicationService;
 
-    @PostMapping(path = "/add")
+    @PostMapping(path = "/admin/add")
     public ResponseEntity<Object> addApplication(@RequestBody ApplicationRequest applicationRequest){
         try {
             Applications application = applicationService.addApplication(applicationRequest);
@@ -38,7 +38,7 @@ public class ApplicationController {
         }
     }
 
-    @DeleteMapping(path = "/delete")
+    @DeleteMapping(path = "/admin/delete")
     public ResponseEntity<Object> deleteApplication(@RequestParam("applicationId") UUID applicationId){
         try {
             applicationService.deleteApplication(applicationId);

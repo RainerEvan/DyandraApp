@@ -35,11 +35,11 @@ export class ConnectionService {
   }
 
   public addConnection(form:any): Observable<any>{
-    return this.http.post(API_URL+'/add',form);
+    return this.http.post(API_URL+'/admin/add',form);
   }
 
   public deleteConnection(connectionId: string): Observable<any>{
     const params = new HttpParams().set('connectionId',connectionId);
-    return this.http.delete(API_URL+'/delete',{params:params});
+    return this.http.delete(API_URL+'/admin/delete',{params:params});
   }
 }

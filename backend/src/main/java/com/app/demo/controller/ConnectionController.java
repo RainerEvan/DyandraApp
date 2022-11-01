@@ -27,7 +27,7 @@ public class ConnectionController {
     @Autowired
     private final ConnectionService connectionService;
 
-    @PostMapping(path = "/add")
+    @PostMapping(path = "/admin/add")
     public ResponseEntity<Object> addConnection(@RequestBody ConnectionRequest connectionRequest){
         try {
             Connections connection = connectionService.addConnection(connectionRequest);
@@ -38,7 +38,7 @@ public class ConnectionController {
         }
     }
 
-    @DeleteMapping(path = "/delete")
+    @DeleteMapping(path = "/admin/delete")
     public ResponseEntity<Object> deleteConnection(@RequestParam("connectionId") UUID connectionId){
         try {
             connectionService.deleteConnection(connectionId);

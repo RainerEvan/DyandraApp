@@ -46,7 +46,7 @@ public class ReportController {
         }
     }
 
-    @PostMapping(path = "/add")
+    @PostMapping(path = "/admin/add")
     public ResponseEntity<Object> addReport(@RequestBody ReportRequest reportRequest){
         try {
             Reports report = reportService.addReport(reportRequest);
@@ -57,7 +57,7 @@ public class ReportController {
         }
     }
 
-    @PutMapping(path = "/edit")
+    @PutMapping(path = "/admin/edit")
     public ResponseEntity<Object> editReport(@RequestParam("reportId") UUID reportId, @RequestBody ReportRequest reportRequest){
         try {
             Reports report = reportService.editReport(reportId, reportRequest);
@@ -79,7 +79,7 @@ public class ReportController {
         }
     }
 
-    @DeleteMapping(path = "/delete")
+    @DeleteMapping(path = "/admin/delete")
     public ResponseEntity<Object> deleteReport(@RequestParam("reportId") UUID reportId){
         try {
             reportService.deleteReport(reportId);

@@ -1,8 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AdminHomeComponent } from './components/admin/admin-home/admin-home.component';
 import { AdminPageComponent } from './components/admin/admin-page/admin-page.component';
 import { ApplicationComponent } from './components/admin/application/application.component';
 import { ConnectionComponent } from './components/admin/connection/connection.component';
+import { LoginComponent } from './components/admin/login/login.component';
+import { ProfileComponent } from './components/admin/profile/profile.component';
 import { ReportComponent } from './components/admin/report/report.component';
 import { SourcepathComponent } from './components/admin/sourcepath/sourcepath.component';
 import { PivotTableComponent } from './components/pivot-table/pivot-table.component';
@@ -10,34 +13,48 @@ import { PivotTableComponent } from './components/pivot-table/pivot-table.compon
 const routes: Routes = [
   {
     path:'',
-    redirectTo:'admin',
+    redirectTo:'pivot',
     pathMatch:'full'
   },
   {
     path:'admin',
-    component: AdminPageComponent,
+    component: AdminHomeComponent,
     children:[
       {
         path:'',
-        redirectTo: 'application',
-        pathMatch: 'full'
+        component: AdminPageComponent,
+        children:[
+          {
+            path:'',
+            redirectTo: 'application',
+            pathMatch: 'full'
+          },
+          {
+            path:'application',
+            component: ApplicationComponent,
+          },
+          {
+            path:'connection',
+            component: ConnectionComponent,
+          },
+          {
+            path:'sourcepath',
+            component: SourcepathComponent,
+          },
+          {
+            path:'report',
+            component: ReportComponent,
+          },
+          {
+            path:'profile',
+            component: ProfileComponent,
+          },
+        ]
       },
       {
-        path:'application',
-        component: ApplicationComponent,
-      },
-      {
-        path:'connection',
-        component: ConnectionComponent,
-      },
-      {
-        path:'sourcepath',
-        component: SourcepathComponent,
-      },
-      {
-        path:'report',
-        component: ReportComponent,
-      },
+        path:'login',
+        component: LoginComponent,
+      }
     ]
   },
   {

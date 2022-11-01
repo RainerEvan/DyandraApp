@@ -18,7 +18,6 @@ import { TableModule } from 'primeng/table';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PivotTableComponent } from './components/pivot-table/pivot-table.component';
-import { HomeComponent } from './components/home/home.component';
 import { ExportDialogComponent } from './components/dialog/pivot-table/export-dialog/export-dialog.component';
 import { OpenDialogComponent } from './components/dialog/pivot-table/open-dialog/open-dialog.component';
 import { SaveDialogComponent } from './components/dialog/pivot-table/save-dialog/save-dialog.component';
@@ -42,12 +41,14 @@ import { ConnectionDetailsComponent } from './components/dialog/admin/connection
 import { SourcepathDetailsComponent } from './components/dialog/admin/sourcepath-details/sourcepath-details.component';
 import { ReportDetailsComponent } from './components/dialog/admin/report-details/report-details.component';
 import { DatePipe } from '@angular/common';
+import { ProfileComponent } from './components/admin/profile/profile.component';
+import { LoginComponent } from './components/admin/login/login.component';
+import { AdminHomeComponent } from './components/admin/admin-home/admin-home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PivotTableComponent,
-    HomeComponent,
     ExportDialogComponent,
     OpenDialogComponent,
     SaveDialogComponent,
@@ -69,6 +70,9 @@ import { DatePipe } from '@angular/common';
     ConnectionDetailsComponent,
     SourcepathDetailsComponent,
     ReportDetailsComponent,
+    ProfileComponent,
+    LoginComponent,
+    AdminHomeComponent,
   ],
   imports: [
     BrowserModule,

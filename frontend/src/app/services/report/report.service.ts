@@ -56,12 +56,12 @@ export class ReportService {
   }
 
   public addReport(form:any): Observable<any>{
-    return this.http.post(API_URL+'/add',form);
+    return this.http.post(API_URL+'/admin/add',form);
   }
   
   public editReport(reportId:string,form:any): Observable<any>{
     const params = new HttpParams().set('reportId',reportId);
-    return this.http.put(API_URL+'/edit',form,{params:params});
+    return this.http.put(API_URL+'/admin/edit',form,{params:params});
   }
 
   public saveReport(reportId:string,report:any): Observable<any>{
@@ -71,7 +71,7 @@ export class ReportService {
 
   public deleteReport(reportId:string): Observable<any>{
     const params = new HttpParams().set('reportId',reportId);
-    return this.http.delete(API_URL+'/delete',{params:params});
+    return this.http.delete(API_URL+'/admin/delete',{params:params});
   }
 
   public generateReport(reportId:string): Observable<any>{

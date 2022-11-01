@@ -30,11 +30,11 @@ export class ApplicationService {
   }
 
   public addApplication(form:any): Observable<any>{
-    return this.http.post(API_URL+'/add',form);
+    return this.http.post(API_URL+'/admin/add',form);
   }
 
   public deleteApplication(applicationId: string): Observable<any>{
     const params = new HttpParams().set('applicationId',applicationId);
-    return this.http.delete(API_URL+'/delete',{params:params});
+    return this.http.delete(API_URL+'/admin/delete',{params:params});
   }
 }

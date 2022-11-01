@@ -28,7 +28,7 @@ public class SourcePathController {
     @Autowired
     private final SourcePathService sourcePathService;
 
-    @PostMapping(path = "/add")
+    @PostMapping(path = "/admin/add")
     public ResponseEntity<Object> addSourcePath(@RequestBody SourcePathRequest sourcePathRequest){
         try {
             SourcePaths sourcePath = sourcePathService.addSourcePath(sourcePathRequest);
@@ -39,7 +39,7 @@ public class SourcePathController {
         }
     }
 
-    @PutMapping(path = "/edit")
+    @PutMapping(path = "/admin/edit")
     public ResponseEntity<Object> editSourcePath(@RequestParam("sourcePathId") UUID sourcePathId, @RequestBody SourcePathRequest sourcePathRequest){
         try {
             SourcePaths sourcePath = sourcePathService.editSourcePath(sourcePathId, sourcePathRequest);
@@ -50,7 +50,7 @@ public class SourcePathController {
         }
     }
 
-    @DeleteMapping(path = "/delete")
+    @DeleteMapping(path = "/admin/delete")
     public ResponseEntity<Object> deleteSourcePath(@RequestParam("sourcePathId") UUID sourcePathId){
         try {
             sourcePathService.deleteSourcePath(sourcePathId);

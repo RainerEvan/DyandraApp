@@ -1,4 +1,4 @@
-package com.app.demo.security.report.filter;
+package com.app.demo.security.report.jwt;
 
 import java.io.IOException;
 
@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.app.demo.security.report.jwt.ReportJwtUtils;
 import com.app.demo.service.ReportTokenService;
 
 @Component
