@@ -20,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 @Slf4j
 public class AccountJwtUtils {
-    @Value("${jwt.jwtSecretKey}")
+    @Value("${jwt.jwtAccountSecretKey}")
     private String jwtSecret;
     @Value("${jwt.jwtExpirationMs}")
     private Long jwtExpirationMs;

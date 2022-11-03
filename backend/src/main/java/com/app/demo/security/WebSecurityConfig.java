@@ -17,6 +17,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.app.demo.security.account.jwt.AccountEntryPoint;
 import com.app.demo.security.account.jwt.AccountTokenFilter;
+import com.app.demo.security.report.jwt.ReportTokenFilter;
 
 import lombok.AllArgsConstructor;
 
@@ -32,6 +33,11 @@ public class WebSecurityConfig{
     @Bean
     public AccountTokenFilter accountTokenFilter(){
         return new AccountTokenFilter();
+    }
+
+    @Bean
+    public ReportTokenFilter reportTokenFilter(){
+        return new ReportTokenFilter();
     }
 
     @Bean
@@ -53,17 +59,18 @@ public class WebSecurityConfig{
         http.cors().and().csrf().disable()
 			.exceptionHandling().authenticationEntryPoint(accountEntryPoint).and()
             .authorizeRequests()
-            .antMatchers("/api/auth/**").permitAll()
-            .antMatchers("/graphiql").permitAll()
-            .antMatchers("/graphql").permitAll()
             .antMatchers("**/admin/**").hasRole("ADMIN")
-            .anyRequest()
-            .authenticated()
+            .antMatchers("/api/auth/**").permitAll()
+            .antMatchers("/api/report/**").permitAll()
+            .antMatchers("/graphiql", "/vendor/**").permitAll()
+            .antMatchers("/graphql").permitAll()
+            .anyRequest().authenticated()
             .and()
             .httpBasic()
             .and()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
+            .addFilterBefore(reportTokenFilter(), UsernamePasswordAuthenticationFilter.class)
             .addFilterBefore(accountTokenFilter(), UsernamePasswordAuthenticationFilter.class)
             .logout()
                 .clearAuthentication(true)

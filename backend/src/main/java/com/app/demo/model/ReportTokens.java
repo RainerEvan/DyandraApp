@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -30,6 +31,7 @@ public class ReportTokens {
     @ManyToOne
     @JoinColumn(name = "report_id")
     private Reports report;
+    @Lob
     private String token;
     private Instant expirationDate;
 }

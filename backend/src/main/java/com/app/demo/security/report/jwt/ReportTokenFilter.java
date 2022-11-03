@@ -8,17 +8,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.app.demo.service.ReportTokenService;
 
-@Component
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class ReportTokenFilter extends OncePerRequestFilter{
     
     @Autowired
-    private ReportJwtUtils reportJwtUtils;
+    private ReportJwtUtils jwtUtils;
     @Autowired
     private ReportTokenService reportTokenService;
 
@@ -26,19 +27,21 @@ public class ReportTokenFilter extends OncePerRequestFilter{
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
         throws ServletException, IOException {
         try{
-            String jwtToken = parseJwt(request);
-            if(jwtToken != null && reportJwtUtils.validateJwtToken(jwtToken)){
-
+            log.info("Request URL path: {}, Request content type: {}",request.getRequestURI(), request.getContentType());
+            String jwt = parseJwt(request);
+            if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
+                
             }
         } catch(Exception e){
+            log.error("Cannot set report authentication: {}", e);
         }
         filterChain.doFilter(request, response);
     }
 
     private String parseJwt(HttpServletRequest request){
-        String headerAuth = request.getHeader("Authorization");
-        if (StringUtils.hasText(headerAuth) && headerAuth.startsWith("Bearer ")) {
-          return headerAuth.substring(7, headerAuth.length());
+        String headerAuth = request.getHeader("Report-Token");
+        if (StringUtils.hasText(headerAuth)) {
+          return headerAuth.substring(0, headerAuth.length());
         }
         return null;
     }
