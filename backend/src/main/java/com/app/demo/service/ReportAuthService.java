@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.app.demo.model.Applications;
 import com.app.demo.model.ReportTokens;
 import com.app.demo.model.Reports;
-import com.app.demo.payload.request.ClientAuthRequest;
+import com.app.demo.payload.request.ReportAuthRequest;
 import com.app.demo.payload.response.JwtReportResponse;
 import com.app.demo.repository.ApplicationRepository;
 import com.app.demo.repository.ReportRepository;
@@ -30,7 +30,7 @@ public class ReportAuthService {
     private final ReportTokenService reportTokenService;
 
     @Transactional
-    public JwtReportResponse authenticate(ClientAuthRequest reportAuthRequest){
+    public JwtReportResponse authenticate(ReportAuthRequest reportAuthRequest){
         try{
             Applications application = applicationRepository.findByClientId(reportAuthRequest.getClientId())
                 .orElseThrow(() -> new IllegalStateException("Client with current id cannot be found"));

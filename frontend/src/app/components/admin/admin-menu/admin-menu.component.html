@@ -1,7 +1,7 @@
 <div class="w-64 h-full flex-col justify-between bg-gray-800 shadow hidden md:flex">
     <div class="flex flex-col">
         <a routerLink="./application" class="w-full flex items-center space-x-1 p-6 border-b-2 border-gray-700">
-            <img class="w-8" src="/assets/image/dyandra-logo2.png" alt="Dyandra dyandra-logo2">
+            <img class="w-8" src="/assets/image/dyandra-logo2.png" alt="dyandra-logo2">
             <span class="font-allerta text-3xl text-white">DYANDRA</span>
         </a>
         
@@ -41,7 +41,7 @@
             </a>
         </li>
         <li>
-            <button class="menu-item">
+            <button (click)="logout()" class="menu-item">
                 <i class="pi pi-sign-out" style="font-size: 14px"></i>
                 <span class="font-medium text-sm ml-2">Logout</span>
             </button>
@@ -92,7 +92,7 @@
                 </a>
             </li>
             <li>
-                <button routerLink="./profile" (click)="toggleDropdown()" class="menu-item-mobile">
+                <button routerLink="./profile" (click)="logout()" class="menu-item-mobile">
                     <i class="pi pi-sign-out" style="font-size: 14px"></i>
                     <span class="font-medium text-sm ml-2">Logout</span>
                 </button>

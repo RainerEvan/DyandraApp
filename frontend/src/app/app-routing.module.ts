@@ -9,6 +9,7 @@ import { ProfileComponent } from './components/admin/profile/profile.component';
 import { ReportComponent } from './components/admin/report/report.component';
 import { SourcepathComponent } from './components/admin/sourcepath/sourcepath.component';
 import { PivotTableComponent } from './components/pivot-table/pivot-table.component';
+import { AccountAuthGuard } from './utils/account-auth-guard';
 
 const routes: Routes = [
   {
@@ -23,6 +24,7 @@ const routes: Routes = [
       {
         path:'',
         component: AdminPageComponent,
+        canActivate:[AccountAuthGuard],
         children:[
           {
             path:'',
@@ -32,22 +34,27 @@ const routes: Routes = [
           {
             path:'application',
             component: ApplicationComponent,
+            canActivate:[AccountAuthGuard],
           },
           {
             path:'connection',
             component: ConnectionComponent,
+            canActivate:[AccountAuthGuard],
           },
           {
             path:'sourcepath',
             component: SourcepathComponent,
+            canActivate:[AccountAuthGuard],
           },
           {
             path:'report',
             component: ReportComponent,
+            canActivate:[AccountAuthGuard],
           },
           {
             path:'profile',
             component: ProfileComponent,
+            canActivate:[AccountAuthGuard],
           },
         ]
       },

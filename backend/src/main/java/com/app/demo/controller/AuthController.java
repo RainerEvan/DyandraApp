@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.app.demo.payload.request.ClientAuthRequest;
+import com.app.demo.payload.request.ReportAuthRequest;
 import com.app.demo.payload.request.LoginRequest;
 import com.app.demo.payload.response.JwtAccountResponse;
 import com.app.demo.payload.response.JwtReportResponse;
@@ -29,7 +29,7 @@ public class AuthController {
     private final AccountAuthService accountAuthService;
 
     @PostMapping(path = "/report")
-    public ResponseEntity<Object> authenticateReport(@RequestBody ClientAuthRequest reportAuthRequest){
+    public ResponseEntity<Object> authenticateReport(@RequestBody ReportAuthRequest reportAuthRequest){
         try {
             JwtReportResponse jwtReportResponse = reportAuthService.authenticate(reportAuthRequest);
             
