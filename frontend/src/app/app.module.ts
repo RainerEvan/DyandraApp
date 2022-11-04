@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { WebdatarocksPivotModule } from 'ng-webdatarocks';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GraphQLModule } from './graphql.module';
@@ -44,6 +44,8 @@ import { DatePipe } from '@angular/common';
 import { ProfileComponent } from './components/admin/profile/profile.component';
 import { LoginComponent } from './components/admin/login/login.component';
 import { AdminHomeComponent } from './components/admin/admin-home/admin-home.component';
+import { AccountJwtInterceptor } from './utils/account-jwt-interceptor';
+import { ErrorInterceptor } from './utils/error-interceptor';
 
 @NgModule({
   declarations: [
@@ -93,7 +95,16 @@ import { AdminHomeComponent } from './components/admin/admin-home/admin-home.com
     DropdownModule,
     TableModule,
   ],
-  providers: [DialogService, DatePipe],
+  providers: [
+    { 
+      provide: HTTP_INTERCEPTORS, useClass: AccountJwtInterceptor, multi: true 
+    },
+    { 
+      provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true 
+    },
+    DialogService,
+    DatePipe
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

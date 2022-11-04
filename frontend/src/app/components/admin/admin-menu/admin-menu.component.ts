@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AccountAuthService } from 'src/app/services/auth/account-auth.service';
 
 @Component({
   selector: 'app-admin-menu',
@@ -9,13 +10,17 @@ export class AdminMenuComponent implements OnInit {
 
   showDropdown:boolean = false;
 
-  constructor() { }
+  constructor(private accountAuthService:AccountAuthService) { }
 
   ngOnInit(): void {
   }
 
   toggleDropdown(){
     this.showDropdown = !this.showDropdown;
+  }
+
+  logout(){
+    this.accountAuthService.logout();
   }
 
 }
