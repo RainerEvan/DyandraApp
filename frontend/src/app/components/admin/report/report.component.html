@@ -20,8 +20,8 @@
             <tr>
                 <td>{{report.title}}</td>
                 <td class="truncate">{{report.reportId}}</td>
-                <td>{{report.createdAt | date:'dd/MM/yyyy'}}</td>
-                <td>{{(report.updatedAt | date:'dd/MM/yyyy') || "-"}}</td>
+                <td>{{report.createdAt | date:'MMM d, y, h:mm a'}}</td>
+                <td>{{(report.updatedAt | date:'MMM d, y, h:mm a') || "-"}}</td>
                 <td class="flex flex-row justify-center space-x-2 text-white">
                     <button (click)="showReportDetailsDialog(report)" class="flex items-center justify-center btn-primary">
                         <i class="pi pi-info-circle" style="font-size:14px"></i>

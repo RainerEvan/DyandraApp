@@ -21,7 +21,7 @@
                 <td>{{connection.name}}</td>
                 <td>{{connection.application.name}}</td>
                 <td>{{connection.method.name}}</td>
-                <td>{{connection.createdAt | date:'dd/MM/yyyy'}}</td>
+                <td>{{connection.createdAt | date:'MMM d, y, h:mm a'}}</td>
                 <td class="flex flex-row justify-center space-x-2 text-white">
                     <button (click)="showConnectionDetailsDialog(connection)" class="flex items-center justify-center btn-primary">
                         <i class="pi pi-info-circle" style="font-size:14px"></i>

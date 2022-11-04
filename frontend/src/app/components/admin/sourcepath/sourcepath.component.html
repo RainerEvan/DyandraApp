@@ -20,8 +20,8 @@
             <tr>
                 <td>{{sourcePath.name}}</td>
                 <td>{{sourcePath.connection.name}}</td>
-                <td>{{sourcePath.createdAt | date:'dd/MM/yyyy'}}</td>
-                <td>{{(sourcePath.updatedAt | date:'dd/MM/yyyy') || "-"}}</td>
+                <td>{{sourcePath.createdAt | date:'MMM d, y, h:mm a'}}</td>
+                <td>{{(sourcePath.updatedAt | date:'MMM d, y, h:mm a') || "-"}}</td>
                 <td class="flex flex-row justify-center space-x-2 text-white">
                     <button (click)="showSourcePathDetailsDialog(sourcePath)" class="flex items-center justify-center btn-primary">
                         <i class="pi pi-info-circle" style="font-size:14px"></i>

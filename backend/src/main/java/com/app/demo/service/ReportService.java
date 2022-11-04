@@ -1,9 +1,7 @@
 package com.app.demo.service;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +15,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -39,6 +38,9 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class ReportService {
+
+    @Value("#{${sqlCommandsExclusion}}")
+    private final List<String> sqlCommandsExclusion;
 
     @Autowired
     private final ReportRepository reportRepository;
@@ -80,12 +82,18 @@ public class ReportService {
         SourcePaths sourcePath = sourcePathRepository.findById(reportRequest.getSourcePathId())
             .orElseThrow(() -> new IllegalStateException("Source path with current id cannot be found"));
         
+        String query = reportRequest.getQuery();
+        
+        if(query != null){
+            validateQuery(query);
+        }
+
         String reportId = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
 
         Reports report = new Reports();
         report.setConnection(connection);
         report.setSourcePath(sourcePath);
-        report.setQuery(reportRequest.getQuery());
+        report.setQuery(query);
         report.setTitle(reportRequest.getTitle());
         report.setReportId(reportId);
         report.setReportConfig("{}");
@@ -99,8 +107,14 @@ public class ReportService {
         Reports report = reportRepository.findById(reportId)
             .orElseThrow(() -> new IllegalStateException("Report with current id cannot be found"));
 
+        String query = reportRequest.getQuery();
+        
+        if(query != null){
+            validateQuery(query);
+        }
+
         report.setTitle(reportRequest.getTitle());
-        report.setQuery(reportRequest.getQuery());
+        report.setQuery(query);
         report.setUpdatedAt(OffsetDateTime.now());
 
         return reportRepository.save(report);
@@ -127,6 +141,17 @@ public class ReportService {
             .orElseThrow(() -> new IllegalStateException("Report with current id cannot be found: "+reportId));
 
         reportRepository.delete(report);
+    }
+
+    @Transactional
+    public void validateQuery(String query){
+        sqlCommandsExclusion.stream().forEach(
+            (command) -> {
+                if(query.toUpperCase().contains(command)){
+                    throw new IllegalStateException(String.format("Query cannot contain %s command",command));
+                }
+            }
+        );
     }
 
     @Transactional

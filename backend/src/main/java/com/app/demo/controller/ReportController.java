@@ -1,6 +1,5 @@
 package com.app.demo.controller;
 
-import java.io.IOException;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +30,13 @@ public class ReportController {
     private final ReportService reportService;
 
     @GetMapping(path = "/test")
-    public Reports test(@RequestBody String reportId) throws IOException{
-        return reportService.getReportByReportId(reportId);
+    public ResponseEntity<Object> test(@RequestBody String query){
+        try {
+            
+            return ResponseHandler.generateResponse("Query accepted", HttpStatus.OK, null);
+        } catch (Exception e) {
+            return ResponseHandler.generateResponse(e.getMessage(), HttpStatus.BAD_REQUEST, null);
+        }
     }
 
     @GetMapping(path = "/generate")

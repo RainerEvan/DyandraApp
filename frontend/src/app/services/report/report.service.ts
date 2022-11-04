@@ -21,6 +21,9 @@ export class ReportService {
             id
             connection{
               name
+              method{
+                name
+              }
             }
             sourcePath{
               name

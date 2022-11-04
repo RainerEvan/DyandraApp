@@ -2,6 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Methods } from 'src/app/models/methods';
 import { Reports } from 'src/app/models/reports';
 import { ReportService } from 'src/app/services/report/report.service';
 
@@ -15,11 +16,13 @@ export class ReportDetailsComponent implements OnInit {
   reportForm: FormGroup;
   isReportFormSubmitted: boolean = false;
   report: Reports;
+  methodName: String;
   
   constructor(public ref: DynamicDialogRef, public config: DynamicDialogConfig, private datePipe:DatePipe, private reportService:ReportService, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
     this.report = this.config.data.reportData;
+    this.methodName = this.report.connection.method.name;
     this.generateReportForm();
   }
 

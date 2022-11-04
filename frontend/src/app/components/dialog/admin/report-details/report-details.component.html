@@ -19,7 +19,7 @@
         <label for="dateCreated" class="font-medium">Date Created</label>
         <input type="text" pInputText placeholder="Enter date created" formControlName="dateCreated">
     </div>
-    <div class="w-full">
+    <div *ngIf="methodName == 'DIRECT_DB'" class="w-full">
         <label for="query" class="font-medium">Query</label>
         <textarea pInputTextarea rows="6" placeholder="Enter query for database" formControlName="query"></textarea>
     </div>

@@ -78,7 +78,6 @@ public class WebSecurityConfig{
                 .deleteCookies("JSESSIONID")
                 .permitAll();
 
-
         return http.build();
     }
 
