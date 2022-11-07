@@ -68,6 +68,10 @@ const routes: Routes = [
     path:'pivot',
     component: PivotTableComponent,
   },
+  {
+    path:'pivot/:id',
+    component: PivotTableComponent,
+  },
 ];
 
 @NgModule({

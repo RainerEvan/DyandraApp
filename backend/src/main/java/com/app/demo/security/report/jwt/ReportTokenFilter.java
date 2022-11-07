@@ -11,7 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.app.demo.service.ReportTokenService;
+import com.app.demo.model.Applications;
+import com.app.demo.service.ApplicationService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,16 +22,18 @@ public class ReportTokenFilter extends OncePerRequestFilter{
     @Autowired
     private ReportJwtUtils jwtUtils;
     @Autowired
-    private ReportTokenService reportTokenService;
+    private ApplicationService applicationService;;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
         throws ServletException, IOException {
         try{
-            log.info("Request URL path: {}, Request content type: {}",request.getRequestURI(), request.getContentType());
+            log.info("Report Auth - Request URL path: {}, Request content type: {}",request.getRequestURI(), request.getContentType());
             String jwt = parseJwt(request);
             if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
-                
+                String clientId = jwtUtils.getClientFromJwtToken(jwt);
+                Applications application = applicationService.getApplication(clientId);
+                log.info("Application authenticated: {}", application.getName());
             }
         } catch(Exception e){
             log.error("Cannot set report authentication: {}", e);

@@ -25,6 +25,12 @@ public class ApplicationService {
     public List<Applications> getAllApplications(){
         return applicationRepository.findAll();
     }
+    
+    @Transactional
+    public Applications getApplication(String clientId){
+        return applicationRepository.findByClientId(clientId)
+            .orElseThrow(() -> new IllegalStateException("Application with current cliend id cannot be found"));
+    }
 
     @Transactional
     public Applications addApplication(ApplicationRequest applicationRequest){

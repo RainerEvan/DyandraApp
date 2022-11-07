@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { WebdatarocksComponent } from 'ng-webdatarocks';
 import { MenuItem } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -21,13 +22,17 @@ export class PivotTableComponent implements OnInit {
     report: Reports;
     items: MenuItem[];
     reportConfig: any;
-
+    reportId: string;
     ref: DynamicDialogRef;
 
-    constructor(private reportService:ReportService, private dialogService:DialogService) { }
+    constructor(private reportService:ReportService, private dialogService:DialogService, private route:ActivatedRoute) { }
 
     ngOnInit(): void {
         this.generateMenubar();
+        this.reportId = this.route.snapshot.paramMap.get('id');
+        if(this.reportId){
+            this.openReport(this.reportId);
+        }
     }
 
     ngOnDestroy(): void {
