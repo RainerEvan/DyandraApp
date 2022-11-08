@@ -7,8 +7,8 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class JwtReportResponse {
+public class JwtClientResponse {
     private String accessToken;
     private Instant expirationDate;
-    private String reportTitle;
+    private String application;
 }

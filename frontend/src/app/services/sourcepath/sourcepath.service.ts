@@ -3,8 +3,9 @@ import { Injectable } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
 import { map, Observable } from 'rxjs';
 import { SourcePaths } from 'src/app/models/sourcepaths';
+import { environment } from 'src/environments/environment';
 
-const API_URL = 'http://localhost:8080/api/source-path';
+const API_URL = environment.apiUrl + '/admin/source-path';
 
 @Injectable({
   providedIn: 'root'
@@ -53,15 +54,15 @@ export class SourcepathService {
   }
 
   public addSourcePath(form:any): Observable<any>{
-    return this.http.post(API_URL+'/admin/add',form);
+    return this.http.post(API_URL+'/add',form);
   }
 
   public editSourcePath(sourcePathId: string, form:any): Observable<any>{
     const params = new HttpParams().set('sourcePathId',sourcePathId);
-    return this.http.put(API_URL+'/admin/edit',form,{params:params});
+    return this.http.put(API_URL+'/edit',form,{params:params});
   }
   public deleteSourcePath(sourcePathId: string): Observable<any>{
     const params = new HttpParams().set('sourcePathId',sourcePathId);
-    return this.http.delete(API_URL+'/admin/delete',{params:params});
+    return this.http.delete(API_URL+'/delete',{params:params});
   }
 }

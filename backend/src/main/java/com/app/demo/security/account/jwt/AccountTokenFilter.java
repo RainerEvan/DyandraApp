@@ -42,11 +42,19 @@ public class AccountTokenFilter extends OncePerRequestFilter{
                     userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
+                log.info("Successfully set account authentication: {}", username);
             }
         } catch (Exception e) {
             log.error("Cannot set account authentication: {}", e);
         }
         filterChain.doFilter(request, response);
+    }
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        String path = request.getRequestURI();
+
+        return !path.contains("/admin");
     }
 
     private String parseJwt(HttpServletRequest request) {

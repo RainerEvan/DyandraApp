@@ -60,7 +60,7 @@ public class AccountAuthService {
                 roles
             );
         } catch (Exception e) {
-            throw new RuntimeException("Invalid username or password!");
+            throw new RuntimeException("Invalid username or password! "+e.getMessage());
         }
     }
     

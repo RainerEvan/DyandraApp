@@ -1,4 +1,4 @@
-package com.app.demo.security.report.jwt;
+package com.app.demo.security.client.jwt;
 
 import java.io.IOException;
 
@@ -11,29 +11,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.app.demo.model.Applications;
-import com.app.demo.service.ApplicationService;
+import com.app.demo.service.ReportService;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class ReportTokenFilter extends OncePerRequestFilter{
+public class ClientTokenFilter extends OncePerRequestFilter{
     
     @Autowired
-    private ReportJwtUtils jwtUtils;
+    private ClientJwtUtils jwtUtils;
     @Autowired
-    private ApplicationService applicationService;;
+    private ReportService reportService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
         throws ServletException, IOException {
         try{
-            log.info("Report Auth - Request URL path: {}, Request content type: {}",request.getRequestURI(), request.getContentType());
+            log.info("Client Auth - Request URL path: {}, Request content type: {}",request.getRequestURI(), request.getContentType());
             String jwt = parseJwt(request);
             if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
                 String clientId = jwtUtils.getClientFromJwtToken(jwt);
-                Applications application = applicationService.getApplication(clientId);
-                log.info("Application authenticated: {}", application.getName());
+                String reportId = jwtUtils.getReportFromJwtToken(jwt);
+
+                if(reportService.verifyClientReport(clientId, reportId)){
+                    log.info("Successfully set client authentication");
+                }
             }
         } catch(Exception e){
             log.error("Cannot set report authentication: {}", e);
@@ -41,8 +43,15 @@ public class ReportTokenFilter extends OncePerRequestFilter{
         filterChain.doFilter(request, response);
     }
 
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        String path = request.getRequestURI();
+
+        return path.contains("/admin");
+    }
+
     private String parseJwt(HttpServletRequest request){
-        String headerAuth = request.getHeader("Report-Token");
+        String headerAuth = request.getHeader("Client-Token");
         if (StringUtils.hasText(headerAuth)) {
           return headerAuth.substring(0, headerAuth.length());
         }

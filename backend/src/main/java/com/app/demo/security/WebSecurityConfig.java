@@ -3,6 +3,7 @@ package com.app.demo.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -17,7 +18,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.app.demo.security.account.jwt.AccountEntryPoint;
 import com.app.demo.security.account.jwt.AccountTokenFilter;
-import com.app.demo.security.report.jwt.ReportTokenFilter;
+import com.app.demo.security.client.jwt.ClientTokenFilter;
 
 import lombok.AllArgsConstructor;
 
@@ -26,19 +27,6 @@ import lombok.AllArgsConstructor;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @AllArgsConstructor
 public class WebSecurityConfig{
-
-    @Autowired
-    private final AccountEntryPoint accountEntryPoint;
-
-    @Bean
-    public AccountTokenFilter accountTokenFilter(){
-        return new AccountTokenFilter();
-    }
-
-    @Bean
-    public ReportTokenFilter reportTokenFilter(){
-        return new ReportTokenFilter();
-    }
 
     @Bean
     public PasswordEncoder passwordEncoder(){
@@ -54,31 +42,81 @@ public class WebSecurityConfig{
             .build();
     }
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-        http.cors().and().csrf().disable()
-			.exceptionHandling().authenticationEntryPoint(accountEntryPoint).and()
-            .authorizeRequests()
-            .antMatchers("**/admin/**").hasRole("ADMIN")
-            .antMatchers("/api/auth/**").permitAll()
-            .antMatchers("/api/report/**").permitAll()
-            .antMatchers("/graphiql", "/vendor/**").permitAll()
-            .antMatchers("/graphql").permitAll()
-            .anyRequest().authenticated()
-            .and()
-            .httpBasic()
-            .and()
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and()
-            .addFilterBefore(reportTokenFilter(), UsernamePasswordAuthenticationFilter.class)
-            .addFilterBefore(accountTokenFilter(), UsernamePasswordAuthenticationFilter.class)
-            .logout()
-                .clearAuthentication(true)
-                .invalidateHttpSession(true)
-                .deleteCookies("JSESSIONID")
-                .permitAll();
+    @Configuration
+    @Order(1)
+    @AllArgsConstructor
+    public static class ClientConfigurationAdapter{
 
-        return http.build();
+        @Bean
+        public ClientTokenFilter clientTokenFilter(){
+            return new ClientTokenFilter();
+        }
+
+        @Bean
+        public SecurityFilterChain filterChainClient(HttpSecurity http) throws Exception{
+            http.cors().and().csrf().disable()
+                .httpBasic().disable();
+                // .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                // .and()
+                // .authorizeRequests()
+                // .antMatchers("/api/auth/**").permitAll()
+                // .antMatchers("/graphiql", "/vendor/**").permitAll()
+                // .antMatchers("/graphql").permitAll()
+                // .anyRequest().authenticated()
+                // .and()
+                // .addFilterBefore(clientTokenFilter(), UsernamePasswordAuthenticationFilter.class)
+                // .httpBasic()
+                // .and()
+                // .logout()
+                //     .clearAuthentication(true)
+                //     .invalidateHttpSession(true)
+                //     .deleteCookies("JSESSIONID")
+                //     .permitAll();
+    
+            return http.build();
+        }
+
     }
 
+    @Configuration
+    @Order(2)
+    @AllArgsConstructor
+    public static class AdminConfigurationAdapter{
+
+        @Autowired
+        private final AccountEntryPoint accountEntryPoint;
+
+        @Bean
+        public AccountTokenFilter accountTokenFilter(){
+            return new AccountTokenFilter();
+        }
+        
+        @Bean
+        public SecurityFilterChain filterChainAccount(HttpSecurity http) throws Exception{
+            http.cors().and().csrf().disable()
+                .httpBasic().disable();
+                // .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                // .and()
+                // .exceptionHandling().authenticationEntryPoint(accountEntryPoint)
+                // .and()
+                // .authorizeRequests()
+                // .antMatchers("**/admin/**").hasAuthority("ADMIN")
+                // .antMatchers("/api/auth/**").permitAll()
+                // .antMatchers("/graphiql", "/vendor/**").permitAll()
+                // .antMatchers("/graphql").permitAll()
+                // .anyRequest().authenticated()
+                // .and()
+                // .addFilterBefore(accountTokenFilter(), UsernamePasswordAuthenticationFilter.class)
+                // .httpBasic()
+                // .and()
+                // .logout()
+                //     .clearAuthentication(true)
+                //     .invalidateHttpSession(true)
+                //     .deleteCookies("JSESSIONID")
+                //     .permitAll();
+    
+            return http.build();
+        }
+
+    }
 }

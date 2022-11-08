@@ -20,14 +20,14 @@ import com.app.demo.utils.ResponseHandler;
 import lombok.AllArgsConstructor;
 
 @RestController
-@RequestMapping("/api/connection")
+@RequestMapping("/api/admin/connection")
 @AllArgsConstructor
 public class ConnectionController {
     
     @Autowired
     private final ConnectionService connectionService;
 
-    @PostMapping(path = "/admin/add")
+    @PostMapping(path = "/add")
     public ResponseEntity<Object> addConnection(@RequestBody ConnectionRequest connectionRequest){
         try {
             Connections connection = connectionService.addConnection(connectionRequest);
@@ -38,7 +38,7 @@ public class ConnectionController {
         }
     }
 
-    @DeleteMapping(path = "/admin/delete")
+    @DeleteMapping(path = "/delete")
     public ResponseEntity<Object> deleteConnection(@RequestParam("connectionId") UUID connectionId){
         try {
             connectionService.deleteConnection(connectionId);

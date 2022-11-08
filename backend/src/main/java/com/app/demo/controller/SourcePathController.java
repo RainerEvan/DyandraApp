@@ -21,14 +21,14 @@ import com.app.demo.utils.ResponseHandler;
 import lombok.AllArgsConstructor;
 
 @RestController
-@RequestMapping("/api/source-path")
+@RequestMapping("/api/admin/source-path")
 @AllArgsConstructor
 public class SourcePathController {
     
     @Autowired
     private final SourcePathService sourcePathService;
 
-    @PostMapping(path = "/admin/add")
+    @PostMapping(path = "/add")
     public ResponseEntity<Object> addSourcePath(@RequestBody SourcePathRequest sourcePathRequest){
         try {
             SourcePaths sourcePath = sourcePathService.addSourcePath(sourcePathRequest);
@@ -39,7 +39,7 @@ public class SourcePathController {
         }
     }
 
-    @PutMapping(path = "/admin/edit")
+    @PutMapping(path = "/edit")
     public ResponseEntity<Object> editSourcePath(@RequestParam("sourcePathId") UUID sourcePathId, @RequestBody SourcePathRequest sourcePathRequest){
         try {
             SourcePaths sourcePath = sourcePathService.editSourcePath(sourcePathId, sourcePathRequest);
@@ -50,7 +50,7 @@ public class SourcePathController {
         }
     }
 
-    @DeleteMapping(path = "/admin/delete")
+    @DeleteMapping(path = "/delete")
     public ResponseEntity<Object> deleteSourcePath(@RequestParam("sourcePathId") UUID sourcePathId){
         try {
             sourcePathService.deleteSourcePath(sourcePathId);

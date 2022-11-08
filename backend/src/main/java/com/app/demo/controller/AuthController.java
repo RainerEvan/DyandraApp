@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.app.demo.payload.request.ReportAuthRequest;
+import com.app.demo.payload.request.ClientAuthRequest;
 import com.app.demo.payload.request.LoginRequest;
 import com.app.demo.payload.response.JwtAccountResponse;
-import com.app.demo.payload.response.JwtReportResponse;
+import com.app.demo.payload.response.JwtClientResponse;
 import com.app.demo.service.AccountAuthService;
-import com.app.demo.service.ReportAuthService;
+import com.app.demo.service.ClientAuthService;
 import com.app.demo.utils.ResponseHandler;
 
 import lombok.AllArgsConstructor;
@@ -24,16 +24,16 @@ import lombok.AllArgsConstructor;
 public class AuthController {
     
     @Autowired
-    private final ReportAuthService reportAuthService;
+    private final ClientAuthService clientAuthService;
     @Autowired
     private final AccountAuthService accountAuthService;
 
-    @PostMapping(path = "/report")
-    public ResponseEntity<Object> authenticateReport(@RequestBody ReportAuthRequest reportAuthRequest){
+    @PostMapping(path = "/client")
+    public ResponseEntity<Object> authenticate(@RequestBody ClientAuthRequest clientAuthRequest){
         try {
-            JwtReportResponse jwtReportResponse = reportAuthService.authenticate(reportAuthRequest);
+            JwtClientResponse jwtClientResponse = clientAuthService.authenticateClient(clientAuthRequest);
             
-            return ResponseHandler.generateResponse("Authenticated successfully!", HttpStatus.OK, jwtReportResponse);
+            return ResponseHandler.generateResponse("Authenticated successfully!", HttpStatus.OK, jwtClientResponse);
         } catch (Exception e) {
             return ResponseHandler.generateResponse(e.getMessage(), HttpStatus.FORBIDDEN, null);
         }

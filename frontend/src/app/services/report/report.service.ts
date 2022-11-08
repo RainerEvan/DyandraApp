@@ -3,8 +3,9 @@ import { Injectable } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
 import { map, Observable } from 'rxjs';
 import { Reports } from 'src/app/models/reports';
+import { environment } from 'src/environments/environment';
 
-const API_URL = 'http://localhost:8080/api/report';
+const API_URL = environment.apiUrl+'/admin/report';
 
 @Injectable({
   providedIn: 'root'
@@ -59,27 +60,17 @@ export class ReportService {
   }
 
   public addReport(form:any): Observable<any>{
-    return this.http.post(API_URL+'/admin/add',form);
+    return this.http.post(API_URL+'/add',form);
   }
   
   public editReport(reportId:string,form:any): Observable<any>{
     const params = new HttpParams().set('reportId',reportId);
-    return this.http.put(API_URL+'/admin/edit',form,{params:params});
-  }
-
-  public saveReport(reportId:string,report:any): Observable<any>{
-    const params = new HttpParams().set('reportId',reportId);
-    return this.http.put(API_URL+'/save',report,{params:params});
+    return this.http.put(API_URL+'/edit',form,{params:params});
   }
 
   public deleteReport(reportId:string): Observable<any>{
     const params = new HttpParams().set('reportId',reportId);
-    return this.http.delete(API_URL+'/admin/delete',{params:params});
-  }
-
-  public generateReport(reportId:string): Observable<any>{
-    const params = new HttpParams().set('reportId',reportId);
-    return this.http.get(API_URL+'/generate',{params:params});
+    return this.http.delete(API_URL+'/delete',{params:params});
   }
   
 }

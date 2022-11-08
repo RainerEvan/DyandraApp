@@ -16,14 +16,14 @@ import com.app.demo.utils.ResponseHandler;
 import lombok.AllArgsConstructor;
 
 @RestController
-@RequestMapping("/api/account")
+@RequestMapping("/api/admin/account")
 @AllArgsConstructor
 public class AccountController {
     
     @Autowired
     private final AccountService accountService;
 
-    @PostMapping(path = "/admin/add")
+    @PostMapping(path = "/add")
     public ResponseEntity<Object> addAccount(@RequestBody AccountRequest accountRequest){
         try {
             Accounts account = accountService.addAccount(accountRequest);

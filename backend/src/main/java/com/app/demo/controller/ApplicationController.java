@@ -20,14 +20,14 @@ import com.app.demo.utils.ResponseHandler;
 import lombok.AllArgsConstructor;
 
 @RestController
-@RequestMapping("/api/application")
+@RequestMapping("/api/admin/application")
 @AllArgsConstructor
 public class ApplicationController {
     
     @Autowired
     private final ApplicationService applicationService;
 
-    @PostMapping(path = "/admin/add")
+    @PostMapping(path = "/add")
     public ResponseEntity<Object> addApplication(@RequestBody ApplicationRequest applicationRequest){
         try {
             Applications application = applicationService.addApplication(applicationRequest);
@@ -38,7 +38,7 @@ public class ApplicationController {
         }
     }
 
-    @DeleteMapping(path = "/admin/delete")
+    @DeleteMapping(path = "/delete")
     public ResponseEntity<Object> deleteApplication(@RequestParam("applicationId") UUID applicationId){
         try {
             applicationService.deleteApplication(applicationId);

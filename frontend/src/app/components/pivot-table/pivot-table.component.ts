@@ -4,6 +4,7 @@ import { WebdatarocksComponent } from 'ng-webdatarocks';
 import { MenuItem } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Reports } from 'src/app/models/reports';
+import { PublicService } from 'src/app/services/public/public.service';
 import { ReportService } from 'src/app/services/report/report.service';
 import { ExportDialogComponent } from '../dialog/pivot-table/export-dialog/export-dialog.component';
 import { FormatDialogComponent } from '../dialog/pivot-table/format-dialog/format-dialog.component';
@@ -25,7 +26,7 @@ export class PivotTableComponent implements OnInit {
     reportId: string;
     ref: DynamicDialogRef;
 
-    constructor(private reportService:ReportService, private dialogService:DialogService, private route:ActivatedRoute) { }
+    constructor(private reportService:ReportService, private publicService:PublicService, private dialogService:DialogService, private route:ActivatedRoute) { }
 
     ngOnInit(): void {
         this.generateMenubar();
@@ -49,19 +50,19 @@ export class PivotTableComponent implements OnInit {
     }
 
     //OPEN
-    showOpenDialog(){
-        this.ref = this.dialogService.open(OpenDialogComponent,{
-            header: 'Open Report',
-            baseZIndex: 10000,
-            contentStyle: {"max-height": "600px", "width":"55vw","min-width":"450px", "max-width":"700px","overflow": "auto"},
-        });
+    // showOpenDialog(){
+    //     this.ref = this.dialogService.open(OpenDialogComponent,{
+    //         header: 'Open Report',
+    //         baseZIndex: 10000,
+    //         contentStyle: {"max-height": "600px", "width":"55vw","min-width":"450px", "max-width":"700px","overflow": "auto"},
+    //     });
 
-        this.ref.onClose.subscribe((reportId:any)=>{
-            if(reportId){
-                this.openReport(reportId);
-            }
-        });
-    }
+    //     this.ref.onClose.subscribe((reportId:any)=>{
+    //         if(reportId){
+    //             this.openReport(reportId);
+    //         }
+    //     });
+    // }
 
     openReport(reportId:any){
         this.reportService.getReportByReportId(reportId).subscribe({
@@ -76,7 +77,7 @@ export class PivotTableComponent implements OnInit {
     }
 
     generateReport(reportId:any){
-        this.reportService.generateReport(reportId).subscribe({
+        this.publicService.generateReport(reportId).subscribe({
             next:(response:any)=>{
                 this.reportConfig = response.data;
                 this.onReportComplete();
@@ -115,7 +116,7 @@ export class PivotTableComponent implements OnInit {
             "reportConfig":JSON.stringify(report)
         }
 
-        this.reportService.saveReport(this.report.id, reportRequest).subscribe({
+        this.publicService.saveReport(this.report.id, reportRequest).subscribe({
             next:(response:any)=>{
                 console.log(response);
             },
@@ -228,13 +229,13 @@ export class PivotTableComponent implements OnInit {
             {
                 label: 'Report',
                 items: [
-                    {
-                        label: 'Open',
-                        icon: 'pi pi-fw pi-folder-open',
-                        command: () => {
-                            this.showOpenDialog();
-                        }
-                    },
+                    // {
+                    //     label: 'Open',
+                    //     icon: 'pi pi-fw pi-folder-open',
+                    //     command: () => {
+                    //         this.showOpenDialog();
+                    //     }
+                    // },
                     {
                         label: 'Save',
                         icon: 'pi pi-fw pi-save',
