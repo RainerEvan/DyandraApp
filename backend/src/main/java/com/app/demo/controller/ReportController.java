@@ -33,8 +33,7 @@ public class ReportController {
     @GetMapping(path = "/test")
     public ResponseEntity<Object> test(@RequestBody ClientAuthRequest clientAuthRequest){
         try {
-            String template = reportService.getTemplate(clientAuthRequest);
-            return ResponseHandler.generateResponse("Credential accepted", HttpStatus.OK, template);
+            return ResponseHandler.generateResponse("Credential accepted", HttpStatus.OK, null);
         } catch (Exception e) {
             return ResponseHandler.generateResponse(e.getMessage(), HttpStatus.BAD_REQUEST, null);
         }

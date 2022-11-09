@@ -6,9 +6,11 @@ import com.app.demo.data.EMethod;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class ConnectionRequest {
     private UUID applicationId;
     private EMethod methodName;

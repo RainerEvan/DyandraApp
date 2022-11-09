@@ -33,7 +33,7 @@ public class AuthController {
         try {
             JwtClientResponse jwtClientResponse = clientAuthService.authenticateClient(clientAuthRequest);
             
-            return ResponseHandler.generateResponse("Authenticated successfully!", HttpStatus.OK, jwtClientResponse);
+            return ResponseEntity.status(HttpStatus.OK).body(jwtClientResponse);
         } catch (Exception e) {
             return ResponseHandler.generateResponse(e.getMessage(), HttpStatus.FORBIDDEN, null);
         }
@@ -42,8 +42,8 @@ public class AuthController {
     @PostMapping(path = "/login")
     public ResponseEntity<Object> login(@RequestBody LoginRequest loginRequest){
         try {
-            JwtAccountResponse response = accountAuthService.loginAccount(loginRequest);
-            return ResponseEntity.status(HttpStatus.OK).body(response);
+            JwtAccountResponse jwtAccountResponse = accountAuthService.loginAccount(loginRequest);
+            return ResponseEntity.status(HttpStatus.OK).body(jwtAccountResponse);
         } catch (Exception e) {
             return ResponseHandler.generateResponse(e.getMessage(), HttpStatus.BAD_REQUEST, null);
         }

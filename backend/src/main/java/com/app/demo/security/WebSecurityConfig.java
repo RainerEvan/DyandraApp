@@ -32,15 +32,6 @@ public class WebSecurityConfig{
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
-    
-    @Bean
-    public AuthenticationManager authManager(HttpSecurity http, BCryptPasswordEncoder bCryptPasswordEncoder, UserDetailsService userDetailsService) throws Exception{
-        return http.getSharedObject(AuthenticationManagerBuilder.class)
-            .userDetailsService(userDetailsService)
-            .passwordEncoder(bCryptPasswordEncoder)
-            .and()
-            .build();
-    }
 
     @Configuration
     @Order(1)
@@ -55,23 +46,16 @@ public class WebSecurityConfig{
         @Bean
         public SecurityFilterChain filterChainClient(HttpSecurity http) throws Exception{
             http.cors().and().csrf().disable()
-                .httpBasic().disable();
-                // .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                // .and()
-                // .authorizeRequests()
-                // .antMatchers("/api/auth/**").permitAll()
-                // .antMatchers("/graphiql", "/vendor/**").permitAll()
-                // .antMatchers("/graphql").permitAll()
-                // .anyRequest().authenticated()
-                // .and()
-                // .addFilterBefore(clientTokenFilter(), UsernamePasswordAuthenticationFilter.class)
-                // .httpBasic()
-                // .and()
-                // .logout()
-                //     .clearAuthentication(true)
-                //     .invalidateHttpSession(true)
-                //     .deleteCookies("JSESSIONID")
-                //     .permitAll();
+                // .httpBasic().disable();
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authorizeRequests()
+                .antMatchers("/api/auth/**").permitAll()
+                .antMatchers("/graphiql", "/vendor/**").permitAll()
+                .antMatchers("/graphql").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .addFilterBefore(clientTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     
             return http.build();
         }
@@ -90,30 +74,39 @@ public class WebSecurityConfig{
         public AccountTokenFilter accountTokenFilter(){
             return new AccountTokenFilter();
         }
+
+        @Bean
+        public AuthenticationManager authManager(HttpSecurity http, BCryptPasswordEncoder bCryptPasswordEncoder, UserDetailsService userDetailsService) throws Exception{
+            return http.getSharedObject(AuthenticationManagerBuilder.class)
+                .userDetailsService(userDetailsService)
+                .passwordEncoder(bCryptPasswordEncoder)
+                .and()
+                .build();
+        }
         
         @Bean
         public SecurityFilterChain filterChainAccount(HttpSecurity http) throws Exception{
             http.cors().and().csrf().disable()
-                .httpBasic().disable();
-                // .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                // .and()
-                // .exceptionHandling().authenticationEntryPoint(accountEntryPoint)
-                // .and()
-                // .authorizeRequests()
-                // .antMatchers("**/admin/**").hasAuthority("ADMIN")
-                // .antMatchers("/api/auth/**").permitAll()
-                // .antMatchers("/graphiql", "/vendor/**").permitAll()
-                // .antMatchers("/graphql").permitAll()
-                // .anyRequest().authenticated()
-                // .and()
-                // .addFilterBefore(accountTokenFilter(), UsernamePasswordAuthenticationFilter.class)
-                // .httpBasic()
-                // .and()
-                // .logout()
-                //     .clearAuthentication(true)
-                //     .invalidateHttpSession(true)
-                //     .deleteCookies("JSESSIONID")
-                //     .permitAll();
+                // .httpBasic().disable();
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .exceptionHandling().authenticationEntryPoint(accountEntryPoint)
+                .and()
+                .authorizeRequests()
+                .antMatchers("**/admin/**").hasAuthority("ADMIN")
+                .antMatchers("/api/auth/**").permitAll()
+                .antMatchers("/graphiql", "/vendor/**").permitAll()
+                .antMatchers("/graphql").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .addFilterBefore(accountTokenFilter(), UsernamePasswordAuthenticationFilter.class)
+                .httpBasic()
+                .and()
+                .logout()
+                    .clearAuthentication(true)
+                    .invalidateHttpSession(true)
+                    .deleteCookies("JSESSIONID")
+                    .permitAll();
     
             return http.build();
         }

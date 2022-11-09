@@ -30,6 +30,7 @@ import com.app.demo.model.Reports;
 import com.app.demo.model.SourcePaths;
 import com.app.demo.payload.request.ClientAuthRequest;
 import com.app.demo.payload.request.ReportRequest;
+import com.app.demo.payload.response.ReportTemplateResponse;
 import com.app.demo.repository.ConnectionRepository;
 import com.app.demo.repository.ReportRepository;
 import com.app.demo.repository.SourcePathRepository;
@@ -259,12 +260,15 @@ public class ReportService{
     }
 
     @Transactional
-    public String getTemplate(ClientAuthRequest clientAuthRequest){
+    public ReportTemplateResponse getTemplate(ClientAuthRequest clientAuthRequest){
         if(verifyClientReport(clientAuthRequest.getClientId(), clientAuthRequest.getReportId())){
-            String template = "<iframe width=\"100%\" height=\"700\" [src]=\"{clientUrl}/{reportId}\"></iframe>";
+            Reports report = reportRepository.findByReportId(clientAuthRequest.getReportId())
+                .orElseThrow(() -> new IllegalStateException("Report with current id cannot be found"));
+
+            String template = "<iframe width=\"100%\" height=\"700\" src=\"{clientUrl}/{reportId}\"></iframe>";
             template = template.replace("{clientUrl}", dyandraClientUrl).replace("{reportId}", clientAuthRequest.getReportId());
-            
-            return template;
+
+            return new ReportTemplateResponse(report.getTitle(), template);
         }
         return null;
     }

@@ -52,8 +52,8 @@ public class ClientTokenFilter extends OncePerRequestFilter{
 
     private String parseJwt(HttpServletRequest request){
         String headerAuth = request.getHeader("Client-Token");
-        if (StringUtils.hasText(headerAuth)) {
-          return headerAuth.substring(0, headerAuth.length());
+        if (StringUtils.hasText(headerAuth) && headerAuth.startsWith("Client ")) {
+          return headerAuth.substring(7, headerAuth.length());
         }
         return null;
     }
