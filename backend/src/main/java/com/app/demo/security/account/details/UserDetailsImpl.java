@@ -15,8 +15,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-@AllArgsConstructor
 @Data
+@AllArgsConstructor
 public class UserDetailsImpl implements UserDetails{
     private UUID id;
     private String username;

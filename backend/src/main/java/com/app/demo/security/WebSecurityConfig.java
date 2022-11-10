@@ -14,11 +14,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.app.demo.security.account.jwt.AccountEntryPoint;
-import com.app.demo.security.account.jwt.AccountTokenFilter;
-import com.app.demo.security.client.jwt.ClientTokenFilter;
+// import com.app.demo.security.account.jwt.AccountTokenFilter;
+// import com.app.demo.security.client.jwt.ClientTokenFilter;
 
 import lombok.AllArgsConstructor;
 
@@ -33,47 +32,46 @@ public class WebSecurityConfig{
         return new BCryptPasswordEncoder();
     }
 
+    // @Configuration
+    // @Order(1)
+    // @AllArgsConstructor
+    // public static class ClientConfigurationAdapter{
+
+    //     // @Bean
+    //     // public ClientTokenFilter clientTokenFilter(){
+    //     //     return new ClientTokenFilter();
+    //     // }
+
+    //     @Bean
+    //     public SecurityFilterChain filterChainClient(HttpSecurity http) throws Exception{
+    //         http.cors().and().csrf().disable()
+    //             // .httpBasic().disable();
+    //             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+    //             .and()
+    //             .authorizeRequests()
+    //             .antMatchers("/api/auth/**").permitAll()
+    //             .antMatchers("/graphiql", "/vendor/**").permitAll()
+    //             .antMatchers("/graphql").permitAll()
+    //             .anyRequest().authenticated();
+    //             // .addFilterBefore(clientTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+    
+    //         return http.build();
+    //     }
+
+    // }
+
     @Configuration
     @Order(1)
-    @AllArgsConstructor
-    public static class ClientConfigurationAdapter{
-
-        @Bean
-        public ClientTokenFilter clientTokenFilter(){
-            return new ClientTokenFilter();
-        }
-
-        @Bean
-        public SecurityFilterChain filterChainClient(HttpSecurity http) throws Exception{
-            http.cors().and().csrf().disable()
-                // .httpBasic().disable();
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authorizeRequests()
-                .antMatchers("/api/auth/**").permitAll()
-                .antMatchers("/graphiql", "/vendor/**").permitAll()
-                .antMatchers("/graphql").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .addFilterBefore(clientTokenFilter(), UsernamePasswordAuthenticationFilter.class);
-    
-            return http.build();
-        }
-
-    }
-
-    @Configuration
-    @Order(2)
     @AllArgsConstructor
     public static class AdminConfigurationAdapter{
 
         @Autowired
         private final AccountEntryPoint accountEntryPoint;
 
-        @Bean
-        public AccountTokenFilter accountTokenFilter(){
-            return new AccountTokenFilter();
-        }
+        // @Bean
+        // public AccountTokenFilter accountTokenFilter(){
+        //     return new AccountTokenFilter();
+        // }
 
         @Bean
         public AuthenticationManager authManager(HttpSecurity http, BCryptPasswordEncoder bCryptPasswordEncoder, UserDetailsService userDetailsService) throws Exception{
@@ -99,15 +97,9 @@ public class WebSecurityConfig{
                 .antMatchers("/graphql").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .addFilterBefore(accountTokenFilter(), UsernamePasswordAuthenticationFilter.class)
-                .httpBasic()
-                .and()
-                .logout()
-                    .clearAuthentication(true)
-                    .invalidateHttpSession(true)
-                    .deleteCookies("JSESSIONID")
-                    .permitAll();
-    
+                // .addFilterBefore(accountTokenFilter(), UsernamePasswordAuthenticationFilter.class)
+                .httpBasic();
+               
             return http.build();
         }
 
