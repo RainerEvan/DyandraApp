@@ -38,7 +38,7 @@
 //             if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
 //                 String username = jwtUtils.getUserNameFromJwtToken(jwt);
 //                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-//                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null,
+//                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(username, null,
 //                     userDetails.getAuthorities());
 //                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 //                 SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -50,12 +50,12 @@
 //         filterChain.doFilter(request, response);
 //     }
 
-//     @Override
-//     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-//         String path = request.getRequestURI();
+//     // @Override
+//     // protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+//     //     String path = request.getRequestURI();
 
-//         return !path.contains("/admin");
-//     }
+//     //     return !path.contains("/admin");
+//     // }
 
 //     private String parseJwt(HttpServletRequest request) {
 //         String headerAuth = request.getHeader("Authorization");
