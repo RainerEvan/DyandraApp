@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.demo.payload.request.ClientAuthRequest;
-import com.app.demo.payload.request.LoginRequest;
+import com.app.demo.payload.request.LoginUIDMRequest;
 import com.app.demo.payload.response.JwtAccountResponse;
 import com.app.demo.payload.response.JwtClientResponse;
 import com.app.demo.service.AccountAuthService;
@@ -40,9 +40,9 @@ public class AuthController {
     }
 
     @PostMapping(path = "/login")
-    public ResponseEntity<Object> login(@RequestBody LoginRequest loginRequest){
+    public ResponseEntity<Object> login(@RequestBody LoginUIDMRequest loginUIDMRequest){
         try {
-            JwtAccountResponse jwtAccountResponse = accountAuthService.loginAccount(loginRequest);
+            JwtAccountResponse jwtAccountResponse = accountAuthService.loginAccount(loginUIDMRequest);
             return ResponseEntity.status(HttpStatus.OK).body(jwtAccountResponse);
         } catch (Exception e) {
             return ResponseHandler.generateResponse(e.getMessage(), HttpStatus.BAD_REQUEST, null);

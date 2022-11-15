@@ -3,9 +3,10 @@ package com.app.demo.security.client.jwt;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
-import com.app.demo.model.Reports;
+import com.app.demo.security.client.details.ClientDetailsImpl;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -25,10 +26,11 @@ public class ClientJwtUtils {
     @Value("${jwt.jwtExpirationMs}")
     private Long jwtExpirationMs;
 
-    public String generateJwtToken(Reports report){
+    public String generateJwtToken(Authentication authentication){
+        ClientDetailsImpl clientPrincipal = (ClientDetailsImpl) authentication.getPrincipal();
         return Jwts.builder()
-            .setIssuer(report.getConnection().getApplication().getClientId())
-            .setSubject(report.getReportId())
+            .setIssuer(clientPrincipal.getClientId())
+            .setSubject(clientPrincipal.getReportId())
             .setIssuedAt(new Date())
             .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
             .signWith(SignatureAlgorithm.HS512, jwtSecret)

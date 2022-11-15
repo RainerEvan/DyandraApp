@@ -12,12 +12,12 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.app.demo.security.account.jwt.AccountAuthProvider;
-// import com.app.demo.security.account.jwt.AccountTokenFilter;
-// import com.app.demo.security.client.details.ClientAuthProvider;
+import com.app.demo.security.account.details.AccountAuthProvider;
+import com.app.demo.security.account.jwt.AccountTokenFilter;
+import com.app.demo.security.client.details.ClientAuthProvider;
 // import com.app.demo.security.client.jwt.ClientTokenFilter;
 
 import lombok.AllArgsConstructor;
@@ -32,13 +32,13 @@ public class WebSecurityConfig{
     private final AuthEntryPoint authEntryPoint;
     @Autowired
     private final AccountAuthProvider accountAuthProvider;
-    // @Autowired
-    // private final ClientAuthProvider clientAuthProvider;
+    @Autowired
+    private final ClientAuthProvider clientAuthProvider;
 
-    // @Bean
-    // public AccountTokenFilter accountTokenFilter(){
-    //     return new AccountTokenFilter();
-    // }
+    @Bean
+    public AccountTokenFilter accountTokenFilter(){
+        return new AccountTokenFilter();
+    }
 
     // @Bean
     // public ClientTokenFilter clientTokenFilter(){
@@ -49,6 +49,7 @@ public class WebSecurityConfig{
     public AuthenticationManager authManager(HttpSecurity http, BCryptPasswordEncoder bCryptPasswordEncoder, UserDetailsService userDetailsService) throws Exception{
         return http.getSharedObject(AuthenticationManagerBuilder.class)
             .authenticationProvider(accountAuthProvider)
+            .authenticationProvider(clientAuthProvider)
             .build();
     }
 
@@ -74,8 +75,8 @@ public class WebSecurityConfig{
             .antMatchers("/graphql").permitAll()
             .anyRequest().authenticated()
             .and()
+            .addFilterBefore(accountTokenFilter(), UsernamePasswordAuthenticationFilter.class)
             // .addFilterBefore(clientAuthProvider(), UsernamePasswordAuthenticationFilter.class)
-            // .addFilterBefore(accountTokenFilter(), UsernamePasswordAuthenticationFilter.class)
             .httpBasic();
             
         return http.build();

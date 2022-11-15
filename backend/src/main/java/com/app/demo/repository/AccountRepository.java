@@ -10,5 +10,5 @@ import com.app.demo.model.Accounts;
 
 @Repository
 public interface AccountRepository extends JpaRepository<Accounts,UUID>{
-    Optional<Accounts> findByUsername(String username);
+    Optional<Accounts> findByUserId(String userId);
 }

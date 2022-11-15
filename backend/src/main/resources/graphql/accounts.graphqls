@@ -1,6 +1,8 @@
 type Accounts{
     id:ID!
-    username:String
+    userId:String
+    hostName:String
+    
 }
 
 extend type Query{

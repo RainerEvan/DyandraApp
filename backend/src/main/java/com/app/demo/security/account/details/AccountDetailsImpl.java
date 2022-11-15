@@ -17,22 +17,24 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class UserDetailsImpl implements UserDetails{
+public class AccountDetailsImpl implements UserDetails{
     private UUID id;
-    private String username;
+    private String userId;
     @JsonIgnore
     private String password;
+    private String hostName;
     private Boolean isActive;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public static UserDetailsImpl build(Accounts account){
+    public static AccountDetailsImpl build(Accounts account){
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(account.getRole().getName()));
 
-        return new UserDetailsImpl(
+        return new AccountDetailsImpl(
             account.getId(),
-            account.getUsername(),
+            account.getUserId(),
             account.getPassword(),
+            account.getHostName(),
             account.getIsActive(),
             authorities
         );
@@ -50,7 +52,7 @@ public class UserDetailsImpl implements UserDetails{
 
     @Override
     public String getUsername() {
-        return username;
+        return userId;
     }
 
     @Override

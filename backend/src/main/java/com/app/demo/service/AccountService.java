@@ -46,8 +46,9 @@ public class AccountService {
             .orElseThrow(() -> new AbstractGraphQLException("Role with current id cannot be found"));
 
         Accounts account = new Accounts();
-        account.setUsername(accountRequest.getUsername());
+        account.setUserId(accountRequest.getUserId());
         account.setPassword(passwordEncoder.encode(accountRequest.getPassword()));
+        account.setHostName(accountRequest.getHostName());
         account.setRole(role);
         account.setIsActive(true);
 

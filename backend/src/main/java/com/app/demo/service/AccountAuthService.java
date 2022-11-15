@@ -12,10 +12,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.app.demo.model.Accounts;
-import com.app.demo.payload.request.LoginRequest;
+import com.app.demo.payload.request.LoginUIDMRequest;
 import com.app.demo.payload.response.JwtAccountResponse;
 import com.app.demo.repository.AccountRepository;
-import com.app.demo.security.account.details.UserDetailsImpl;
+import com.app.demo.security.account.details.AccountDetailsImpl;
 import com.app.demo.security.account.jwt.AccountJwtUtils;
 
 import lombok.AllArgsConstructor;
@@ -34,31 +34,31 @@ public class AccountAuthService {
     public Accounts getCurrentAccount(){
         String principal = (String) SecurityContextHolder.getContext().getAuthentication().getName();
         
-        return accountRepository.findByUsername(principal)
-            .orElseThrow(() -> new UsernameNotFoundException("Account with current username cannot be found: "+principal));
+        return accountRepository.findByUserId(principal)
+            .orElseThrow(() -> new UsernameNotFoundException("Account with current user id cannot be found: "+principal));
     }
 
-    public JwtAccountResponse loginAccount(LoginRequest loginRequest){
+    public JwtAccountResponse loginAccount(LoginUIDMRequest loginUIDMRequest){
         try {
             Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
+                new UsernamePasswordAuthenticationToken(loginUIDMRequest.getUserId(), loginUIDMRequest.getPassword())
             );
 
             String token = accountJwtUtils.generateJwtToken(authentication);
-            UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-            List<String> roles = userDetails.getAuthorities().stream()
+            AccountDetailsImpl accountDetails = (AccountDetailsImpl) authentication.getPrincipal();
+            List<String> roles = accountDetails.getAuthorities().stream()
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
 
             return new JwtAccountResponse(
                 token, 
                 accountJwtUtils.getExpirationFromJwtToken(token).toInstant(), 
-                userDetails.getUsername(),
-                userDetails.getIsActive(),
+                accountDetails.getUsername(),
+                accountDetails.getIsActive(),
                 roles
             );
         } catch (Exception e) {
-            throw new RuntimeException("Invalid username or password! "+e.getMessage());
+            throw new RuntimeException("Login failed! "+e.getMessage());
         }
     }
     

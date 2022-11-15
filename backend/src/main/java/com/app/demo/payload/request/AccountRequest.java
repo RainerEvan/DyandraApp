@@ -10,7 +10,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AccountRequest {
-    private String username;
+    private String userId;
     private String password;
+    private String hostName;
     private UUID roleId;
 }

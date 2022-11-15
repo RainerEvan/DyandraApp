@@ -5,6 +5,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.app.demo.model.Reports;
 import com.app.demo.payload.request.ClientAuthRequest;
+import com.app.demo.payload.request.LoginUIDMRequest;
 import com.app.demo.payload.request.ReportRequest;
 import com.app.demo.payload.response.ReportTemplateResponse;
 import com.app.demo.service.ReportService;
@@ -29,6 +31,17 @@ public class PublicController {
     
     @Autowired
     private final ReportService reportService;
+
+    @GetMapping(path = "/test")
+    public ResponseEntity<Object> test(@RequestBody LoginUIDMRequest loginRequest){
+        try {
+            String principal = (String) SecurityContextHolder.getContext().getAuthentication().getName();
+
+            return ResponseHandler.generateResponse("Credential accepted", HttpStatus.OK, principal);
+        } catch (Exception e) {
+            return ResponseHandler.generateResponse(e.getMessage(), HttpStatus.BAD_REQUEST, null);
+        }
+    }
     
     @GetMapping(path = "/generate")
     public ResponseEntity<Object> generateReport(@RequestParam("reportId") UUID reportId){

@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.app.demo.security.account.details.UserDetailsServiceImpl;
+import com.app.demo.security.account.details.AccountDetailsServiceImpl;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,22 +27,23 @@ public class AccountTokenFilter extends OncePerRequestFilter{
     @Autowired
     private AccountJwtUtils jwtUtils;
     @Autowired
-    private UserDetailsServiceImpl userDetailsService;
+    private AccountDetailsServiceImpl accountDetailsService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
         throws ServletException, IOException {
         try {
+            log.info("Account token filter checked!");
             log.info("Account Auth - Request URL path: {}, Request content type: {}",request.getRequestURI(), request.getContentType());
             String jwt = parseJwt(request);
             if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
-                String username = jwtUtils.getUserNameFromJwtToken(jwt);
-                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(username, null,
-                    userDetails.getAuthorities());
+                String userId = jwtUtils.getUsernameFromJwtToken(jwt);
+                UserDetails accountDetails = accountDetailsService.loadUserByUsername(userId);
+                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userId, null,
+                    accountDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
-                log.info("Successfully set account authentication: {}", username);
+                log.info("Successfully set account authentication: {}", userId);
             }
         } catch (Exception e) {
             log.error("Cannot set account authentication: {}", e);

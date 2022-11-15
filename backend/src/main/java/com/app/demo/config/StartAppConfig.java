@@ -50,7 +50,7 @@ public class StartAppConfig {
             role.setName("ADMIN");
             roleRepository.save(role);
 
-            AccountRequest accountReq = new AccountRequest("admin", "pass123", role.getId());
+            AccountRequest accountReq = new AccountRequest("admin", "pass123", "insomnia", role.getId());
             Accounts account = accountService.addAccount(accountReq);
 
             ApplicationRequest applicationReq = new ApplicationRequest("ICOS", "ICOS");

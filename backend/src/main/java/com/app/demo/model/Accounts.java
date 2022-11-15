@@ -28,8 +28,9 @@ public class Accounts {
     private UUID id;
 
     @Column(unique = true)
-    private String username;
+    private String userId;
     private String password;
+    private String hostName;
     private Boolean isActive;
 
     @ManyToOne

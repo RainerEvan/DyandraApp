@@ -25,13 +25,13 @@ export class LoginComponent implements OnInit {
   
   generateLoginForm(){
     this.loginForm = this.formBuilder.group({
-      username: [null, [Validators.required]],
+      userId: [null, [Validators.required]],
       password: [null, [Validators.required, Validators.minLength(6)]],
     });
   }
 
-  get username(){
-    return this.loginForm.get('username');
+  get userId(){
+    return this.loginForm.get('userId');
   }
 
   get password(){

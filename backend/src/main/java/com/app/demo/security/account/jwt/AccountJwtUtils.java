@@ -2,7 +2,7 @@ package com.app.demo.security.account.jwt;
 
 import org.springframework.stereotype.Component;
 
-import com.app.demo.security.account.details.UserDetailsImpl;
+import com.app.demo.security.account.details.AccountDetailsImpl;
 
 import java.util.Date;
 
@@ -20,22 +20,24 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 @Slf4j
 public class AccountJwtUtils {
+
     @Value("${jwt.jwtAccountSecretKey}")
     private String jwtSecret;
+    
     @Value("${jwt.jwtExpirationMs}")
     private Long jwtExpirationMs;
 
     public String generateJwtToken(Authentication authentication) {
-        UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
+        AccountDetailsImpl accountPrincipal = (AccountDetailsImpl) authentication.getPrincipal();
         return Jwts.builder()
-            .setSubject((userPrincipal.getUsername()))
+            .setSubject((accountPrincipal.getUsername()))
             .setIssuedAt(new Date())
             .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
             .signWith(SignatureAlgorithm.HS512, jwtSecret)
             .compact();
     }
 
-    public String getUserNameFromJwtToken(String token) {
+    public String getUsernameFromJwtToken(String token) {
         return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
     }
 

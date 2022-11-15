@@ -1,4 +1,4 @@
-package com.app.demo.security.account.jwt;
+package com.app.demo.security.account.details;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -10,35 +10,40 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import com.app.demo.security.account.details.UserDetailsServiceImpl;
-
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Component
+@Slf4j
 @AllArgsConstructor
 public class AccountAuthProvider implements AuthenticationProvider{
 
     @Autowired
-    private final UserDetailsServiceImpl userDetailsService;
+    private final AccountDetailsServiceImpl accountDetailsService;
     @Autowired
     private final PasswordEncoder passwordEncoder;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        String username = authentication.getName();
-        String password = authentication.getCredentials().toString();
+        try{
+            String userId = authentication.getName();
+            String password = authentication.getCredentials().toString();
 
-        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+            log.info("Account auth provider checked!");
 
-        if(userDetails != null){
-            if(passwordEncoder.matches(password, userDetails.getPassword())){
-                UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
-                token.setDetails(userDetails);
-                return token;
+            UserDetails accountDetails = accountDetailsService.loadUserByUsername(userId);
+
+            if(accountDetails != null){
+                if(passwordEncoder.matches(password, accountDetails.getPassword())){
+                    UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(accountDetails, accountDetails.getPassword(), accountDetails.getAuthorities());
+                    token.setDetails(accountDetails);
+                    return token;
+                }
             }
+            return null;
+        } catch(Exception e){
+            throw new BadCredentialsException(e.getMessage());
         }
-
-        throw new BadCredentialsException("Invalid credentials for account");
     }
 
     @Override

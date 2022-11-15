@@ -11,7 +11,7 @@ import lombok.Data;
 public class JwtAccountResponse {
     private String accessToken;
     private Instant expirationDate;
-    private String username;
+    private String userId;
     private Boolean isActive;
     private List<String> role;
 }
