@@ -33,7 +33,6 @@ public class AccountTokenFilter extends OncePerRequestFilter{
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
         throws ServletException, IOException {
         try {
-            log.info("Account token filter checked!");
             log.info("Account Auth - Request URL path: {}, Request content type: {}",request.getRequestURI(), request.getContentType());
             String jwt = parseJwt(request);
             if (jwt != null && jwtUtils.validateJwtToken(jwt)) {

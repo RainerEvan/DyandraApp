@@ -17,8 +17,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.app.demo.security.account.details.AccountAuthProvider;
 import com.app.demo.security.account.jwt.AccountTokenFilter;
-import com.app.demo.security.client.details.ClientAuthProvider;
-// import com.app.demo.security.client.jwt.ClientTokenFilter;
+import com.app.demo.security.client.jwt.ClientTokenFilter;
 
 import lombok.AllArgsConstructor;
 
@@ -32,24 +31,22 @@ public class WebSecurityConfig{
     private final AuthEntryPoint authEntryPoint;
     @Autowired
     private final AccountAuthProvider accountAuthProvider;
-    @Autowired
-    private final ClientAuthProvider clientAuthProvider;
 
     @Bean
     public AccountTokenFilter accountTokenFilter(){
         return new AccountTokenFilter();
     }
 
-    // @Bean
-    // public ClientTokenFilter clientTokenFilter(){
-    //     return new ClientTokenFilter();
-    // }
+    @Bean
+    public ClientTokenFilter clientTokenFilter(){
+        return new ClientTokenFilter();
+    }
 
     @Bean
     public AuthenticationManager authManager(HttpSecurity http, BCryptPasswordEncoder bCryptPasswordEncoder, UserDetailsService userDetailsService) throws Exception{
         return http.getSharedObject(AuthenticationManagerBuilder.class)
             .authenticationProvider(accountAuthProvider)
-            .authenticationProvider(clientAuthProvider)
+            // .authenticationProvider(clientAuthProvider)
             .build();
     }
 
@@ -76,7 +73,7 @@ public class WebSecurityConfig{
             .anyRequest().authenticated()
             .and()
             .addFilterBefore(accountTokenFilter(), UsernamePasswordAuthenticationFilter.class)
-            // .addFilterBefore(clientAuthProvider(), UsernamePasswordAuthenticationFilter.class)
+            .addFilterBefore(clientTokenFilter(), UsernamePasswordAuthenticationFilter.class)
             .httpBasic();
             
         return http.build();

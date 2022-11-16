@@ -33,14 +33,12 @@ public class AccountAuthProvider implements AuthenticationProvider{
 
             UserDetails accountDetails = accountDetailsService.loadUserByUsername(userId);
 
-            if(accountDetails != null){
-                if(passwordEncoder.matches(password, accountDetails.getPassword())){
-                    UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(accountDetails, accountDetails.getPassword(), accountDetails.getAuthorities());
-                    token.setDetails(accountDetails);
-                    return token;
-                }
+            if(accountDetails != null && passwordEncoder.matches(password, accountDetails.getPassword())){
+                UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(accountDetails, accountDetails.getPassword(), accountDetails.getAuthorities());
+                token.setDetails(accountDetails);
+                return token;
             }
-            return null;
+            throw new BadCredentialsException("Invalid credentials!");
         } catch(Exception e){
             throw new BadCredentialsException(e.getMessage());
         }
