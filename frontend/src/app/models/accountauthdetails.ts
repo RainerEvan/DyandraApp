@@ -1,7 +1,7 @@
 export class AccountAuthDetails{
     accessToken:string;
     expirationDate:Date;
-    username:string;
+    userId:string;
     isActive:boolean;
     role:string[];
 }

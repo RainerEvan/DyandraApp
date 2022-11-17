@@ -2,9 +2,11 @@ type Accounts{
     id:ID!
     userId:String
     hostName:String
-    
+    isActive:Boolean
+    role:Roles
 }
 
 extend type Query{
     getAllAccounts:[Accounts]
+    getAccountByUserId(userId:String):Accounts
 }

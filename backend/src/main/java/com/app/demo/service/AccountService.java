@@ -39,6 +39,12 @@ public class AccountService {
         return accountRepository.findById(accountId)
             .orElseThrow(() -> new AbstractGraphQLException("Account with current id cannot be found"));
     }
+
+    @Transactional
+    public Accounts getAccountByUserId(String userId){
+        return accountRepository.findByUserId(userId)
+            .orElseThrow(() -> new AbstractGraphQLException("Account with current user id cannot be found"));
+    }
     
     @Transactional
     public Accounts addAccount(AccountRequest accountRequest){

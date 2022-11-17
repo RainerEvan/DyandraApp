@@ -46,7 +46,8 @@ public class WebSecurityConfig{
     public AuthenticationManager authManager(HttpSecurity http, BCryptPasswordEncoder bCryptPasswordEncoder, UserDetailsService userDetailsService) throws Exception{
         return http.getSharedObject(AuthenticationManagerBuilder.class)
             .authenticationProvider(accountAuthProvider)
-            // .authenticationProvider(clientAuthProvider)
+                .userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder)
+            .and()
             .build();
     }
 
@@ -68,6 +69,8 @@ public class WebSecurityConfig{
             .authorizeRequests()
             .antMatchers("**/admin/**").hasAuthority("ADMIN")
             .antMatchers("/api/auth/**").permitAll()
+            .antMatchers("/api/public/**").permitAll()
+            .antMatchers("/api/client/**").permitAll()
             .antMatchers("/graphiql", "/vendor/**").permitAll()
             .antMatchers("/graphql").permitAll()
             .anyRequest().authenticated()

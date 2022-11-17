@@ -21,4 +21,8 @@ public class AccountQueryResolver implements GraphQLQueryResolver{
     public List<Accounts> getAllAccounts(){
         return accountService.getAllAccounts();
     }
+
+    public Accounts getAccountByUserId(String userId){
+        return accountService.getAccountByUserId(userId);
+    }
  }

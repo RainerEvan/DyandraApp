@@ -3,6 +3,7 @@ package com.app.demo.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +28,11 @@ public class AuthController {
     private final ClientAuthService clientAuthService;
     @Autowired
     private final AccountAuthService accountAuthService;
+
+    @GetMapping(path = "/unauthorized")
+    public ResponseEntity<Object> unauthorized(){
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Request unauthorized!");
+    }
 
     @PostMapping(path = "/client")
     public ResponseEntity<Object> authenticate(@RequestBody ClientAuthRequest clientAuthRequest){

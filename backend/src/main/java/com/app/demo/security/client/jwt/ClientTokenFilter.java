@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -28,30 +27,29 @@ public class ClientTokenFilter extends OncePerRequestFilter{
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
         throws ServletException, IOException {
         try{
-            log.info("Client Auth - Request URL path: {}, Request content type: {}",request.getRequestURI(), request.getContentType());
-            String jwt = parseJwt(request);
-            if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
-                String clientId = jwtUtils.getClientFromJwtToken(jwt);
-                String reportId = jwtUtils.getReportFromJwtToken(jwt);
+            if(request.getRequestURI().contains("/api/client")){
+                log.info("Client Auth - Request URL path: {}, Request content type: {}",request.getRequestURI(), request.getContentType());
+                String jwt = parseJwt(request);
+                if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
+                    String clientId = jwtUtils.getClientFromJwtToken(jwt);
+                    String reportId = jwtUtils.getReportFromJwtToken(jwt);
 
-                if(reportService.verifyClientReport(clientId, reportId)){
-                    filterChain.doFilter(request, response);
-                    log.info("Successfully set client authentication");
+                    if(reportService.verifyClientReport(clientId, reportId)){
+                        filterChain.doFilter(request, response);
+                        log.info("Successfully set client authentication");
+                    }
+                }
+                else{
+                    response.sendRedirect(request.getContextPath()+"/api/auth/unauthorized");
                 }
             }
-            
-            response.sendError(HttpStatus.UNAUTHORIZED.value(), "Client unauthorized!");
+            else{
+                filterChain.doFilter(request, response);
+            }
 
         } catch(Exception e){
-            log.error("Cannot set report authentication: {}", e);
+            log.error("Cannot set report authentication: {}", e.getMessage());
         }
-    }
-
-    @Override
-    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-        String path = request.getRequestURI();
-        
-        return path.contains("/auth") || path.contains("/graphql") || path.contains("/admin");
     }
 
     private String parseJwt(HttpServletRequest request){

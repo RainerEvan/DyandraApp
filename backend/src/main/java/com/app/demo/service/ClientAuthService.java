@@ -24,16 +24,19 @@ public class ClientAuthService {
     @Transactional
     public JwtClientResponse authenticateClient(ClientAuthRequest clientAuthRequest){
         try{
-            Reports report = reportService.getReportByReportId(clientAuthRequest.getReportId());
+            if(reportService.verifyClientReport(clientAuthRequest.getClientId(), clientAuthRequest.getReportId())){
+                Reports report = reportService.getReportByReportId(clientAuthRequest.getReportId());
 
-            String token = clientJwtUtils.generateJwtToken(report);
+                String token = clientJwtUtils.generateJwtToken(report);
 
-            return new JwtClientResponse(
-                token,
-                clientJwtUtils.getExpirationFromJwtToken(token).toInstant(),
-                report.getConnection().getApplication().getName()
-            );
+                return new JwtClientResponse(
+                    token,
+                    clientJwtUtils.getExpirationFromJwtToken(token).toInstant(),
+                    report.getConnection().getApplication().getName()
+                );
+            }
             
+            return null;
         } catch(Exception e){
             throw new RuntimeException("Client authentication failed! "+e.getMessage());
         }

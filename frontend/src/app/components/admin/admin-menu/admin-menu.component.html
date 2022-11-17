@@ -1,4 +1,4 @@
-<div class="w-64 h-full flex-col justify-between bg-gray-800 shadow hidden md:flex">
+<div class="w-64 h-full flex-col justify-between bg-gray-800 shadow z-10 hidden lg:flex">
     <div class="flex flex-col">
         <a routerLink="./application" class="w-full flex items-center space-x-1 p-6 border-b-2 border-gray-700">
             <img class="w-8" src="/assets/image/dyandra-logo2.png" alt="dyandra-logo2">
@@ -49,17 +49,19 @@
     </ul>
 </div>
 
-<div class="absolute flex flex-col w-full md:hidden">
+<div class="absolute flex flex-col w-full z-10 lg:hidden">
     <div class="flex flex-row items-center justify-between h-16 px-4 bg-gray-800">
-        <button (click)="toggleDropdown()" class="text-white">
+        <button (click)="toggleDropdown()" class="text-white z-10">
             <i class="pi pi-bars" style="font-size: 24px"></i>
         </button>
-        <a routerLink="./application" class="flex items-center justify-center space-x-1">
-            <img class="w-8" src="/assets/image/dyandra-logo2.png" alt="Dyandra dyandra-logo2">
-            <span class="font-allerta text-3xl text-white">DYANDRA</span>
-        </a>
+        <div class="absolute inset-x-0 flex items-center justify-center">
+            <a routerLink="./application" class="flex items-center justify-center space-x-1">
+                <img class="w-8" src="/assets/image/dyandra-logo2.png" alt="Dyandra dyandra-logo2">
+                <span class="font-allerta text-3xl text-white">DYANDRA</span>
+            </a>
+        </div>
     </div>
-    <div [hidden]="!showDropdown" class="z-[2] shadow-lg">
+    <div [hidden]="!showDropdown" class="z-10 shadow-lg">
         <ul class="flex flex-col">
             <li>
                 <a routerLink="./application" (click)="toggleDropdown()" routerLinkActive="menu-item-mobile-active" class="menu-item-mobile">
