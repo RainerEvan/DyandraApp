@@ -71,7 +71,10 @@ public class StartAppConfig {
             ConnectionRequest connectionReq2 = new ConnectionRequest(application.getId(), EMethod.LOCAL_FILES,"ICOS-FILES");
             Connections connection2 = connectionService.addConnection(connectionReq2);
 
-            SourcePathRequest sourcePathReq2= new SourcePathRequest(connection2.getId(), "FILE URL", "C:/Users/u545587/Downloads/data.json", null, null);
+            // SourcePathRequest sourcePathReq2= new SourcePathRequest(connection2.getId(), "FILE URL", "C:/Users/u545587/Downloads/data.json", null, null);
+            // SourcePaths sourcePath2 = sourcePathService.addSourcePath(sourcePathReq2);
+
+            SourcePathRequest sourcePathReq2= new SourcePathRequest(connection2.getId(), "FILE URL", "D:/Download/data.json", null, null);
             SourcePaths sourcePath2 = sourcePathService.addSourcePath(sourcePathReq2);
 
             ReportRequest reportReq2 = new ReportRequest(connection2.getId(), sourcePath2.getId(), null, "Report 2",null);
@@ -80,7 +83,10 @@ public class StartAppConfig {
             ConnectionRequest connectionReq3 = new ConnectionRequest(application2.getId(), EMethod.LOCAL_FILES,"SMILE-FILES");
             Connections connection3 = connectionService.addConnection(connectionReq3);
 
-            SourcePathRequest sourcePathReq3= new SourcePathRequest(connection3.getId(), "FILE URL", "C:/Users/u545587/Downloads/data.json", null, null);
+            // SourcePathRequest sourcePathReq3= new SourcePathRequest(connection3.getId(), "FILE URL", "C:/Users/u545587/Downloads/data.json", null, null);
+            // SourcePaths sourcePath3 = sourcePathService.addSourcePath(sourcePathReq3);
+            
+            SourcePathRequest sourcePathReq3= new SourcePathRequest(connection3.getId(), "FILE URL", "D:/Download/data.csv", null, null);
             SourcePaths sourcePath3 = sourcePathService.addSourcePath(sourcePathReq3);
 
             ReportRequest reportReq3 = new ReportRequest(connection3.getId(), sourcePath3.getId(), null, "Report 3",null);

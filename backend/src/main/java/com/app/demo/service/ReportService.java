@@ -1,17 +1,25 @@
 package com.app.demo.service;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import javax.sql.DataSource;
 import javax.transaction.Transactional;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.json.CDL;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,20 +70,6 @@ public class ReportService{
     public Reports getReportByReportId(String reportId){
         return reportRepository.findByReportId(reportId)
             .orElseThrow(() -> new AbstractGraphQLException("Report with current id cannot be found"));
-    }
-
-    @Transactional
-    public String generateReport(UUID reportId){
-        Reports report = reportRepository.findById(reportId)
-            .orElseThrow(() -> new IllegalStateException("Report with current report id cannot be found"));
-
-        JSONObject reportJson = new JSONObject(report.getReportConfig());
-        
-        JSONObject dataSource = generateReport(report.getConnection(), report.getSourcePath(), report.getQuery());
-
-        reportJson.put("dataSource",dataSource);
-
-        return reportJson.toString();
     }
 
     @Transactional
@@ -159,7 +153,21 @@ public class ReportService{
     }
 
     @Transactional
-    public JSONObject generateReport(Connections connection, SourcePaths sourcePath, String query){
+    public String generateReport(UUID reportId){
+        Reports report = reportRepository.findById(reportId)
+            .orElseThrow(() -> new IllegalStateException("Report with current report id cannot be found"));
+
+        JSONObject reportJson = new JSONObject(report.getReportConfig());
+        
+        JSONObject dataSource = generateReportData(report.getConnection(), report.getSourcePath(), report.getQuery());
+
+        reportJson.put("dataSource",dataSource);
+
+        return reportJson.toString();
+    }
+
+    @Transactional
+    public JSONObject generateReportData(Connections connection, SourcePaths sourcePath, String query){
         try {
             JSONObject dataSource = new JSONObject();
             Methods method = connection.getMethod();
@@ -217,21 +225,6 @@ public class ReportService{
         return dataSource;
     }
 
-
-    // @Transactional
-    // public JSONObject generateReportFromFiles(SourcePaths sourcePath) throws IOException{
-    //     File file = new File(sourcePath.getPath());
-    //     String type = FilenameUtils.getExtension(file.getName());
-
-    //     InputStream data = new FileInputStream(file);
-
-    //     JSONObject dataSource = new JSONObject();
-    //     dataSource.put("dataSourceType", type);
-    //     dataSource.put("filename", data);
-
-    //     return dataSource;
-    // }
-
     @Transactional
     public JSONObject generateReportFromFiles(SourcePaths sourcePath) throws IOException{
         File file = new File(sourcePath.getPath());
@@ -248,10 +241,15 @@ public class ReportService{
             return dataSource;
         }
         else if(type.equals("csv")){
+            InputStream is = new FileInputStream(file);
+            String dataString = new BufferedReader(new InputStreamReader(Objects.requireNonNull(is), StandardCharsets.UTF_8))
+                                .lines()
+                                .collect(Collectors.joining("\n"));
+            JSONArray data = CDL.toJSONArray(dataString);
+
             JSONObject dataSource = new JSONObject();
             dataSource.put("dataSourceType", type);
-            dataSource.put("filename", file.getPath());
-            dataSource.put("fieldSeparator", ",");
+            dataSource.put("data", data);
 
             return dataSource;
         }

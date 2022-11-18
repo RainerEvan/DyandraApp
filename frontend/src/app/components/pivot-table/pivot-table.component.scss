@@ -12,7 +12,9 @@
             }
 
             .p-submenu-icon{
-                @apply text-white;
+                @media (min-width: 960px) {
+                    color:white;
+                }
             }
         }
 
@@ -39,7 +41,7 @@
     }
     
     .p-menubar-button{
-        @apply ring-0 text-white hover:text-black;
+        @apply ring-0 text-white hover:text-[#3F3F46];
     }
 
 }
