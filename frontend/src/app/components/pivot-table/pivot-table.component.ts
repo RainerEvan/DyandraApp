@@ -11,6 +11,8 @@ import { FormatDialogComponent } from '../dialog/pivot-table/format-dialog/forma
 import { OpenDialogComponent } from '../dialog/pivot-table/open-dialog/open-dialog.component';
 import { OptionsDialogComponent } from '../dialog/pivot-table/options-dialog/options-dialog.component';
 import { SaveDialogComponent } from '../dialog/pivot-table/save-dialog/save-dialog.component';
+import * as Highcharts from "highcharts";
+import "webdatarocks/webdatarocks.highcharts.js";
 
 @Component({
   selector: 'app-pivot-table',
@@ -20,6 +22,8 @@ import { SaveDialogComponent } from '../dialog/pivot-table/save-dialog/save-dial
 export class PivotTableComponent implements OnInit {
 
     @ViewChild('pivot1') child: WebdatarocksComponent;
+    Highcharts: typeof Highcharts = Highcharts;
+
     report: Reports;
     items: MenuItem[];
     reportConfig: any;
@@ -47,6 +51,20 @@ export class PivotTableComponent implements OnInit {
         if(this.report){
             this.child.webDataRocks.setReport(JSON.parse(this.reportConfig));
         }
+    }
+
+    createChart(type:string){
+        this.child.webDataRocks.highcharts.getData(
+            {
+                type:type,
+            },
+            data => {
+                this.Highcharts.chart("highCharts",data);
+            },
+            data => {
+                this.Highcharts.chart("highCharts",data);
+            }
+        );
     }
 
     //OPEN

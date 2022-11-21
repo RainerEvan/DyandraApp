@@ -32,13 +32,14 @@ import org.springframework.web.client.RestTemplate;
 
 import com.app.demo.data.EMethod;
 import com.app.demo.exception.AbstractGraphQLException;
+import com.app.demo.model.Applications;
 import com.app.demo.model.Connections;
 import com.app.demo.model.Methods;
 import com.app.demo.model.Reports;
 import com.app.demo.model.SourcePaths;
-import com.app.demo.payload.request.ClientAuthRequest;
 import com.app.demo.payload.request.ReportRequest;
 import com.app.demo.payload.response.ReportTemplateResponse;
+import com.app.demo.repository.ApplicationRepository;
 import com.app.demo.repository.ConnectionRepository;
 import com.app.demo.repository.ReportRepository;
 import com.app.demo.repository.SourcePathRepository;
@@ -56,6 +57,8 @@ public class ReportService{
 
     @Autowired
     private final ReportRepository reportRepository;
+    @Autowired
+    private final ApplicationRepository applicationRepository;
     @Autowired
     private final ConnectionRepository connectionRepository;
     @Autowired
@@ -258,17 +261,14 @@ public class ReportService{
     }
 
     @Transactional
-    public ReportTemplateResponse getTemplate(ClientAuthRequest clientAuthRequest){
-        if(verifyClientReport(clientAuthRequest.getClientId(), clientAuthRequest.getReportId())){
-            Reports report = reportRepository.findByReportId(clientAuthRequest.getReportId())
-                .orElseThrow(() -> new IllegalStateException("Report with current id cannot be found"));
+    public ReportTemplateResponse getTemplate(String reportId){
+        Reports report = reportRepository.findByReportId(reportId)
+            .orElseThrow(() -> new IllegalStateException("Report with current id cannot be found"));
 
-            String template = "<iframe width=\"100%\" height=\"700\" src=\"{clientUrl}/{reportId}\"></iframe>";
-            template = template.replace("{clientUrl}", dyandraClientUrl).replace("{reportId}", clientAuthRequest.getReportId());
+        String template = "<iframe width=\"100%\" height=\"750\" src=\"{clientUrl}/{reportId}\"></iframe>";
+        template = template.replace("{clientUrl}", dyandraClientUrl).replace("{reportId}", reportId);
 
-            return new ReportTemplateResponse(report.getTitle(), template);
-        }
-        return null;
+        return new ReportTemplateResponse(report.getTitle(), template);
     }
 
     @Transactional
@@ -277,7 +277,10 @@ public class ReportService{
             Reports report = reportRepository.findByReportId(reportId)
                 .orElseThrow(() -> new IllegalStateException("Report with current id cannot be found"));
 
-            if(clientId.equals(report.getConnection().getApplication().getClientId())){
+            Applications application = applicationRepository.findByClientId(clientId)
+                .orElseThrow(() -> new IllegalStateException("Application with current id cannot be found"));
+
+            if(application.getClientId().equals(report.getConnection().getApplication().getClientId())){
                 return true;
             }
             throw new IllegalStateException("Invalid credential to access report");

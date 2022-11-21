@@ -34,7 +34,9 @@ public class ClientTokenFilter extends OncePerRequestFilter{
                     String clientId = jwtUtils.getClientFromJwtToken(jwt);
                     String reportId = jwtUtils.getReportFromJwtToken(jwt);
 
-                    if(reportService.verifyClientReport(clientId, reportId)){
+                    String requestReportId = request.getParameter("reportId");
+
+                    if(reportService.verifyClientReport(clientId, requestReportId) && reportId.equals(requestReportId)){
                         filterChain.doFilter(request, response);
                         log.info("Successfully set client authentication");
                     }

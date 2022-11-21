@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.app.demo.model.Accounts;
-import com.app.demo.payload.request.LoginUIDMRequest;
+import com.app.demo.payload.request.LoginRequest;
 import com.app.demo.payload.response.JwtAccountResponse;
 import com.app.demo.repository.AccountRepository;
 import com.app.demo.security.account.details.AccountDetailsImpl;
@@ -38,10 +38,10 @@ public class AccountAuthService {
             .orElseThrow(() -> new UsernameNotFoundException("Account with current user id cannot be found: "+principal));
     }
 
-    public JwtAccountResponse loginAccount(LoginUIDMRequest loginUIDMRequest){
+    public JwtAccountResponse loginAccount(LoginRequest loginRequest){
         try {
             Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginUIDMRequest.getUserId(), loginUIDMRequest.getPassword())
+                new UsernamePasswordAuthenticationToken(loginRequest.getUserId(), loginRequest.getPassword())
             );
 
             String token = accountJwtUtils.generateJwtToken(authentication);
