@@ -8,7 +8,6 @@ import { PublicService } from 'src/app/services/public/public.service';
 import { ReportService } from 'src/app/services/report/report.service';
 import { ExportDialogComponent } from '../dialog/pivot-table/export-dialog/export-dialog.component';
 import { FormatDialogComponent } from '../dialog/pivot-table/format-dialog/format-dialog.component';
-import { OpenDialogComponent } from '../dialog/pivot-table/open-dialog/open-dialog.component';
 import { OptionsDialogComponent } from '../dialog/pivot-table/options-dialog/options-dialog.component';
 import { SaveDialogComponent } from '../dialog/pivot-table/save-dialog/save-dialog.component';
 import * as Highcharts from "highcharts";
@@ -29,8 +28,41 @@ export class PivotTableComponent implements OnInit {
     reportConfig: any;
     reportId: string;
     ref: DynamicDialogRef;
+    chartType:any;
+    selectedChart:any;
 
-    constructor(private reportService:ReportService, private publicService:PublicService, private dialogService:DialogService, private route:ActivatedRoute) { }
+    constructor(private reportService:ReportService, private publicService:PublicService, private dialogService:DialogService, private route:ActivatedRoute) {
+        this.chartType = [
+            {
+                name:"Area Spline",
+                value:"areaspline"
+            },
+            {
+                name:"Basic Area",
+                value:"area"
+            },
+            {
+                name:"Basic Bar",
+                value:"bar"
+            },
+            {
+                name:"Basic Column",
+                value:"column"
+            },
+            {
+                name:"Line Chart",
+                value:"line"
+            },
+            {
+                name:"Pie Chart",
+                value:"pie"
+            },
+            {
+                name:"Spline",
+                value:"spline"
+            },
+        ]
+    }
 
     ngOnInit(): void {
         this.generateMenubar();
@@ -53,18 +85,21 @@ export class PivotTableComponent implements OnInit {
         }
     }
 
-    createChart(type:string){
-        this.child.webDataRocks.highcharts.getData(
-            {
-                type:type,
-            },
-            data => {
-                this.Highcharts.chart("highCharts",data);
-            },
-            data => {
-                this.Highcharts.chart("highCharts",data);
-            }
-        );
+    createChart(){
+        console.log(this.selectedChart)
+        if(this.selectedChart){
+            this.child.webDataRocks.highcharts.getData(
+                {
+                    type:this.selectedChart,
+                },
+                data => {
+                    this.Highcharts.chart("highCharts",data);
+                },
+                data => {
+                    this.Highcharts.chart("highCharts",data);
+                }
+            );
+        }
     }
 
     //OPEN
