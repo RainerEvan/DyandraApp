@@ -1,0 +1,15 @@
+.p-inputtext {
+    @apply w-full ring-0 border border-gray-400 text-sm placeholder:text-gray-400 hover:border-gray-400 focus:border-gray-400 focus:ring-0 disabled:pointer-events-none;
+}
+
+:host ::ng-deep .p-dropdown {
+    @apply w-full ring-0 border border-gray-400 shadow-none hover:border-gray-400 focus:border-gray-400;
+}
+
+:host ::ng-deep .p-dropdown.p-focus{
+    @apply ring-0;
+}
+
+:host ::ng-deep .p-dropdown-label {
+    @apply text-sm p-3;
+}

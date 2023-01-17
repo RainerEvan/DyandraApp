@@ -1,0 +1,7 @@
+:host ::ng-deep .p-datatable {
+    @apply text-sm;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-thead th{
+    @apply bg-gray-800 font-medium text-white;
+}

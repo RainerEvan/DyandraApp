@@ -3,8 +3,9 @@ import { Injectable } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
 import { map, Observable } from 'rxjs';
 import { Connections } from 'src/app/models/connections';
+import { environment } from 'src/environments/environment';
 
-const API_URL = 'http://localhost:8080/api/connection';
+const API_URL = environment.apiUrl + '/admin/connection';
 
 @Injectable({
   providedIn: 'root'

@@ -1,0 +1,83 @@
+:host ::ng-deep .p-menubar {
+    @apply bg-bca border-none rounded-b-none text-white;
+}
+
+:host ::ng-deep .p-menubar-root-list .p-menuitem .p-menuitem-link {
+    @apply ring-0 font-medium text-sm px-3 py-2 transition duration-200 ease-out focus:ring-0;
+}
+
+:host ::ng-deep .p-menubar-root-list .p-menuitem .p-menuitem-link .p-menuitem-text{
+    @apply lg:text-white;
+}
+
+:host ::ng-deep .p-menubar-root-list .p-menuitem .p-menuitem-link .p-submenu-icon{
+    @apply lg:text-white;
+}
+
+:host ::ng-deep .p-menubar .p-menubar-root-list .p-menuitem.p-menuitem-active > .p-menuitem-link .p-menuitem-text{
+    @apply text-[#3F3F46];
+}
+
+:host ::ng-deep .p-menubar .p-menubar-root-list .p-menuitem.p-menuitem-active > .p-menuitem-link .p-submenu-icon{
+    @apply text-[#3F3F46];
+}
+
+:host ::ng-deep .p-menubar .p-submenu-list .p-menuitem .p-menuitem-link{
+    @apply bg-white hover:bg-gray-100;
+}
+
+:host ::ng-deep .p-menubar .p-submenu-list .p-menuitem .p-menuitem-link .p-menuitem-text{
+    @apply text-[#3F3F46];
+}
+
+:host ::ng-deep .p-menubar .p-submenu-list .p-menuitem .p-menuitem-link .p-submenu-icon{
+    @apply text-[#3F3F46];
+}
+    
+:host ::ng-deep .p-menubar .p-menubar-button{
+    @apply ring-0 text-white hover:text-[#3F3F46];
+}
+
+:host ::ng-deep .p-dropdown {
+    @apply w-full ring-0 shadow-none text-black text-sm border-0 border-b-2 border-gray-400 rounded-none hover:border-gray-500 focus:ring-0 focus:border-gray-500;
+}
+
+:host ::ng-deep .p-dropdown .p-dropdown-label{
+    @apply text-sm text-black;
+}
+
+:host ::ng-deep .p-dropdown .p-dropdown-label.p-placeholder{
+    @apply text-sm text-slate-400;
+}
+
+:host ::ng-deep .p-dropdown .p-dropdown-item{
+    @apply text-sm text-black;
+}
+
+:host ::ng-deep .p-dropdown .p-dropdown-empty-message{
+    @apply text-sm text-black;
+}
+
+:host ::ng-deep .p-dropdown.p-focus {
+    @apply ring-0 shadow-none border-gray-500;
+}
+
+.form-enabled-false{
+    @apply bg-gray-50 text-slate-400/75;
+}
+
+.form-label{
+    @apply w-1/3 text-sm;
+}
+
+.p-inputtext {
+    @apply w-full ring-0 text-black text-sm border-0 border-b-2 border-gray-400 rounded-none placeholder:text-slate-400 hover:border-gray-500 focus:ring-0 focus:border-gray-500 disabled:pointer-events-none;
+}
+
+:host ::ng-deep #wdr-pivot-view .wdr-credits a{
+    @apply hidden;
+}
+
+:host ::ng-deep text.highcharts-credits{
+    @apply hidden;
+}

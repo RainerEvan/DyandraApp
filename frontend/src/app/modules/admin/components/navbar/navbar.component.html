@@ -1,0 +1,104 @@
+<div class="w-64 h-full flex-col justify-between bg-gray-800 shadow z-10 hidden lg:flex">
+    <div class="flex flex-col">
+        <a routerLink="./application" class="w-full flex items-center space-x-1 p-6 border-b-2 border-gray-700">
+            <img class="w-8" src="/assets/icons/dyandra-logo2.png" alt="dyandra-logo2">
+            <span class="font-allerta text-3xl text-white">DYANDRA</span>
+        </a>
+        
+        <ul class="flex flex-col py-6">
+            <li>
+                <a routerLink="./application" routerLinkActive="menu-item-active" class="menu-item">
+                    <i class="pi pi-box" style="font-size: 14px"></i>
+                    <span class="font-medium text-sm ml-2">Application</span>
+                </a>
+            </li>
+            <li>
+                <a routerLink="./connection" routerLinkActive="menu-item-active" class="menu-item">
+                    <i class="pi pi-globe" style="font-size: 14px"></i>
+                    <span class="font-medium text-sm ml-2">Connection</span>
+                </a>
+            </li>
+            <li>
+                <a routerLink="./sourcepath" routerLinkActive="menu-item-active" class="menu-item">
+                    <i class="pi pi-code" style="font-size: 14px"></i>
+                    <span class="font-medium text-sm ml-2">Source Path</span>
+                </a>
+            </li>
+            <li>
+                <a routerLink="./report" routerLinkActive="menu-item-active" class="menu-item">
+                    <i class="pi pi-book" style="font-size: 14px"></i>
+                    <span class="font-medium text-sm ml-2">Report</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <ul class="flex flex-col py-2">
+        <li>
+            <a routerLink="./profile" routerLinkActive="menu-item-active" class="menu-item">
+                <i class="pi pi-user" style="font-size: 14px"></i>
+                <span class="font-medium text-sm ml-2">Profile</span>
+            </a>
+        </li>
+        <li>
+            <button (click)="logout()" class="menu-item">
+                <i class="pi pi-sign-out" style="font-size: 14px"></i>
+                <span class="font-medium text-sm ml-2">Logout</span>
+            </button>
+        </li>
+    </ul>
+</div>
+
+<div class="absolute flex flex-col w-full z-10 lg:hidden">
+    <div class="flex flex-row items-center justify-between h-16 px-4 bg-gray-800">
+        <button (click)="toggleDropdown()" class="text-white z-10">
+            <i class="pi pi-bars" style="font-size: 24px"></i>
+        </button>
+        <div class="absolute inset-x-0 flex items-center justify-center">
+            <a routerLink="./application" class="flex items-center justify-center space-x-1">
+                <img class="w-8" src="/assets/image/dyandra-logo2.png" alt="Dyandra dyandra-logo2">
+                <span class="font-allerta text-3xl text-white">DYANDRA</span>
+            </a>
+        </div>
+    </div>
+    <div [hidden]="!showDropdown" class="z-10 shadow-lg">
+        <ul class="flex flex-col">
+            <li>
+                <a routerLink="./application" (click)="toggleDropdown()" routerLinkActive="menu-item-mobile-active" class="menu-item-mobile">
+                    <i class="pi pi-box" style="font-size: 14px"></i>
+                    <span class="font-medium text-sm ml-2">Application</span>
+                </a>
+            </li>
+            <li>
+                <a routerLink="./connection" (click)="toggleDropdown()" routerLinkActive="menu-item-mobile-active" class="menu-item-mobile">
+                    <i class="pi pi-globe" style="font-size: 14px"></i>
+                    <span class="font-medium text-sm ml-2">Connection</span>
+                </a>
+            </li>
+            <li>
+                <a routerLink="./sourcepath" (click)="toggleDropdown()" routerLinkActive="menu-item-mobile-active" class="menu-item-mobile">
+                    <i class="pi pi-code" style="font-size: 14px"></i>
+                    <span class="font-medium text-sm ml-2">Source Path</span>
+                </a>
+            </li>
+            <li>
+                <a routerLink="./report" (click)="toggleDropdown()" routerLinkActive="menu-item-mobile-active" class="menu-item-mobile">
+                    <i class="pi pi-book" style="font-size: 14px"></i>
+                    <span class="font-medium text-sm ml-2">Report</span>
+                </a>
+            </li>
+            <li>
+                <a routerLink="./profile" (click)="toggleDropdown()" routerLinkActive="menu-item-mobile-active" class="menu-item-mobile">
+                    <i class="pi pi-user" style="font-size: 14px"></i>
+                    <span class="font-medium text-sm ml-2">Profile</span>
+                </a>
+            </li>
+            <li>
+                <button routerLink="./profile" (click)="logout()" class="menu-item-mobile">
+                    <i class="pi pi-sign-out" style="font-size: 14px"></i>
+                    <span class="font-medium text-sm ml-2">Logout</span>
+                </button>
+            </li>
+        </ul>
+    </div>
+</div>

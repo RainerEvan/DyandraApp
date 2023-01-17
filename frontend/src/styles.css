@@ -1,0 +1,38 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'webdatarocks/webdatarocks.min.css';
+@import url('https://fonts.googleapis.com/css2?family=Allerta+Stencil&family=Inter:wght@300;400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    @apply bg-transparent font-inter text-black;
+}
+
+.p-component{
+    @apply font-inter !important;
+}
+
+.btn-primary {
+    @apply text-sm text-white rounded-md px-3 py-2 bg-bca border-2 border-bca transition ease-out duration-100 hover:bg-bca/80 hover:border-bca/0 active:bg-bca disabled:bg-slate-200 disabled:text-slate-400 disabled:border-slate-200;
+}
+
+.btn-secondary {
+    @apply text-sm text-bca rounded-md px-3 py-2 bg-white border-2 border-bca transition ease-out duration-100 hover:bg-bca/10 hover:border-bca/80 active:bg-white disabled:bg-white disabled:text-slate-400 disabled:border-slate-200;
+}
+
+.p-paginator {
+    @apply text-sm !important;
+}
+
+.p-paginator-page{
+    @apply shadow-none text-inherit ring-0 !important;
+}
+
+.p-paginator .p-link{
+    @apply shadow-none text-inherit ring-0 !important;
+}
+
+.p-paginator .p-paginator-page.p-highlight{
+    @apply font-regular text-inherit ring-0 bg-gray-100 border-gray-400 outline-none !important;
+}

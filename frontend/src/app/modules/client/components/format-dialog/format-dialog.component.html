@@ -1,0 +1,60 @@
+<div class="pb-6">
+    <label for="fild" class="font-medium">Field Value</label>
+    <p-dropdown (onChange)="toggleForm()" [(ngModel)]="selectedFieldValue" [options]="measureFormats" optionLabel="caption" [showClear]="false" placeholder="Choose field value"></p-dropdown>
+</div>
+<form [formGroup]="formatForm" class="flex flex-col space-y-4">
+    <label class="font-medium">Format</label>
+    <div class="flex flex-col space-y-4 py-3 transition ease-in duration-100" [class]="'form-enabled-'+isFormEnabled">
+        <div class="w-full flex flex-row items-center px-3 space-x-4">
+            <label for="textAlign" class="form-label">Text align</label>
+            <div class="w-2/3">
+                <p-dropdown [options]="textAlignOpt" optionLabel="label" optionValue="value" [showClear]="false" placeholder="Choose text align" formControlName="textAlign"></p-dropdown>
+            </div>
+        </div>
+        <div class="w-full flex flex-row items-center px-3 space-x-4">
+            <label for="thousandsSeparator" class="form-label">Thousands separator</label>
+            <div class="w-2/3">
+                <p-dropdown [options]="thousandsSeparatorOpt" optionLabel="label" optionValue="value" [showClear]="false" placeholder="Choose thousands separator" formControlName="thousandsSeparator"></p-dropdown>
+            </div>
+        </div>
+        <div class="w-full flex flex-row items-center px-3 space-x-4">
+            <label for="decimalSeparator" class="form-label">Decimal separator</label>
+            <div class="w-2/3">
+                <p-dropdown [options]="decimalSeparatorOpt" optionLabel="label" optionValue="value" [showClear]="false" placeholder="Choose decimal separator" formControlName="decimalSeparator"></p-dropdown>
+            </div>
+        </div>
+        <div class="w-full flex flex-row items-center px-3 space-x-4">
+            <label for="decimalPlaces" class="form-label">Decimal places</label>
+            <div class="w-2/3">
+                <p-dropdown [options]="decimalPlacesOpt" optionLabel="label" optionValue="value" [showClear]="false" placeholder="Choose decimal places" formControlName="decimalPlaces"></p-dropdown>
+            </div>
+        </div>
+        <div class="w-full flex flex-row items-center px-3 space-x-4">
+            <label for="currencySymbol" class="form-label">Currency symbol</label>
+            <div class="w-2/3">
+                <input type="text" pInputText placeholder="Enter currency symbol" formControlName="currencySymbol">
+            </div>
+        </div>
+        <div class="w-full flex flex-row items-center px-3 space-x-4">
+            <label for="currencySymbolAlign" class="form-label">Currency align</label>
+            <div class="w-2/3">
+                <p-dropdown [options]="currencySymbolAlignOpt" optionLabel="label" optionValue="value" [showClear]="false" placeholder="Choose currency align" formControlName="currencySymbolAlign"></p-dropdown>
+            </div>
+        </div>
+        <div class="w-full flex flex-row items-center px-3 space-x-4">
+            <label for="nullValue" class="form-label">Null value</label>
+            <div class="w-2/3">
+                <input type="text" pInputText placeholder="Enter null value" formControlName="nullValue">
+            </div>
+        </div>
+        <div class="w-full flex flex-row items-center px-3 space-x-4">
+            <label for="isPercent" class="form-label">Format as percent</label>
+            <div class="w-2/3">
+                <p-dropdown [options]="isPercentOpt" optionLabel="label" optionValue="value" [showClear]="false" placeholder="Choose format percent" formControlName="isPercent"></p-dropdown>
+            </div>
+        </div>
+    </div>
+    <div class="w-full flex items-center justify-center pt-2 pb-2">
+        <button (click)="applyFormat()" [disabled]="!isFormEnabled" type="button" class="w-full btn-primary">APPLY</button>
+    </div>
+</form>
