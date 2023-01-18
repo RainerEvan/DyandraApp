@@ -28,6 +28,7 @@ export class ReportService {
             }
             sourcePath{
               name
+              path
             }
             query
             title

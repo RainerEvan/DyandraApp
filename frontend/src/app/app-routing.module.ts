@@ -1,16 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from './utils/auth-guard/auth.guard';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'report',
+    redirectTo: 'pivot',
     pathMatch: 'full'
   },
   {
-    path: 'report',
-    loadChildren: () => import('./modules/client/client.module').then((m) => m.ClientModule),
+    path: 'pivot',
+    loadChildren: () => import('./modules/pivot/pivot.module').then((m) => m.PivotModule),
   },
   {
     path: 'admin',

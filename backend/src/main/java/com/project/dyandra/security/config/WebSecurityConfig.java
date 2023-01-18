@@ -69,7 +69,7 @@ public class WebSecurityConfig{
             .authorizeRequests()
             .antMatchers("**/admin/**").hasAuthority("ADMIN")
             .antMatchers("/api/auth/**").permitAll()
-            .antMatchers("/api/public/**").permitAll()
+            .antMatchers("/api/pivot/**").permitAll()
             .antMatchers("/api/client/**").permitAll()
             .antMatchers("/graphiql", "/vendor/**").permitAll()
             .antMatchers("/api/graphql").permitAll()

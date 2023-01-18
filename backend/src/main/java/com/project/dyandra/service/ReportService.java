@@ -265,7 +265,7 @@ public class ReportService{
         Reports report = reportRepository.findByReportId(reportId)
             .orElseThrow(() -> new IllegalStateException("Report with current id cannot be found"));
 
-        String template = "<iframe width=\"100%\" height=\"750\" src=\"{clientUrl}/report/{reportId}\"></iframe>";
+        String template = "<iframe width=\"100%\" height=\"750\" src=\"{clientUrl}/#/pivot/{reportId}\"></iframe>";
         template = template.replace("{clientUrl}", dyandraClientUrl).replace("{reportId}", reportId);
 
         return new ReportTemplateResponse(report.getTitle(), template);

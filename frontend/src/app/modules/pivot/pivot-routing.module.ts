@@ -1,11 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ConnectionListComponent } from './components/connection-list/connection-list.component';
+import { PivotTableComponent } from './components/pivot-table/pivot-table.component';
 
 const routes: Routes = [
   {
     path:'',
-    component: ConnectionListComponent,
+    component: PivotTableComponent,
+  },
+  {
+    path:':id',
+    component: PivotTableComponent,
   },
 ];
 
@@ -13,4 +17,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ConnectionRoutingModule { }
+export class PivotRoutingModule { }

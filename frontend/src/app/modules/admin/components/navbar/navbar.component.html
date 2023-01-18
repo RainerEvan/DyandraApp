@@ -41,7 +41,7 @@
             </a>
         </li>
         <li>
-            <button (click)="logout()" class="menu-item">
+            <button (click)="showConfirmationDialog('Logout','Do you want to logout?','logout')" class="menu-item">
                 <i class="pi pi-sign-out" style="font-size: 14px"></i>
                 <span class="font-medium text-sm ml-2">Logout</span>
             </button>
@@ -94,7 +94,7 @@
                 </a>
             </li>
             <li>
-                <button routerLink="./profile" (click)="logout()" class="menu-item-mobile">
+                <button routerLink="./profile" (click)="showConfirmationDialog('Logout','Do you want to logout?','logout')" class="menu-item-mobile">
                     <i class="pi pi-sign-out" style="font-size: 14px"></i>
                     <span class="font-medium text-sm ml-2">Logout</span>
                 </button>

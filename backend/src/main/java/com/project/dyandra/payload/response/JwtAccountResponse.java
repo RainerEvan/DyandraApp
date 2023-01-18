@@ -1,7 +1,6 @@
 package com.project.dyandra.payload.response;
 
 import java.time.Instant;
-import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,5 +12,5 @@ public class JwtAccountResponse {
     private Instant expirationDate;
     private String userId;
     private Boolean isActive;
-    private List<String> role;
+    private String role;
 }

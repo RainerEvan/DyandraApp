@@ -15,13 +15,13 @@ import com.project.dyandra.utils.ResponseHandler;
 import lombok.AllArgsConstructor;
 
 @RestController
-@RequestMapping("/api/client/report")
+@RequestMapping("/api/client")
 @AllArgsConstructor
 public class ClientController {
     @Autowired
     private final ReportService reportService;
 
-    @GetMapping(path = "/template")
+    @GetMapping(path = "/report")
     public ResponseEntity<Object> getTemplate(@RequestParam("reportId") String reportId){
         try {
             ReportTemplateResponse template = reportService.getTemplate(reportId);

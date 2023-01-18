@@ -71,16 +71,16 @@ public class StartAppConfig {
             ReportRequest reportReq2 = new ReportRequest(connection2.getId(), sourcePath2.getId(), null, "Report 2",null);
             Reports report2 = reportService.addReport(reportReq2);
 
-            ConnectionRequest connectionReq3 = new ConnectionRequest(application2.getId(), EMethod.LOCAL_FILES,"SMILE-FILES");
+            ConnectionRequest connectionReq3 = new ConnectionRequest(application2.getId(), EMethod.DIRECT_DB,"SMILE-DB");
             Connections connection3 = connectionService.addConnection(connectionReq3);
 
-            SourcePathRequest sourcePathReq3= new SourcePathRequest(connection3.getId(), "FILE URL", "C:/Users/u545587/Downloads/data.json", null, null);
+            SourcePathRequest sourcePathReq3= new SourcePathRequest(connection3.getId(), "SMILE DB 1", "jdbc:postgresql://localhost:5432/dummy", "postgres", "Bojongloa90");
             SourcePaths sourcePath3 = sourcePathService.addSourcePath(sourcePathReq3);
             
             // SourcePathRequest sourcePathReq3= new SourcePathRequest(connection3.getId(), "FILE URL", "D:/Download/data.csv", null, null);
             // SourcePaths sourcePath3 = sourcePathService.addSourcePath(sourcePathReq3);
 
-            ReportRequest reportReq3 = new ReportRequest(connection3.getId(), sourcePath3.getId(), null, "Report 3",null);
+            ReportRequest reportReq3 = new ReportRequest(connection3.getId(), sourcePath3.getId(), "SELECT * FROM appraisals", "Report 3",null);
             Reports report3 = reportService.addReport(reportReq3);
         };
     }
