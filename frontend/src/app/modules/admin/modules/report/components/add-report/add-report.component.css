@@ -7,7 +7,7 @@
 }
 
 :host ::ng-deep .p-dropdown.p-focus{
-    @apply ring-0;
+    @apply ring-0 border border-gray-400 outline-none focus:ring-0;
 }
 
 :host ::ng-deep .p-dropdown-label {

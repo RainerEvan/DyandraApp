@@ -6,7 +6,7 @@
             <span class="text-sm">New</span>
         </button>
     </div>
-    <p-table #reportTable [value]="reports" [loading]="loading" dataKey="id" [rowHover]="true" [paginator]="true" scrollHeight="60vh" [rows]="10" [responsive]="true" responsiveLayout="scroll" sortField="createdAt" [sortOrder]="-1">
+    <p-table #reportTable [value]="reports" [loading]="loading" dataKey="id" [rowHover]="true" [paginator]="true" [rows]="10"  sortField="createdAt" [sortOrder]="-1">
         <ng-template pTemplate="header">
             <tr>
                 <th>Title</th>
