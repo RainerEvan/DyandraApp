@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "m_reports")
+@Table(name = "t_reports")
 public class Reports {
     @Id
     @GeneratedValue(generator = "UUID")
