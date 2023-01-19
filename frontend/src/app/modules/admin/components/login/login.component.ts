@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { ResultDialogComponent } from 'src/app/modules/shared/components/result-dialog/result-dialog.component';
 import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
@@ -11,8 +13,9 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
+  ref:DynamicDialogRef;
 
-  constructor(private route:ActivatedRoute, private router:Router, private authService:AuthService, private formBuilder:FormBuilder) {
+  constructor(public dialogService:DialogService, private route:ActivatedRoute, private router:Router, private authService:AuthService, private formBuilder:FormBuilder) {
     if(this.authService.accountValue){
       this.router.navigate(['/admin']);
     }
@@ -21,7 +24,6 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.generateLoginForm();
   }
-
   
   generateLoginForm(){
     this.loginForm = this.formBuilder.group({
@@ -42,15 +44,27 @@ export class LoginComponent implements OnInit {
     if(this.loginForm.valid){
       this.authService.login(this.loginForm.value).subscribe({
         next: () => {
+          this.showResultDialog("Success","Login Success! Welcome back");
+
           const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/admin';
           this.router.navigateByUrl(returnUrl);
         },
         error: (error: any) => {
           console.log(error);
+          this.showResultDialog("Failed",error.message);
         }
       });
     }
   }
 
-
+  showResultDialog(title:string, message:string){
+    this.ref = this.dialogService.open(ResultDialogComponent, {
+      header: title,
+      data: {
+        message: message,
+      },
+      baseZIndex: 10000,
+      contentStyle: {"max-height": "650px","width":"40vw", "min-width":"250px", "max-width":"400px", "overflow": "auto"},
+    });
+  }
 }

@@ -18,6 +18,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
+import { TooltipModule } from 'primeng/tooltip';
 
 
 @NgModule({
@@ -42,6 +43,7 @@ import { TableModule } from 'primeng/table';
     InputTextModule,
     RadioButtonModule,
     DropdownModule,
+    TooltipModule
   ]
 })
 export class PivotModule { }
