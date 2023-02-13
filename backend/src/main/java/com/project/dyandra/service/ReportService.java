@@ -43,6 +43,7 @@ import com.project.dyandra.repository.ApplicationRepository;
 import com.project.dyandra.repository.ConnectionRepository;
 import com.project.dyandra.repository.ReportRepository;
 import com.project.dyandra.repository.SourcePathRepository;
+import com.project.dyandra.security.client.jwt.ClientJwtUtils;
 
 import lombok.RequiredArgsConstructor;
 
@@ -63,10 +64,20 @@ public class ReportService{
     private final ConnectionRepository connectionRepository;
     @Autowired
     private final SourcePathRepository sourcePathRepository;
+    @Autowired
+    private ClientJwtUtils jwtUtils;
 
     @Transactional
     public List<Reports> getAllReports(){
         return reportRepository.findAll();
+    }
+
+    @Transactional
+    public Reports getReportByToken(String token){
+        String reportId = jwtUtils.getReportFromJwtToken(token);
+
+        return reportRepository.findByReportId(reportId)
+            .orElseThrow(() -> new AbstractGraphQLException("Report with current id cannot be found"));
     }
     
     @Transactional
@@ -261,12 +272,14 @@ public class ReportService{
     }
 
     @Transactional
-    public ReportTemplateResponse getTemplate(String reportId){
+    public ReportTemplateResponse getTemplate(String token){
+        String reportId = jwtUtils.getReportFromJwtToken(token);
+
         Reports report = reportRepository.findByReportId(reportId)
             .orElseThrow(() -> new IllegalStateException("Report with current id cannot be found"));
 
-        String template = "<iframe width=\"100%\" height=\"750\" src=\"{clientUrl}/#/pivot/{reportId}\"></iframe>";
-        template = template.replace("{clientUrl}", dyandraClientUrl).replace("{reportId}", reportId);
+        String template = "<iframe width=\"100%\" height=\"100%\" src=\"{clientUrl}/#/pivot/{token}\"></iframe>";
+        template = template.replace("{clientUrl}", dyandraClientUrl).replace("{token}", token);
 
         return new ReportTemplateResponse(report.getTitle(), template);
     }
@@ -278,7 +291,7 @@ public class ReportService{
                 .orElseThrow(() -> new IllegalStateException("Report with current id cannot be found"));
 
             Applications application = applicationRepository.findByClientId(clientId)
-                .orElseThrow(() -> new IllegalStateException("Application with current id cannot be found"));
+                .orElseThrow(() -> new IllegalStateException("Client with current id cannot be found"));
 
             if(application.getClientId().equals(report.getConnection().getApplication().getClientId())){
                 return true;

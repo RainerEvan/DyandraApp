@@ -1,26 +1,24 @@
-<div class="container flex flex-col justify-center min-h-screen mx-auto max-w-screen-lg">
-    <div class=" bg-white border rounded-lg shadow-lg p-10 flex flex-col ">
-        <p-menubar [model]="items">
-            <ng-template pTemplate="end">
-                <div class="flex flex-row items-center">
-                    <img src="assets/icons/dyandra-logo2.png" class="w-6 mr-1">
-                    <div class="font-allerta text-2xl text-white tracking-widest" pTooltip="Dynamic Analytic Dashboard and Reporting App" tooltipPosition="bottom">DYANDRA</div>
-                </div>
-            </ng-template>
-        </p-menubar>
-        <div class="w-full flex items-center justify-center bg-white p-2">
-            <span class="font-medium text-sm">{{report?.title || "New Report"}}</span>
-        </div>
-
-        <app-wbr-pivot #pivot1 [toolbar]="false" [width]="'100%'" [height]="" (reportcomplete)="onReportComplete()"></app-wbr-pivot>
-
-        <div *ngIf="report" class="flex flex-col space-y-6 py-6">
-            <div class="w-full flex items-center space-x-4">
-                <h2 class="font-medium">Chart:</h2>
-                <p-dropdown [options]="chartType" [(ngModel)]="selectedChart" optionLabel="name" optionValue="value" [showClear]="false" placeholder="Select chart type" class="w-64"></p-dropdown>
-                <button (click)="createChart()" type="button" class="bg-bca text-white text-sm py-2 px-3 rounded-md hover:bg-bca/80 active:bg-bca/70 active:shadow-inner">Generate Chart</button>
+<div class="w-full bg-white border rounded-lg shadow-lg p-10 flex flex-col ">
+    <p-menubar [model]="items">
+        <ng-template pTemplate="end">
+            <div class="flex flex-row items-center">
+                <img src="assets/icons/dyandra-logo2.png" class="w-6 mr-1">
+                <div class="font-allerta text-2xl text-white tracking-widest" pTooltip="Dynamic Analytic Dashboard and Reporting App" tooltipPosition="bottom">DYANDRA</div>
             </div>
-            <div id="highCharts" class="w-full"></div>
+        </ng-template>
+    </p-menubar>
+    <div class="w-full flex items-center justify-center bg-white p-2">
+        <span class="font-medium text-sm">{{report?.title || "New Report"}}</span>
+    </div>
+
+    <app-wbr-pivot #pivot1 [toolbar]="false" [width]="'100%'" [height]="" (reportcomplete)="onReportComplete()"></app-wbr-pivot>
+
+    <div *ngIf="report" class="flex flex-col space-y-6 py-6">
+        <div class="w-full flex items-center space-x-4">
+            <h2 class="font-medium">Chart:</h2>
+            <p-dropdown [options]="chartType" [(ngModel)]="selectedChart" optionLabel="name" optionValue="value" [showClear]="false" placeholder="Select chart type" class="w-64"></p-dropdown>
+            <button (click)="createChart()" type="button" class="bg-bca text-white text-sm py-2 px-3 rounded-md hover:bg-bca/80 active:bg-bca/70 active:shadow-inner">Generate Chart</button>
         </div>
+        <div id="highCharts" class="w-full"></div>
     </div>
 </div>

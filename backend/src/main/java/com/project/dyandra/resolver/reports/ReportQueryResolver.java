@@ -22,6 +22,10 @@ public class ReportQueryResolver implements GraphQLQueryResolver {
         return reportService.getAllReports();
     }
 
+    public Reports getReportByToken(String token){
+        return reportService.getReportByToken(token);
+    }
+
     public Reports getReportByReportId(String reportId){
         return reportService.getReportByReportId(reportId);
     }

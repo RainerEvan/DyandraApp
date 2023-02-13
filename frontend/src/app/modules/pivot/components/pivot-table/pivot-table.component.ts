@@ -26,7 +26,7 @@ export class PivotTableComponent implements OnInit {
   report: Reports;
   items: MenuItem[];
   reportConfig: any;
-  reportId: string;
+  token: string;
   ref: DynamicDialogRef;
   chartType:any;
   selectedChart:any;
@@ -45,9 +45,9 @@ export class PivotTableComponent implements OnInit {
 
   ngOnInit(): void {
       this.generateMenubar();
-      this.reportId = this.route.snapshot.paramMap.get('id');
-      if(this.reportId){
-          this.openReport(this.reportId);
+      this.token = this.route.snapshot.paramMap.get('token');
+      if(this.token){
+          this.openReport(this.token);
       }
   }
 
@@ -95,8 +95,8 @@ export class PivotTableComponent implements OnInit {
   //     });
   // }
 
-  openReport(reportId:any){
-      this.reportService.getReportByReportId(reportId).subscribe({
+  openReport(token:any){
+      this.reportService.getReportByToken(token).subscribe({
           next:(response:Reports)=>{
               this.report = response;
               this.generateReport(response.id);

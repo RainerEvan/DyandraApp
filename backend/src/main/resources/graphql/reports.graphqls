@@ -12,5 +12,6 @@ type Reports{
 
 extend type Query{
     getAllReports:[Reports]
+    getReportByToken(token:String):Reports
     getReportByReportId(reportId:String):Reports
 }

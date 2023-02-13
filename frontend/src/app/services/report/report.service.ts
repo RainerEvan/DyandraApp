@@ -42,11 +42,11 @@ export class ReportService {
       .valueChanges.pipe(map((result)=>result.data.getAllReports));
   }
 
-  public getReportByReportId(reportId:any): Observable<Reports>{
+  public getReportByToken(token:string): Observable<Reports>{
     return this.apollo.watchQuery<any>({
       query:gql`
-        query getReportByReportId($reportId:String!){
-          getReportByReportId(reportId: $reportId){
+        query getReportByToken($token:String!){
+          getReportByToken(token: $token){
             id
             title
             reportConfig
@@ -54,10 +54,10 @@ export class ReportService {
         }
       `,
       variables:{
-        reportId: reportId,
+        token: token,
       }
     })
-      .valueChanges.pipe(map((result)=>result.data.getReportByReportId));
+      .valueChanges.pipe(map((result)=>result.data.getReportByToken));
   }
 
   public addReport(form:any): Observable<any>{

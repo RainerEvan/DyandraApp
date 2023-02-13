@@ -8,7 +8,7 @@ const routes: Routes = [
     component: PivotTableComponent,
   },
   {
-    path:':id',
+    path:':token',
     component: PivotTableComponent,
   },
 ];

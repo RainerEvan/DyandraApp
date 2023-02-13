@@ -22,9 +22,9 @@ public class ClientController {
     private final ReportService reportService;
 
     @GetMapping(path = "/report")
-    public ResponseEntity<Object> getTemplate(@RequestParam("reportId") String reportId){
+    public ResponseEntity<Object> getTemplate(@RequestParam("token") String token){
         try {
-            ReportTemplateResponse template = reportService.getTemplate(reportId);
+            ReportTemplateResponse template = reportService.getTemplate(token);
             
             return ResponseEntity.status(HttpStatus.OK).body(template);
         } catch (Exception e) {
